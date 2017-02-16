@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
-    class GameObject : Body
+    abstract class GameObject : Body
     {
         public GameObject(World world, Vector2? position = default(Vector2?), float rotation = 0, object userdata = null) : base(world, position, rotation, userdata)
         {
