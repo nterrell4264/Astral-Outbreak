@@ -38,6 +38,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MenuStuff\MenuContent.cs" />
+    <Compile Include="MenuStuff\MenuButton.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Enemy.cs" />
     <Compile Include="ObjectSubclasses\Entity.cs" />
     <Compile Include="ManagerClasses\FileManager.cs" />
@@ -45,7 +47,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="ManagerClasses\InputManager.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Item.cs" />
-    <Compile Include="Menu.cs" />
+    <Compile Include="MenuStuff\Menu.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ObjectSubclasses\Projectile.cs" />
