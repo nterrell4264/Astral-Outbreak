@@ -48,6 +48,7 @@
     <Compile Include="Menu.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Player.cs" />
     <Compile Include="Physics\PhysicsObject.cs" />
+    <Compile Include="Physics\Vector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ObjectSubclasses\Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,7 +58,6 @@
     <Compile Include="ManagerClasses\SpriteManager.cs" />
     <Compile Include="ObjectSubclasses\Wall.cs" />
     <Compile Include="Physics\World.cs" />
-    <Compile Include="Physics\Vector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
