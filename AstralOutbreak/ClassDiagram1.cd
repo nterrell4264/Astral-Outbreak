@@ -102,14 +102,5 @@
       <FileName>Room.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FarseerPhysics.Dynamics.Body" Collapsed="true">
-    <Position X="10.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="FarseerPhysics.Dynamics.World" Collapsed="true">
-    <Position X="10.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

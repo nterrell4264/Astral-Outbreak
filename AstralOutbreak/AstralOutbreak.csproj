@@ -47,6 +47,7 @@
     <Compile Include="ObjectSubclasses\EntitySubClasses\Item.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Player.cs" />
+    <Compile Include="Physics\PhysicsObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ObjectSubclasses\Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,12 +56,10 @@
     <Compile Include="ManagerClasses\SoundManager.cs" />
     <Compile Include="ManagerClasses\SpriteManager.cs" />
     <Compile Include="ObjectSubclasses\Wall.cs" />
+    <Compile Include="Physics\World.cs" />
+    <Compile Include="Physics\Vector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FarseerPhysics MonoGame, Version=3.5.0.40766, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\FarseerPhysics.MonoGame.Unofficial.3.5.0\lib\FarseerPhysics MonoGame.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>

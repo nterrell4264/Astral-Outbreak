@@ -1,5 +1,4 @@
-﻿using FarseerPhysics.Dynamics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +7,8 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
-    abstract class GameObject : Body
+    abstract class GameObject : PhysicsObject
     {
-        public GameObject(World world, Vector2? position = default(Vector2?), float rotation = 0, object userdata = null) : base(world, position, rotation, userdata)
-        {
-        }
+        
     }
 }
