@@ -52,34 +52,45 @@ namespace AstralOutbreak
                 
                 //Check for collisions
                 if (obj.VelocityX.X != 0 || obj.VelocityY.Y != 0)
+                    //This object is moving, which means we need to check for collisions!
                     for (int j = 0; i < PhysicsObjects.Count; j++)
                     {
+                        //For each other object check for collisions
                         if (i != j && obj.CheckCollision(PhysicsObjects[j], obj.Velocity * time))
                         {
+                            //Doing the full move triggers a collision
                             if(obj.CheckCollision(PhysicsObjects[j], obj.VelocityX * time))
                             {
+                                //We now know that movement on the X axis causes a collision
                                 if(obj.Position.X < PhysicsObjects[j].Position.X)
                                 {
+                                    //Im to the left, reduce my movement
                                     obj.VelocityX.X = PhysicsObjects[j].Position.X - obj.Position.X - obj.Width;
                                 }
                                 else
                                 {
+                                    //Im to the right, reduce my movement
                                     obj.VelocityX.X = PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width;
                                 }
                             }
                             if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityY * time))
                             {
+                                //We now know that movement on the Y axis causes a collision
                                 if (obj.Position.Y < PhysicsObjects[j].Position.Y)
                                 {
+                                    //Im above, reduce my movement
                                     obj.VelocityY.Y = PhysicsObjects[j].Position.Y - obj.Position.Y - obj.Height;
                                 }
                                 else
                                 {
+                                    //Im below, reduce my movement
                                     obj.VelocityY.Y = PhysicsObjects[j].Position.Y - obj.Position.Y + PhysicsObjects[j].Height;
                                 }
                             }
+                            //Let everyone know I collided
                             obj.Collide(PhysicsObjects[j]);
                         }
+                        //Change my position
                         obj.Position += obj.Velocity;
                     }
                 
