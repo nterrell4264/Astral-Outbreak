@@ -54,9 +54,9 @@ namespace AstralOutbreak
                 if (obj.VelocityX.X != 0 || obj.VelocityY.Y != 0)
                     for (int j = 0; i < PhysicsObjects.Count; j++)
                     {
-                        if (i != j && obj.CheckCollision(PhysicsObjects[j], obj.Velocity))
+                        if (i != j && obj.CheckCollision(PhysicsObjects[j], obj.Velocity * time))
                         {
-                            if(obj.CheckCollision(PhysicsObjects[j], obj.VelocityX))
+                            if(obj.CheckCollision(PhysicsObjects[j], obj.VelocityX * time))
                             {
                                 if(obj.Position.X < PhysicsObjects[j].Position.X)
                                 {
@@ -67,7 +67,7 @@ namespace AstralOutbreak
                                     obj.VelocityX.X = PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width;
                                 }
                             }
-                            if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityY))
+                            if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityY * time))
                             {
                                 if (obj.Position.Y < PhysicsObjects[j].Position.Y)
                                 {
