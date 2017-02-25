@@ -16,7 +16,6 @@ namespace AstralOutbreak
         SoundManager soundManager;
         SpriteManager spriteManager;
 
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
