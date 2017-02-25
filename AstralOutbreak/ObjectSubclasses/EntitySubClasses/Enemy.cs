@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    class Enemy : Entity
+    public class Enemy : Entity
     {
-        public Enemy(Vector pos, float width, float height, bool mobile = false) : base(pos, width, height, mobile)
+        public Enemy(Vector2 pos, float width, float height, bool mobile = true) : base(pos, width, height, mobile)
         {
+        }
+
+        public override void Step(float deltaTime)
+        {
+            throw new NotImplementedException();
         }
     }
 }

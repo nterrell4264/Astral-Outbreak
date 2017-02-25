@@ -59,7 +59,7 @@ namespace AstralOutbreak
         }
 
         /// <summary>
-        /// Add two vectors.
+        /// Adds two vectors.
         /// </summary>
         public static Vector operator +(Vector a, Vector b)
         {
@@ -73,7 +73,7 @@ namespace AstralOutbreak
             return new Vector(a.X - b.X, a.Y - b.Y);
         }
         /// <summary>
-        /// Simple scalar multiple of a vector.
+        /// Simple scalar multiplication of a vector.
         /// </summary>
         public static Vector operator *(Vector a, float b)
         {

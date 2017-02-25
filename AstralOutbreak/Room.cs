@@ -7,10 +7,46 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
-    class Room: World
+    /// <summary>
+    /// Handles the nonphysics elements of a room.
+    /// </summary>
+    public class Room: World
     {
-        public Room(Vector2 gravity)
+        //Id for this room
+        public int RoomNumber { get; set; }
+
+        //Rooms IDs that this room links to
+        public List<int> RoomLinks { get; set; }
+
+        //Bounds of the room
+        public float Width { get; set; }
+        public float Height { get; set; }
+        
+        /// <summary>
+        /// A simple room with gravity
+        /// </summary>
+        /// <param name="gravity">Force of gravity</param>
+        public Room(float width, float height, Vector2 gravity = default(Vector2)): base(gravity)
         {
+            Width = width;
+            Height = height;
+        }
+
+        /// <summary>
+        /// Updates the room and the physics.
+        /// </summary>
+        /// <param name="deltaTime"></param>
+        public void Step(float deltaTime)
+        {
+            for(int i = 0; i < PhysicsObjects.Count; i++)
+            {
+                if(PhysicsObjects[i] is Entity)
+                {
+                    (PhysicsObjects[i] as Entity).Step(deltaTime);
+                }
+            }
+            //Update Physics
+            Update(deltaTime);
         }
     }
 }

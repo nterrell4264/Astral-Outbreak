@@ -5,13 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-
-
 namespace AstralOutbreak
 {
-    public class Player : Entity
+    public class Projectile : Entity
     {
-        public Player(Vector2 pos, float width, float height, bool mobile = true) : base(pos, width, height, mobile)
+        public Projectile(Vector2 pos, float width, float height, bool mobile = true) : base(pos, width, height, mobile)
         {
         }
 
