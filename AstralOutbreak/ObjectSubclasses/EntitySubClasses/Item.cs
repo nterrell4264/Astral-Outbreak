@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    class Item: GameObject
+    class Item : GameObject
     {
+        public Item(Vector pos, float width, float height, bool mobile = false) : base(pos, width, height, mobile)
+        {
+        }
     }
 }

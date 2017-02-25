@@ -9,6 +9,8 @@ namespace AstralOutbreak
 {
     abstract class GameObject : PhysicsObject
     {
-        
+        public GameObject(Vector pos, float width, float height, bool mobile = false) : base(pos, width, height, mobile)
+        {
+        }
     }
 }

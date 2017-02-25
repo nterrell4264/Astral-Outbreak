@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
+
+    public delegate void Collision(PhysicsObject other);
+
     /// <summary>
     /// The most basic Object that handles the physics in the game.
     /// </summary>
@@ -14,6 +17,7 @@ namespace AstralOutbreak
     {
         //Motion
         public bool Mobile { get; set; }
+        public bool Gravity { get; set; }
         public Vector Position { get; set; }
         public Vector VelocityX { get; set; }
         public Vector VelocityY { get; set; }
@@ -37,19 +41,13 @@ namespace AstralOutbreak
         /// <param name="width">Width of the hitbox.</param>
         /// <param name="height">Height of the hitbox.</param>
         /// <param name="mobile">Can the object move.</param>
-        public PhysicsObject(Vector2 pos, float width, float height, bool mobile = false)
+        public PhysicsObject(Vector pos, float width, float height, bool mobile = false, bool grav = false)
         {
+            Gravity = grav;
             Mobile = mobile;
             Position = pos;
-            VelocityX = new Vector2(0, 0);
-            VelocityY = new Vector2(0, 0);
-
-
-        }
-
-        public void UpdateVelocity(float time)
-        {
-            VelocityX.X += Acceleration.X * time;
+            VelocityX = new Vector(0, 0);
+            VelocityY = new Vector(0, 0);
         }
 
         /// <summary>
@@ -76,7 +74,7 @@ namespace AstralOutbreak
         /// <param name="other">Object to check collisions against.</param>
         /// <param name="vel">Velocity of movement.</param>
         /// <returns>True if there is a collision.</returns>
-        public bool CheckCollision(PhysicsObject other, Vector2 vel)
+        public bool CheckCollision(PhysicsObject other, Vector vel)
         {
             if (Position.X + vel.X > other.Position.X + other.Width)
                 return false;
@@ -88,6 +86,16 @@ namespace AstralOutbreak
                 return false;
             return true;
         }
+
+        public void Collide(PhysicsObject obj)
+        {
+            this.CollisionEvent?.Invoke(obj);
+
+        }
+        /// <summary>
+        /// Event that is called whenever two objects collide.
+        /// </summary>
+        public event Collision CollisionEvent;
 
     }
 }

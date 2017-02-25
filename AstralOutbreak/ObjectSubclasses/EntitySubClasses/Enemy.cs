@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    class Enemy: Entity
+    class Enemy : Entity
     {
+        public Enemy(Vector pos, float width, float height, bool mobile = false) : base(pos, width, height, mobile)
+        {
+        }
     }
 }
