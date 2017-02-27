@@ -40,9 +40,15 @@ namespace AstralOutbreak
         {
             for(int i = 0; i < PhysicsObjects.Count; i++)
             {
+                //For each entity
                 if(PhysicsObjects[i] is Entity)
                 {
-                    (PhysicsObjects[i] as Entity).Step(deltaTime);
+                    var obj = (PhysicsObjects[i] as Entity);
+                    //Call its step
+                    obj.Step(deltaTime);
+                    //And make sure it isn't dead
+                    if (obj.IsDead)
+                        PhysicsObjects.RemoveAt(i);
                 }
             }
             //Update Physics

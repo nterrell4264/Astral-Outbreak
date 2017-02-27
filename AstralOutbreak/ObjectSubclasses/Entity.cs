@@ -11,6 +11,19 @@ namespace AstralOutbreak
     {
         //A float that keeps track of how long the entityhas been in its current action
         public float CurrentActionTime { get; set; }
+        //Bool that denotes death
+        public bool IsDead { get; set; }
+        //Float that signifies the entities current health
+        private float health;
+        public float Health
+        {
+            get { return health; }
+            set
+            {
+                health = value;
+                IsDead = health <= 0;
+            }
+        }
 
 
         /// <summary>
@@ -19,15 +32,20 @@ namespace AstralOutbreak
         /// <param name="pos">Position (Top left corner)</param>
         /// <param name="width">Width</param>
         /// <param name="height">Height</param>
-        public Entity(Vector2 pos, float width, float height, bool mobile = true) : base(pos, width, height, mobile)
+        public Entity(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, mobile)
         {
             CurrentActionTime = 0;
+            IsDead = false;
+            Health = health;
         }
 
         /// <summary>
         /// Gives all Game Objects a way to update themselves each step.
         /// </summary>
         /// <param name="deltaTime"></param>
-        public abstract void Step(float deltaTime);
+        public virtual void Step(float deltaTime)
+        {
+            CurrentActionTime += deltaTime;
+        }
     }
 }

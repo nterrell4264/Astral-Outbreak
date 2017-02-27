@@ -9,13 +9,14 @@ namespace AstralOutbreak
 {
     public class Enemy : Entity
     {
-        public Enemy(Vector2 pos, float width, float height, bool mobile = true) : base(pos, width, height, mobile)
+        public Enemy(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
         }
 
         public override void Step(float deltaTime)
         {
-            throw new NotImplementedException();
+            base.Step(deltaTime);
+
         }
     }
 }
