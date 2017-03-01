@@ -48,7 +48,10 @@ namespace AstralOutbreak
                     obj.Step(deltaTime);
                     //And make sure it isn't dead
                     if (obj.IsDead)
+                    {
                         PhysicsObjects.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
             //Update Physics
