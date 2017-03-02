@@ -86,9 +86,9 @@ namespace AstralOutbreak
         /// <param name="pos">Position</param>
         /// <param name="direction">Direction of shot</param>
         /// <returns></returns>
-        public Projectile Shoot(Vector direction)
+        public void Shoot(Vector direction)
         {
-            return new Projectile(Source.Center, BulletSize, BulletSize, bulletHealth, Damage, Source);
+            RoomManager.Data.Current.PhysicsObjects.Add( new Projectile(Source.Center, BulletSize, BulletSize, bulletHealth, Damage, Source));
         }
 
 

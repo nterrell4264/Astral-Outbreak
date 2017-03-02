@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    enum ButtonStatus { Unpressed, Pressed, Held}
+    public enum ButtonStatus { Unpressed, Pressed, Held}
     public class InputManager
     {
         private KeyboardState keyState; //Key state this frame

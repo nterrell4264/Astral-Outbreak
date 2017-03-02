@@ -9,7 +9,7 @@ namespace AstralOutbreak
     public class RoomManager
     {
         //The room currently in play
-        public Room current { get; set; }
+        public Room Current { get; set; }
         
 
         //Stores the one instance of this class
@@ -28,7 +28,7 @@ namespace AstralOutbreak
         //Private constructor
         private RoomManager()
         {
-            current = null;
+            Current = null;
         }
     }
 }
