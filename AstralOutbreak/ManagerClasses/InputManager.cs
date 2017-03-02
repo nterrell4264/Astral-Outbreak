@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AstralOutbreak
 {
     enum ButtonStatus { Unpressed, Pressed, Held}
-    class InputManager
+    public class InputManager
     {
         private KeyboardState keyState; //Key state this frame
         private KeyboardState prevKeyState; //Key state last frame
