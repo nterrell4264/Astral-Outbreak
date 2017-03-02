@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace AstralOutbreak
 {
 
-    public delegate void Collision(PhysicsObject other);
 
     /// <summary>
     /// The most basic Object that handles the physics in the game.
@@ -33,6 +32,14 @@ namespace AstralOutbreak
         //Rectangle parameters
         public float Width { get; set; }
         public float Height { get; set; }
+        public Vector Center
+        {
+            get
+            {
+                return new Vector(Position.X + Width/2, Position.Y + Height/2);
+            }
+        }
+
 
         /// <summary>
         /// Creates a physics object with everything it needs.
@@ -86,16 +93,6 @@ namespace AstralOutbreak
                 return false;
             return true;
         }
-
-        public void Collide(PhysicsObject obj)
-        {
-            this.CollisionEvent?.Invoke(obj);
-
-        }
-        /// <summary>
-        /// Event that is called whenever two objects collide.
-        /// </summary>
-        public event Collision CollisionEvent;
 
     }
 }

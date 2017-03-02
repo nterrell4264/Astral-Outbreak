@@ -30,6 +30,8 @@ namespace AstralOutbreak
         {
             Width = width;
             Height = height;
+            PhysicalLogic = DetermineCollision;
+            Collide += HandleCollision;
         }
 
         /// <summary>
@@ -57,5 +59,28 @@ namespace AstralOutbreak
             //Update Physics
             Update(deltaTime);
         }
+
+        public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)
+        {
+            return true;
+        }
+
+
+        public void HandleCollision(PhysicsObject obj1, PhysicsObject obj2)
+        {
+            if(obj1 is Projectile && obj2 is GameObject)
+            {
+                (obj1 as Projectile).Strike(obj2 as GameObject);
+            }
+            if (obj2 is Projectile && obj1 is GameObject)
+            {
+                (obj2 as Projectile).Strike(obj1 as GameObject);
+            }
+        }
+
+
+
+
+
     }
 }

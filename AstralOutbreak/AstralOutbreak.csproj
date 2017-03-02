@@ -60,6 +60,7 @@
     <Compile Include="ManagerClasses\SpriteManager.cs" />
     <Compile Include="ObjectSubclasses\Wall.cs" />
     <Compile Include="Physics\World.cs" />
+    <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

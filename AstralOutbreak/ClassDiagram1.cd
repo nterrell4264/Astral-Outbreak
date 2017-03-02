@@ -21,7 +21,7 @@
   <Class Name="AstralOutbreak.InputManager" Collapsed="true">
     <Position X="1.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAQIAgAIAAAAoAFAIACAACgAAAAAAAAAHECAAAAAAAA=</HashCode>
       <FileName>ManagerClasses\InputManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -42,14 +42,14 @@
   <Class Name="AstralOutbreak.Entity" Collapsed="true">
     <Position X="6.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAgAAAAAAAAAAAAEAAAAAAAAAAAIAAAAAAAAAg=</HashCode>
       <FileName>ObjectSubclasses\Entity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AstralOutbreak.Enemy" Collapsed="true">
     <Position X="6.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>ObjectSubclasses\EntitySubClasses\Enemy.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -57,21 +57,21 @@
     <Position X="5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ObjectSubclasses\EntitySubClasses\Item.cs</FileName>
+      <FileName>ObjectSubclasses\Item.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AstralOutbreak.Player" Collapsed="true">
     <Position X="5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>ObjectSubclasses\EntitySubClasses\Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AstralOutbreak.Projectile" Collapsed="true">
     <Position X="8.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ObjectSubclasses\Projectile.cs</FileName>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAACAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>ObjectSubclasses\EntitySubClasses\Projectile.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AstralOutbreak.Wall" Collapsed="true">
@@ -98,8 +98,22 @@
   <Class Name="AstralOutbreak.Room" Collapsed="true">
     <Position X="8.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABAAAAAAAAAAAIEAAIAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AstralOutbreak.PhysicsObject" Collapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAABAAIAAAgAAAAAEQAAAAAAACAAAAEAAAEAAA=</HashCode>
+      <FileName>Physics\PhysicsObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AstralOutbreak.World" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Physics\World.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

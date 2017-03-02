@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    class SoundManager
+    public class SoundManager
     {
     }
 }

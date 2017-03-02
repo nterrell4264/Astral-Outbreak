@@ -7,15 +7,19 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
+
     public class Projectile : Entity
     {
         //Damage that the projectile inflicts on contact
         public float Damage { get; set; }
 
-        public Projectile(Vector2 pos, float width, float height, float health, float damage, bool mobile = true) : base(pos, width, height, health, mobile)
+        //Reference to its source, so that it does not hit its source
+        public GameObject Source { get; set; }
+
+        public Projectile(Vector2 pos, float width, float height, float health, float damage, GameObject source = null, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             Damage = damage;
-            CollisionEvent += Strike;
+            Source = source;
         }
 
         //Each step, projectiles damage themselves
@@ -26,11 +30,15 @@ namespace AstralOutbreak
         }
 
         //When Projectiles hit things they die and inflict damage.
-        public void Strike(PhysicsObject other)
+        public void Strike(GameObject other)
         {
-            Health = 0;
-            if (other is Entity)
-                (other as Entity).Health -= Damage;
+            if(other != Source)
+            {
+                Health = 0;
+                if(other is Entity)
+                    (other as Entity).Health -= Damage;
+            }
+                
         }
     }
 }

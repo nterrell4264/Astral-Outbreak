@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    class FileManager
+    public class FileManager
     {
         public List<Room> roomsLoaded { get; set; }
     }

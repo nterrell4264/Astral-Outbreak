@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
@@ -94,6 +95,14 @@ namespace AstralOutbreak
         {
             return new Vector(a.X / b, a.Y / b);
         }
+
+        //Implicit conversion to xna
+        public static implicit operator Vector2(Vector v)
+        {
+            return new Vector2(v.X, v.Y);
+        }
+
+
 
     }
 }

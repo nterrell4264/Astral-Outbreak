@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    class RoomManager
+    public class RoomManager
     {
         public Room current { get; set; }
 
