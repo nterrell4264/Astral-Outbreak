@@ -60,14 +60,16 @@ namespace AstralOutbreak
             Update(deltaTime);
         }
 
+        //Returns true if we want both objects to collide with each other in a physical sense
         public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)
         {
             return true;
         }
 
-
+        //Handles nonphysical results of physical collisions
         public void HandleCollision(PhysicsObject obj1, PhysicsObject obj2)
         {
+            //Bullets damage entities
             if(obj1 is Projectile && obj2 is GameObject)
             {
                 (obj1 as Projectile).Strike(obj2 as GameObject);
@@ -76,6 +78,7 @@ namespace AstralOutbreak
             {
                 (obj2 as Projectile).Strike(obj1 as GameObject);
             }
+
         }
 
 

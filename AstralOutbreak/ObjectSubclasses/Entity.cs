@@ -25,6 +25,8 @@ namespace AstralOutbreak
             }
         }
 
+        //If the entity does not shoot/frag, MyWeapon should equal null
+        public Weapon MyWeapon { get; set; }
 
         /// <summary>
         /// Makes a mobile entity with the given constraints.
@@ -37,6 +39,7 @@ namespace AstralOutbreak
             CurrentActionTime = 0;
             IsDead = false;
             Health = health;
+            MyWeapon = null;
         }
 
         /// <summary>

@@ -20,6 +20,7 @@ namespace AstralOutbreak
         {
             Damage = damage;
             Source = source;
+            Gravity = false;
         }
 
         //Each step, projectiles damage themselves
@@ -32,7 +33,7 @@ namespace AstralOutbreak
         //When Projectiles hit things they die and inflict damage.
         public void Strike(GameObject other)
         {
-            if(other != Source)
+            if(other != Source && !(other is Projectile))
             {
                 Health = 0;
                 if(other is Entity)

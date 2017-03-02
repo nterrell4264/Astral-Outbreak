@@ -39,6 +39,7 @@ namespace AstralOutbreak
             }
         }
 
+        //size of the square bullet
         public float BulletSize { get; set; }
 
         //Range of the bullet = speed * health

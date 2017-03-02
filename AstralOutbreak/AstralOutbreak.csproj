@@ -55,7 +55,7 @@
     <Compile Include="ObjectSubclasses\EntitySubClasses\Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
-    <Compile Include="RoomManager.cs" />
+    <Compile Include="ManagerClasses\RoomManager.cs" />
     <Compile Include="ManagerClasses\SoundManager.cs" />
     <Compile Include="ManagerClasses\SpriteManager.cs" />
     <Compile Include="ObjectSubclasses\Wall.cs" />
