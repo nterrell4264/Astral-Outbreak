@@ -28,7 +28,8 @@ namespace AstralOutbreak
             set { effect = value; }
         }
 
-        //In order to have any control over a SoundEffect object while it's playing, we must convert it to a SoundEffectInstance. This makes our properties seem a little strange, but I promise it's better this way
+        //In order to have any control over a SoundEffect object while it's playing, we must convert it to a SoundEffectInstance
+        //This makes our properties seem a little strange, but I promise it's better this way
 
         public float Volume
         {
