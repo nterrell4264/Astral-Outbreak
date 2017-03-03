@@ -34,19 +34,19 @@ namespace AstralOutbreak
                         break;
                     }
 
-                case (GameState.Options):
+                case (GameState.OptionsMenu):
                     {
                         LoadOptions();
                         break;
                     }
-                case (GameState.GameOver):
+                case (GameState.GameOverMenu):
                     {
                         LoadGameOver();
                         break;
                     }
                 default:
                     {
-                        throw new ArgumentException();
+                        return;
                     }
             }
             currentState = type;

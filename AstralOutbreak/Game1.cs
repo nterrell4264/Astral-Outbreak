@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 namespace AstralOutbreak
 {
     //Enum that handles all of the states our game can be in
-    public enum GameState { MainMenu, OptionsMenu, PauseMenu, LoadMenu, SaveMenu, Playing, GameOver }
+    public enum GameState { MainMenu, OptionsMenu, PauseMenu, LoadMenu, SaveMenu, Playing, GameOverMenu }
 
     /// <summary>
     /// This is the main type for your game.
@@ -96,7 +96,7 @@ namespace AstralOutbreak
                 case GameState.Playing:
                     RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
-                case GameState.GameOver:
+                case GameState.GameOverMenu:
                     break;
                 default:
                     break;
@@ -137,7 +137,7 @@ namespace AstralOutbreak
                             Color.Black);
                     }
                     break;
-                case GameState.GameOver:
+                case GameState.GameOverMenu:
                     break;
                 default:
                     break;
