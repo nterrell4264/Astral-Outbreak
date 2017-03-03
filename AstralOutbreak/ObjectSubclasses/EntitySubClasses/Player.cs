@@ -34,6 +34,10 @@ namespace AstralOutbreak
                 Acceleration.X += 1;
             }
 
+            if(Acceleration.X == 0)
+            {
+                VelocityX.X = 0;
+            }
         }
     }
 }
