@@ -49,14 +49,14 @@ namespace AstralOutbreak
         }
 
         /// <summary>
-        /// 
+        /// Need help optimising this as a singleton
         /// </summary>
         /// <param name="effect"></param>
         /// <param name="volume"></param>
         /// <param name="pan"></param>
         /// <param name="pitch"></param>
         /// <param name="song"></param>
-        private SoundManager(SoundEffect effect, float volume, float pan = 0.0f, float pitch = 0.0f, Song song = null)
+        private SoundManager(SoundEffect effect = null, float volume = 0.0f, float pan = 0.0f, float pitch = 0.0f, Song song = null)
         {
             this.effect = effect;
             effectInstance = effect.CreateInstance();
@@ -71,14 +71,12 @@ namespace AstralOutbreak
         /// </summary>
         /// <param name="player">Instance of the player</param>
         /// <param name="source">Entity object that acts as the source of the given sound effect</param>
-        /// <param name="room">Instance of the current room</param>
-        public void CalculatePan(Player player, Entity source, Room room)
+        /// <param name="maxRange">Max distance the player can hear, should be about the radius of the room</param>
+        public void CalculatePanAndVolume(Player player, Entity source, float maxRange)
         {
-            float distance = source.Position.X - player.Position.X;
-            if (distance >= 0)
-                effectInstance.Pan = distance / (room.Width - player.Position.X);
-            else
-                effectInstance.Pan = distance / player.Position.X;
+            Vector distance = new Vector(source.Position.X - player.Position.X, source.Position.Y - player.Position.Y);
+            effectInstance.Pan = (float)(Math.Cos(distance.GetAngle()) / 2);
+            effectInstance.Volume = (maxRange - distance.Magnitude()) / maxRange;
         }
 
         /// <summary>
@@ -136,6 +134,24 @@ namespace AstralOutbreak
                 NullReferenceException nre = new NullReferenceException();
                 throw (nre);
             }
+        }
+
+        /// <summary>
+        /// Stops the current effect (up for change) then calculates the proper values for the given effect before playing the effect
+        /// </summary>
+        /// <param name="effect">SoundEffect object to be played</param>
+        /// <param name="player">Instance of the player</param>
+        /// <param name="source">Entity that the effect originates from</param>
+        /// <param name="maxRange">Maximum range that the player can hear</param>
+        public void SetAndPlayEffect(SoundEffect effect, Player player, Entity source, float maxRange)
+        {
+            if (effectInstance.State == SoundState.Playing)
+                effectInstance.Stop();
+            this.effect = effect;
+            effectInstance = effect.CreateInstance();
+            CalculatePanAndVolume(player, source, maxRange);
+            RandomizePitch();
+            effectInstance.Play();
         }
     }
 }
