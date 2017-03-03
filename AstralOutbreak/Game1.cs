@@ -43,7 +43,7 @@ namespace AstralOutbreak
         {
             Inputs = new InputManager();
             CurrentState = GameState.Playing;
-            RoomManager.Data.Current = new Room(2000, 2000, new Vector2(0, 3));
+            RoomManager.Data.Current = new Room(2000, 2000, new Vector2(0, .1f));
             RoomManager.Data.Current.PhysicsObjects.Add(new Wall(new Vector2(0, 64), 300, 20));
             RoomManager.Data.Current.PhysicsObjects.Add(new Player(new Vector2(4, 4), 20, 20, 10));
 
@@ -81,6 +81,7 @@ namespace AstralOutbreak
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            Inputs.Update();
             switch (CurrentState)
             {
                 case GameState.MainMenu:
