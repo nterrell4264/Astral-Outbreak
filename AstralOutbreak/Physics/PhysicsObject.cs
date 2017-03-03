@@ -53,8 +53,11 @@ namespace AstralOutbreak
             Gravity = grav;
             Mobile = mobile;
             Position = pos;
+            Width = width;
+            Height = height;
             VelocityX = new Vector(0, 0);
             VelocityY = new Vector(0, 0);
+            Acceleration = new Vector(0, 0);
         }
 
         /// <summary>
@@ -64,13 +67,13 @@ namespace AstralOutbreak
         /// <returns>True if there is a collision.</returns>
         public bool CheckCollision(PhysicsObject other)
         {
-            if (Position.X > other.Position.X + other.Width)
+            if (Position.X >= other.Position.X + other.Width)
                 return false;
-            if (Position.X + Width < other.Position.X)
+            if (Position.X + Width <= other.Position.X)
                 return false;
-            if (Position.Y > other.Position.Y + other.Height)
+            if (Position.Y >= other.Position.Y + other.Height)
                 return false;
-            if (Position.Y + Height < other.Position.Y)
+            if (Position.Y + Height <= other.Position.Y)
                 return false;
             return true;
         }
@@ -83,13 +86,13 @@ namespace AstralOutbreak
         /// <returns>True if there is a collision.</returns>
         public bool CheckCollision(PhysicsObject other, Vector vel)
         {
-            if (Position.X + vel.X > other.Position.X + other.Width)
+            if (Position.X + vel.X >= other.Position.X + other.Width)
                 return false;
-            if (Position.X + Width + vel.X < other.Position.X)
+            if (Position.X + Width + vel.X <= other.Position.X)
                 return false;
-            if (Position.Y + vel.Y > other.Position.Y + other.Height)
+            if (Position.Y + vel.Y >= other.Position.Y + other.Height)
                 return false;
-            if (Position.Y + Height + vel.Y < other.Position.Y)
+            if (Position.Y + Height + vel.Y <= other.Position.Y)
                 return false;
             return true;
         }

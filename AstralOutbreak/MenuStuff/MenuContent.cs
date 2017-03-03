@@ -18,6 +18,10 @@ namespace AstralOutbreak
         public MenuContent(int x, int y, Texture2D texture)
         {
             Location = new Point(x, y);
+        }
+        public MenuContent(Point location, Texture2D texture)
+        {
+            Location = location;
             Sprite = texture;
         }
     }

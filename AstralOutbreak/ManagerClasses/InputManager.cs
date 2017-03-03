@@ -16,11 +16,11 @@ namespace AstralOutbreak
         private MouseState prevMouseState;
 
         //Button Bindings
-        private Keys jumpButton;
-        private Keys leftButton;
-        private Keys rightButton;
-        private Keys rollButton;
-        private Keys dashButton;
+        public Keys jumpButton { get; set; }
+        public Keys leftButton { get; set; }
+        public Keys rightButton { get; set; }
+        public Keys rollButton { get; set; }
+        public Keys dashButton { get; set; }
 
         //Button Statuses
         public ButtonStatus JumpButtonState { get; private set; }
@@ -30,6 +30,23 @@ namespace AstralOutbreak
         public ButtonStatus DashButtonState { get; private set; }
         public ButtonStatus ShootButtonState { get; private set; }
 
+        //Mouse stuff
+        public int MouseX
+        {
+            get { return mouseState.Position.X; }
+        }
+        public int MouseY
+        {
+            get { return mouseState.Position.Y; }
+        }
+        public bool M1Clicked
+        {
+            get { return mouseState.LeftButton.Equals(ButtonState.Pressed); }
+        }
+        public bool M2Clicked
+        {
+            get { return mouseState.RightButton.Equals(ButtonState.Pressed); }
+        }
 
         //Default constructor
         public InputManager()

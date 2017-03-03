@@ -14,16 +14,25 @@ namespace AstralOutbreak
     /// </summary>
     public class Player : Entity
     {
-        //Will be mad public after input manager is a public class
-        InputManager Input { get; set; }
 
         public Player(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
+            Gravity = true;
         }
 
         public override void Step(float deltaTime)
         {
             base.Step(deltaTime);
+            Acceleration.X = 0;
+            Acceleration.Y = 0;
+            if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+            {
+                Acceleration.X += -1;
+            }
+            if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+            {
+                Acceleration.X += 1;
+            }
 
         }
     }
