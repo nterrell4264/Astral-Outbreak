@@ -21,6 +21,7 @@ namespace AstralOutbreak
         public Keys rightButton { get; set; }
         public Keys rollButton { get; set; }
         public Keys dashButton { get; set; }
+        public Keys pauseButton { get; set; }
 
         //Button Statuses
         public ButtonStatus JumpButtonState { get; private set; }
@@ -29,6 +30,7 @@ namespace AstralOutbreak
         public ButtonStatus RollButtonState { get; private set; }
         public ButtonStatus DashButtonState { get; private set; }
         public ButtonStatus ShootButtonState { get; private set; }
+        public ButtonStatus PauseButtonState { get; private set; }
 
         //Mouse stuff
         public int MouseX
@@ -57,6 +59,7 @@ namespace AstralOutbreak
             rightButton = Keys.D;
             rollButton = Keys.LeftShift;
             dashButton = Keys.Space;
+            pauseButton = Keys.LeftShift;
         }
 
         public void Update() //Updates all buttons
@@ -69,6 +72,8 @@ namespace AstralOutbreak
             RightButtonState = UpdateKey(rightButton);
             RollButtonState = UpdateKey(rollButton);
             DashButtonState = UpdateKey(dashButton);
+            PauseButtonState = UpdateKey(pauseButton);
+
             //Updates mouse separately because it's a special snowflake
             if (mouseState.LeftButton.Equals(ButtonState.Pressed))
             {
