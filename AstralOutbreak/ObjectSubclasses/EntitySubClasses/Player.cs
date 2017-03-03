@@ -27,11 +27,11 @@ namespace AstralOutbreak
             Acceleration.Y = 0;
             if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
-                Acceleration.X += -1;
+                Acceleration.X += -5;
             }
             if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
-                Acceleration.X += 1;
+                Acceleration.X += 5;
             }
             //Temporary Jump
             if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && VelocityY.Y == 0))
@@ -39,18 +39,19 @@ namespace AstralOutbreak
                 Acceleration.Y -= 100;
             }
             //Makes sure player stops when buttons arent pressed and can change direction easily
-            if(Acceleration.X == 0)
+            if (VelocityX.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
-                VelocityX.X = 0;
-            }
-            else if (VelocityX.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
-            {
-                VelocityX.X = 0;
+                VelocityX.X = -30;
             }
             else if (VelocityX.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
+                VelocityX.X = 30;
+            }
+            else if (Acceleration.X == 0)
+            {
                 VelocityX.X = 0;
             }
+            
         }
     }
 }
