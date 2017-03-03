@@ -42,7 +42,6 @@ namespace AstralOutbreak
         protected override void Initialize()
         {
             Inputs = new InputManager();
-            IsMouseVisible = true;
             CurrentState = GameState.Playing;
             RoomManager.Data.Current = new Room(2000, 2000, new Vector2(0, 3f));
             RoomManager.Data.Current.PhysicsObjects.Add(new Wall(new Vector2(0, 64), 300, 20));
