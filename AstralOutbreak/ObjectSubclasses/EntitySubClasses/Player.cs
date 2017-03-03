@@ -38,8 +38,16 @@ namespace AstralOutbreak
             {
                 Acceleration.Y -= 100;
             }
-
-            if (Acceleration.X == 0)
+            //Makes sure player stops when buttons arent pressed and can change direction easily
+            if(Acceleration.X == 0)
+            {
+                VelocityX.X = 0;
+            }
+            else if (VelocityX.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+            {
+                VelocityX.X = 0;
+            }
+            else if (VelocityX.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
                 VelocityX.X = 0;
             }
