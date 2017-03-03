@@ -16,11 +16,11 @@ namespace AstralOutbreak
         private MouseState prevMouseState;
 
         //Button Bindings
-        public Keys jumpButton;
-        public Keys leftButton;
-        public Keys rightButton;
-        public Keys rollButton;
-        public Keys dashButton;
+        private Keys jumpButton;
+        private Keys leftButton;
+        private Keys rightButton;
+        private Keys rollButton;
+        private Keys dashButton;
 
         //Button Statuses
         public ButtonStatus JumpButtonState { get; private set; }
