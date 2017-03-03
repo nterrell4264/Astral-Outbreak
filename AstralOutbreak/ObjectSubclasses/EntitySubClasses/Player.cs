@@ -25,13 +25,13 @@ namespace AstralOutbreak
             base.Step(deltaTime);
             Acceleration.X = 0;
             Acceleration.Y = 0;
-            if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Held))
+            if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
                 Acceleration.X += -1;
             }
-            if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Held))
+            if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
-                Acceleration.X += -1;
+                Acceleration.X += 1;
             }
 
         }

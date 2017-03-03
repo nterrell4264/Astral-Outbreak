@@ -26,7 +26,7 @@ namespace AstralOutbreak
         /// A simple room with gravity
         /// </summary>
         /// <param name="gravity">Force of gravity</param>
-        public Room(float width, float height, Vector2 gravity = default(Vector2)): base(gravity)
+        public Room(float width, float height, Vector2 gravity = default(Vector2)): base(gravity, new Vector2(100, 100))
         {
             Width = width;
             Height = height;

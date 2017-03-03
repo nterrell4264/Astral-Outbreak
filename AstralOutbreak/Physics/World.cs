@@ -18,7 +18,13 @@ namespace AstralOutbreak
     {
         //Physics objects that move and interact
         public List<PhysicsObject> PhysicsObjects { get; set; }
+        //Gravity as an acceleration
         public Vector Gravity { get; set; }
+        //Terminal velocities
+        public float TerminalVelX { get; set; }
+        public float TerminalVelY { get; set; }
+
+
 
         /// <summary>
         /// Returns true if the objects collide and stop.
@@ -32,14 +38,18 @@ namespace AstralOutbreak
         {
             PhysicsObjects = new List<PhysicsObject>();
             Gravity = new Vector(0,0);
+            TerminalVelX = 10;
+            TerminalVelY = 10;
         }
         /// <summary>
-        /// A simple empty world with gravity.
+        /// A simple empty world with gravity and a terminal velocity.
         /// </summary>
-        public World(Vector2 grav)
+        public World(Vector2 grav, Vector2 terminal)
         {
             PhysicsObjects = new List<PhysicsObject>();
             Gravity = new Vector(grav.X, grav.Y);
+            TerminalVelX = terminal.X;
+            TerminalVelY = terminal.Y;
         }
 
 
@@ -59,6 +69,25 @@ namespace AstralOutbreak
                     obj.VelocityY.Y += Gravity.Y;
                 }
                 
+                //Enforce Terminal velocity
+                if(obj.VelocityX.X > TerminalVelX)
+                {
+                    obj.VelocityX.X = TerminalVelX;
+                }
+                else if (obj.VelocityX.X < -TerminalVelX)
+                {
+                    obj.VelocityX.X = -TerminalVelX;
+                }
+                if (obj.VelocityY.Y > TerminalVelY)
+                {
+                    obj.VelocityY.Y = TerminalVelY;
+                }
+                else if (obj.VelocityY.Y < -TerminalVelY)
+                {
+                    obj.VelocityY.Y = -TerminalVelY;
+                }
+
+
                 //Check for collisions
                 if (obj.VelocityX.X != 0 || obj.VelocityY.Y != 0)
                     //This object is moving, which means we need to check for collisions!
@@ -69,42 +98,45 @@ namespace AstralOutbreak
                         {
                             //Doing the full move triggers a collision!
                             if(PhysicalLogic == null || PhysicalLogic(obj, PhysicsObjects[j]))
+                            {
                                 //We got the go ahead from the delegate
-                                if(obj.CheckCollision(PhysicsObjects[j], obj.VelocityX * time))
+                                if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityX * time))
                                 {
                                     //We now know that movement on the X axis causes a collision
-                                    if(obj.Position.X < PhysicsObjects[j].Position.X)
+                                    if (obj.Position.X < PhysicsObjects[j].Position.X)
                                     {
                                         //Im to the left, reduce my movement
-                                        obj.VelocityX.X = PhysicsObjects[j].Position.X - obj.Position.X - obj.Width;
+                                        obj.VelocityX.X = (PhysicsObjects[j].Position.X - obj.Position.X - obj.Width)/time;
                                     }
                                     else
                                     {
                                         //Im to the right, reduce my movement
-                                        obj.VelocityX.X = PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width;
+                                        obj.VelocityX.X = (PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width)/time;
                                     }
                                 }
+
                                 if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityY * time))
                                 {
                                     //We now know that movement on the Y axis causes a collision
                                     if (obj.Position.Y < PhysicsObjects[j].Position.Y)
                                     {
                                         //Im above, reduce my movement
-                                        obj.VelocityY.Y = PhysicsObjects[j].Position.Y - obj.Position.Y - obj.Height;
+                                        obj.VelocityY.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y - obj.Height)/time;
                                     }
                                     else
                                     {
                                         //Im below, reduce my movement
-                                        obj.VelocityY.Y = PhysicsObjects[j].Position.Y - obj.Position.Y + PhysicsObjects[j].Height;
+                                        obj.VelocityY.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y + PhysicsObjects[j].Height)/time;
                                     }
                                 }
+                            }          
                             //If anyone cares, let them know about the collision
                             if (Collide != null)
                                 Collide(obj, PhysicsObjects[j]);
                         }
-                        //Change my position
-                        obj.Position += obj.Velocity;
                     }
+                //Change my position
+                obj.Position += obj.Velocity * time;
             }
         }//End of method
 

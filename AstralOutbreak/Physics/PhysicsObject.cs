@@ -86,13 +86,13 @@ namespace AstralOutbreak
         /// <returns>True if there is a collision.</returns>
         public bool CheckCollision(PhysicsObject other, Vector vel)
         {
-            if (Position.X + vel.X > other.Position.X + other.Width)
+            if (Position.X + vel.X >= other.Position.X + other.Width)
                 return false;
-            if (Position.X + Width + vel.X < other.Position.X)
+            if (Position.X + Width + vel.X <= other.Position.X)
                 return false;
-            if (Position.Y + vel.Y > other.Position.Y + other.Height)
+            if (Position.Y + vel.Y >= other.Position.Y + other.Height)
                 return false;
-            if (Position.Y + Height + vel.Y < other.Position.Y)
+            if (Position.Y + Height + vel.Y <= other.Position.Y)
                 return false;
             return true;
         }
