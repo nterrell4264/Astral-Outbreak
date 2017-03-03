@@ -62,7 +62,7 @@ namespace AstralOutbreak
                 //Check for collisions
                 if (obj.VelocityX.X != 0 || obj.VelocityY.Y != 0)
                     //This object is moving, which means we need to check for collisions!
-                    for (int j = 0; i < PhysicsObjects.Count; j++)
+                    for (int j = 0; j < PhysicsObjects.Count; j++)
                     {
                         //For each other object check for collisions
                         if (i != j && obj.CheckCollision(PhysicsObjects[j], obj.Velocity * time))

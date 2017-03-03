@@ -53,8 +53,11 @@ namespace AstralOutbreak
             Gravity = grav;
             Mobile = mobile;
             Position = pos;
+            Width = width;
+            Height = height;
             VelocityX = new Vector(0, 0);
             VelocityY = new Vector(0, 0);
+            Acceleration = new Vector(0, 0);
         }
 
         /// <summary>

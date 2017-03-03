@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 namespace AstralOutbreak
 {
     //Enum that handles all of the states our game can be in
-    public enum GameState { MainMenu, PauseMenu, LoadMenu, SaveMenu, Playing, GameOver }
+    public enum GameState { MainMenu, OptionsMenu, PauseMenu, LoadMenu, SaveMenu, Playing, GameOver }
 
     /// <summary>
     /// This is the main type for your game.
@@ -21,7 +21,7 @@ namespace AstralOutbreak
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         FileManager fileManager;
-        public InputManager Inputs { get; set; }
+        public static InputManager Inputs { get; set; }
         SoundManager soundManager;
         SpriteManager spriteManager;
         //Current game state
@@ -42,8 +42,13 @@ namespace AstralOutbreak
         protected override void Initialize()
         {
             Inputs = new InputManager();
-            CurrentState = GameState.MainMenu;
+            CurrentState = GameState.Playing;
+            RoomManager.Data.Current = new Room(2000, 2000, new Vector2(0, 3));
+            RoomManager.Data.Current.PhysicsObjects.Add(new Wall(new Vector2(0, 64), 300, 20));
+            RoomManager.Data.Current.PhysicsObjects.Add(new Player(new Vector2(4, 4), 20, 20, 10));
+
             base.Initialize();
+
         }
 
         /// <summary>
@@ -76,8 +81,26 @@ namespace AstralOutbreak
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            //RoomManager.Data.Current.Step((float) gameTime.ElapsedGameTime.TotalSeconds);
+            switch (CurrentState)
+            {
+                case GameState.MainMenu:
+                    break;
+                case GameState.OptionsMenu:
+                    break;
+                case GameState.PauseMenu:
+                    break;
+                case GameState.LoadMenu:
+                    break;
+                case GameState.SaveMenu:
+                    break;
+                case GameState.Playing:
+                    RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.GameOver:
+                    break;
+                default:
+                    break;
+            }
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -93,14 +116,34 @@ namespace AstralOutbreak
 
             spriteBatch.Begin();
             // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
-            if(false)
-            for(int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
+            switch (CurrentState)
             {
-                spriteBatch.Draw(testTexture, 
-                    new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
-                    (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height), 
-                    Color.White);
+                case GameState.MainMenu:
+                    break;
+                case GameState.OptionsMenu:
+                    break;
+                case GameState.PauseMenu:
+                    break;
+                case GameState.LoadMenu:
+                    break;
+                case GameState.SaveMenu:
+                    break;
+                case GameState.Playing:
+                    for (int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
+                    {
+                        spriteBatch.Draw(testTexture, 
+                            new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
+                            (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height), 
+                            Color.Black);
+                    }
+                    break;
+                case GameState.GameOver:
+                    break;
+                default:
+                    break;
             }
+            
+
             spriteBatch.End();
 
             base.Draw(gameTime);
