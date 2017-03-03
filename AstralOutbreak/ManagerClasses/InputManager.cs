@@ -72,8 +72,8 @@ namespace AstralOutbreak
             //Updates mouse separately because it's a special snowflake
             if (mouseState.LeftButton.Equals(ButtonState.Pressed))
             {
-                if (prevMouseState.LeftButton.Equals(ButtonState.Released)) ShootButtonState = ButtonStatus.Held;
-                else ShootButtonState = ButtonStatus.Pressed;
+                if (prevMouseState.LeftButton.Equals(ButtonState.Released)) ShootButtonState = ButtonStatus.Pressed;
+                else ShootButtonState = ButtonStatus.Held;
             }
             else ShootButtonState = ButtonStatus.Unpressed;
 
