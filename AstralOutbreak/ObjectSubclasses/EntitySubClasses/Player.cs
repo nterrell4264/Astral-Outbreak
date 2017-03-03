@@ -33,7 +33,16 @@ namespace AstralOutbreak
             {
                 Acceleration.X += 1;
             }
+            //Temporary Jump
+            if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && VelocityY.Y == 0))
+            {
+                Acceleration.Y -= 100;
+            }
 
+            if (Acceleration.X == 0)
+            {
+                VelocityX.X = 0;
+            }
         }
     }
 }

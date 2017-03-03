@@ -64,16 +64,16 @@ namespace AstralOutbreak
             keyState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
-            UpdateKey(JumpButtonState, jumpButton);
-            UpdateKey(LeftButtonState, leftButton);
-            UpdateKey(RightButtonState, rightButton);
-            UpdateKey(RollButtonState, rollButton);
-            UpdateKey(DashButtonState, dashButton);
+            JumpButtonState = UpdateKey(jumpButton);
+            LeftButtonState = UpdateKey(leftButton);
+            RightButtonState = UpdateKey(rightButton);
+            RollButtonState = UpdateKey(rollButton);
+            DashButtonState = UpdateKey(dashButton);
             //Updates mouse separately because it's a special snowflake
             if (mouseState.LeftButton.Equals(ButtonState.Pressed))
             {
-                if (prevMouseState.LeftButton.Equals(ButtonState.Released)) ShootButtonState = ButtonStatus.Held;
-                else ShootButtonState = ButtonStatus.Pressed;
+                if (prevMouseState.LeftButton.Equals(ButtonState.Released)) ShootButtonState = ButtonStatus.Pressed;
+                else ShootButtonState = ButtonStatus.Held;
             }
             else ShootButtonState = ButtonStatus.Unpressed;
 
@@ -86,14 +86,14 @@ namespace AstralOutbreak
         /// </summary>
         /// <param name="state">The button state to update</param>
         /// <param name="button">The key used to determine the state</param>
-        private void UpdateKey(ButtonStatus state, Keys key)
+        private ButtonStatus UpdateKey(Keys key)
         {
             if (keyState.IsKeyDown(key))
             {
-                if (!prevKeyState.IsKeyDown(key)) state = ButtonStatus.Held;
-                else state = ButtonStatus.Pressed;
+                if (!prevKeyState.IsKeyDown(key)) return ButtonStatus.Held;
+                else return ButtonStatus.Pressed;
             }
-            else state = ButtonStatus.Unpressed;
+            else return ButtonStatus.Unpressed;
         }
 
         private void ReConfig() { } //To be used for config files
