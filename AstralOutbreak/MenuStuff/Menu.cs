@@ -8,43 +8,48 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    enum ActiveMenu { MainMenu, PauseMenu, OptionsMenu, GameOverMenu} //Passed in during Menu's constructor to determine what gets loaded
-
-    class Menu
+   class Menu
     {
-        public List<MenuContent> items { get; private set; } //List of things to draw 
+        public List<MenuContent> items { get; private set; } //List of things to draw
+        private GameState currentState;
 
-        public Menu()
+        public Menu() //Automatically loads the main menu on instantiating.
         {
-            Load(ActiveMenu.MainMenu);
+            Load(GameState.MainMenu);
         }
 
-        public void Load(ActiveMenu type)
+        public void Load(GameState type) //Loads the appropriate menu type.
         {
+            if (type == currentState) return; //Prevents loading the same menu more than once in a row.
             switch (type)
             {
-                case (ActiveMenu.MainMenu):
+                case (GameState.MainMenu):
                     {
                         LoadMain();
                         break;
                     }
-                case (ActiveMenu.PauseMenu):
+                case (GameState.PauseMenu):
                     {
                         LoadPause();
                         break;
                     }
 
-                case (ActiveMenu.OptionsMenu):
+                case (GameState.Options):
                     {
                         LoadOptions();
                         break;
                     }
-                case (ActiveMenu.GameOverMenu):
+                case (GameState.GameOver):
                     {
                         LoadGameOver();
                         break;
                     }
+                default:
+                    {
+                        throw new ArgumentException();
+                    }
             }
+            currentState = type;
         }
 
         //Load options
@@ -52,15 +57,15 @@ namespace AstralOutbreak
         {
 
         }
-        private void LoadPause() //Loads main menu assets
+        private void LoadPause() //Loads pause menu assets
         {
 
         }
-        private void LoadOptions() //Loads main menu assets
+        private void LoadOptions() //Loads options menu assets
         {
 
         }
-        private void LoadGameOver() //Loads main menu assets
+        private void LoadGameOver() //Loads game over menu assets
         {
 
         }

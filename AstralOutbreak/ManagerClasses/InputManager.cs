@@ -30,6 +30,23 @@ namespace AstralOutbreak
         public ButtonStatus DashButtonState { get; private set; }
         public ButtonStatus ShootButtonState { get; private set; }
 
+        //Mouse stuff
+        public int MouseX
+        {
+            get { return mouseState.Position.X; }
+        }
+        public int MouseY
+        {
+            get { return mouseState.Position.Y; }
+        }
+        public bool M1Clicked
+        {
+            get { return mouseState.LeftButton.Equals(ButtonState.Pressed); }
+        }
+        public bool M2Clicked
+        {
+            get { return mouseState.RightButton.Equals(ButtonState.Pressed); }
+        }
 
         //Default constructor
         public InputManager()
