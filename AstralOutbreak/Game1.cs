@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace AstralOutbreak
 {
+    //Enum that handles all of the states our game can be in
+    public enum GameState { MainMenu, PauseMenu, LoadMenu, SaveMenu, Playing, GameOver }
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -15,6 +18,8 @@ namespace AstralOutbreak
         InputManager inputManager;
         SoundManager soundManager;
         SpriteManager spriteManager;
+        //
+        public static GameState CurrentState { get; set; }
 
         public Game1()
         {
@@ -31,7 +36,7 @@ namespace AstralOutbreak
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            CurrentState = GameState.MainMenu;
             base.Initialize();
         }
 
