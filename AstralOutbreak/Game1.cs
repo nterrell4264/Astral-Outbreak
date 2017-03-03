@@ -12,13 +12,19 @@ namespace AstralOutbreak
     /// </summary>
     public class Game1 : Game
     {
+        //TEST
+        Texture2D testTexture;
+        //END TEST
+
+
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         FileManager fileManager;
-        InputManager inputManager;
+        public InputManager Inputs { get; set; }
         SoundManager soundManager;
         SpriteManager spriteManager;
-        //
+        //Current game state
         public static GameState CurrentState { get; set; }
 
         public Game1()
@@ -35,7 +41,7 @@ namespace AstralOutbreak
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            Inputs = new InputManager();
             CurrentState = GameState.MainMenu;
             base.Initialize();
         }
@@ -48,7 +54,7 @@ namespace AstralOutbreak
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            testTexture = Content.Load<Texture2D>("rect");
             // TODO: use this.Content to load your game content here
         }
 
@@ -71,6 +77,7 @@ namespace AstralOutbreak
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            //RoomManager.Data.Current.Step((float) gameTime.ElapsedGameTime.TotalSeconds);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -84,7 +91,17 @@ namespace AstralOutbreak
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
+            if(false)
+            for(int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
+            {
+                spriteBatch.Draw(testTexture, 
+                    new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
+                    (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height), 
+                    Color.White);
+            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
