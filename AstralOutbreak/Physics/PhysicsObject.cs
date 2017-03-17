@@ -18,13 +18,19 @@ namespace AstralOutbreak
         public bool Mobile { get; set; }
         public bool Gravity { get; set; }
         public Vector Position { get; set; }
-        public Vector VelocityX { get; set; }
-        public Vector VelocityY { get; set; }
-        public Vector Velocity
+        public Vector Velocity { get; set; }
+        public Vector VelocityY
         {
             get
             {
-                return VelocityX + VelocityY;
+                return new Vector(0, Velocity.Y);
+            }
+        }
+        public Vector VelocityX
+        {
+            get
+            {
+                return new Vector(Velocity.X, 0);
             }
         }
         public Vector Acceleration { get; set; }
@@ -55,8 +61,7 @@ namespace AstralOutbreak
             Position = pos;
             Width = width;
             Height = height;
-            VelocityX = new Vector(0, 0);
-            VelocityY = new Vector(0, 0);
+            Velocity = new Vector(0, 0);
             Acceleration = new Vector(0, 0);
         }
 

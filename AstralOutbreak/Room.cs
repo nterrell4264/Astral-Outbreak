@@ -15,13 +15,19 @@ namespace AstralOutbreak
         //Id for this room
         public int RoomNumber { get; set; }
 
-        //Rooms IDs that this room links to
-        public List<int> RoomLinks { get; set; }
+        //Map information
+        public Map MapData { get; set; }
 
-        //Bounds of the room
+
+        //Bounds of the camera
+        public float CameraX { get; set; }
+        public float CameraY { get; set; }
         public float Width { get; set; }
         public float Height { get; set; }
-        
+
+        //Buffer width
+        private const float BUFFER = 32;
+
         /// <summary>
         /// A simple room with gravity
         /// </summary>
@@ -55,10 +61,29 @@ namespace AstralOutbreak
                         i--;
                     }
                 }
+                if(PhysicsObjects[i] is GameObject && (PhysicsObjects[i] as GameObject).Unload)
+                {
+                    PhysicsObjects.RemoveAt(i);
+                    i--;
+                }
             }
             //Update Physics
             Update(deltaTime);
         }
+
+        public void CameraTrack(GameObject target)
+        {
+            float newX = target.Position.X - Width / 2;
+            float newY = target.Position.Y - Height / 2;
+
+        }
+
+
+
+
+
+
+
 
         //Returns true if we want both objects to collide with each other in a physical sense
         public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)

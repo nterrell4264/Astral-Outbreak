@@ -9,7 +9,7 @@ namespace AstralOutbreak
     public class RoomManager
     {
         //The room currently in play
-        public Room Current { get; set; }
+        public static Room Active { get; set; }
         
 
         //Stores the one instance of this class
@@ -24,11 +24,19 @@ namespace AstralOutbreak
             }
         }
 
+        //Access the rooms map
+        public static Map MapData
+        {
+            get { return Active.MapData; }
+            set { Active.MapData = value; }
+        }
+
+
 
         //Private constructor
         private RoomManager()
         {
-            Current = null;
+            Active = null;
         }
     }
 }

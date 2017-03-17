@@ -37,7 +37,7 @@ namespace AstralOutbreak
         public void ReloadRooms()
         {
             UnloadRooms();
-            LoadRooms(RoomManager.Data.Current.RoomLinks);
+            //LoadRooms(RoomManager.Active.RoomLinks);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace AstralOutbreak
         public void UnloadRooms()
         {
             roomsLoaded = new List<Room>();
-            LoadRoom(RoomManager.Data.Current.RoomNumber);
+            LoadRoom(RoomManager.Active.RoomNumber);
         }
 
         /// <summary>

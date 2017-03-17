@@ -12,9 +12,10 @@ namespace AstralOutbreak
     /// </summary>
     public abstract class GameObject : PhysicsObject
     {
-        //Note: This class doesn't do anything important at this time due to the use of my physics instead of Farseer Phyisics.
-        //      The reason it still exists is so that if we decide we want all game objects to do something that isn't physics
-        //      related, we can without putting it in the physics classes.
+        /// <summary>
+        /// Making this true tells the engine to unload the object.
+        /// </summary>
+        public bool Unload { get; set; }
 
         /// <summary>
         /// A simple constructor that handles all of the physics object parameters.
@@ -25,6 +26,7 @@ namespace AstralOutbreak
         /// <param name="mobile">Can it move?</param>
         public GameObject(Vector2 pos, float width, float height, bool mobile = false) : base(new Vector(pos.X, pos.Y), width, height, mobile)
         {
+            Unload = false;
         }
 
         
