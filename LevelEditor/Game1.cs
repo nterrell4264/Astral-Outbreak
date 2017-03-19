@@ -12,6 +12,11 @@ namespace LevelEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private LevelInterface level;
+        private bool unClicked;
+        private KeyboardState kbLast;
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +32,14 @@ namespace LevelEditor
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            level = new LevelInterface(new AstralOutbreak.Map(1000, 1000));
+            unClicked = true;
+            kbLast = Keyboard.GetState();
+            for (int i = 0;  i < 100; i++)
+            {
+                if(i % 2 == 0)
+                    level.MapData[i, 0] = AstralOutbreak.MapItem.Wall;
+            }
             base.Initialize();
         }
 
@@ -39,6 +51,13 @@ namespace LevelEditor
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            LevelInterface.DemonTexture = Content.Load<Texture2D>("rect");
+            LevelInterface.SlugTexture = Content.Load<Texture2D>("rect");
+            LevelInterface.WallTexture = Content.Load<Texture2D>("rect");
+            LevelInterface.PlayerStartTexture = Content.Load<Texture2D>("rect");
+            LevelInterface.RoundTexture = Content.Load<Texture2D>("rounded");
+            LevelInterface.GridTexture = Content.Load<Texture2D>("grid");
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -62,9 +81,63 @@ namespace LevelEditor
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            
+
+            HandleInput();
 
             base.Update(gameTime);
+        }
+
+        public void HandleInput()
+        {
+            //Mouse
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                if (unClicked)
+                {
+                    level.Click(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / 8 - 2, GraphicsDevice.Viewport.Height / 8 - 2);
+                }
+                else
+                {
+                    unClicked = true;
+                }
+            }
+
+            //Keyboard
+            KeyboardState kb = Keyboard.GetState();
+            if(kb.IsKeyDown(Keys.D) && (kbLast.IsKeyUp(Keys.D) || kb.IsKeyDown(Keys.LeftShift)))
+            {
+                if(level.MapX < level.MapData.Width)
+                    level.MapX++;
+            }
+            if (kb.IsKeyDown(Keys.A) && (kbLast.IsKeyUp(Keys.A) || kb.IsKeyDown(Keys.LeftShift)))
+            {
+                if (level.MapX > 0)
+                    level.MapX--;
+            }
+            if (kb.IsKeyDown(Keys.S) && (kbLast.IsKeyUp(Keys.S) || kb.IsKeyDown(Keys.LeftShift)))
+            {
+                if (level.MapY < level.MapData.Height)
+                    level.MapY++;
+            }
+            if (kb.IsKeyDown(Keys.W) && (kbLast.IsKeyUp(Keys.W) || kb.IsKeyDown(Keys.LeftShift)))
+            {
+                if (level.MapY > 0)
+                    level.MapY--;
+            }
+
+            if (kb.IsKeyDown(Keys.D1))
+                level.CursorItem = CursorMode.Erase;
+            if (kb.IsKeyDown(Keys.D2))
+                level.CursorItem = CursorMode.Wall;
+            if (kb.IsKeyDown(Keys.D3))
+                level.CursorItem = CursorMode.Demon;
+            if (kb.IsKeyDown(Keys.D4))
+                level.CursorItem = CursorMode.Slug;
+            if (kb.IsKeyDown(Keys.D5))
+                level.CursorItem = CursorMode.Player;
+
+            kbLast = kb;
         }
 
         /// <summary>
@@ -74,10 +147,10 @@ namespace LevelEditor
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            level.Draw(spriteBatch, Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width/8 - 2, GraphicsDevice.Viewport.Height / 8 - 2);
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }

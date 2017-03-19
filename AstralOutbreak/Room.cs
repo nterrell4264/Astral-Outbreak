@@ -18,6 +18,8 @@ namespace AstralOutbreak
         //Map information
         public Map MapData { get; set; }
 
+        //Changing the list lock
+        private Object listLock = new Object();
 
         //Bounds of the camera
         public float CameraX { get; set; }
@@ -25,7 +27,7 @@ namespace AstralOutbreak
         public float Width { get; set; }
         public float Height { get; set; }
 
-        //Buffer width
+        //Buffer width around the screen
         private const float BUFFER = 32;
 
         /// <summary>
@@ -57,25 +59,48 @@ namespace AstralOutbreak
                     //And make sure it isn't dead
                     if (obj.IsDead)
                     {
+                        obj.Unload = true;
+                    }
+                }
+                lock (listLock)
+                {
+                    if(PhysicsObjects[i] is GameObject && (PhysicsObjects[i] as GameObject).Unload)
+                    {
                         PhysicsObjects.RemoveAt(i);
                         i--;
                     }
                 }
-                if(PhysicsObjects[i] is GameObject && (PhysicsObjects[i] as GameObject).Unload)
-                {
-                    PhysicsObjects.RemoveAt(i);
-                    i--;
-                }
+                
             }
             //Update Physics
             Update(deltaTime);
         }
 
+        /// <summary>
+        /// Tracks an object with the camera and loads new stuffs
+        /// </summary>
+        /// <param name="target"></param>
         public void CameraTrack(GameObject target)
         {
             float newX = target.Position.X - Width / 2;
             float newY = target.Position.Y - Height / 2;
+            if (newX < 0)
+                newX = 0;
+            if (newX + Width > MapData.Width * MapData.Scale)
+                newX = MapData.Width * MapData.Scale - Width;
+            if (newY < 0)
+                newY = 0;
+            if (newY + Height > MapData.Height * MapData.Scale)
+                newY = MapData.Height * MapData.Scale - Height;
 
+            List<GameObject> newData = MapData.Load(newX, newY, Width, Height, BUFFER);
+            lock (listLock)
+            {
+                for(int i = 0; i < newData.Count; i++)
+                {
+                    PhysicsObjects.Add(newData[i]);
+                }
+            }
         }
 
 

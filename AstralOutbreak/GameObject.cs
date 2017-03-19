@@ -12,10 +12,28 @@ namespace AstralOutbreak
     /// </summary>
     public abstract class GameObject : PhysicsObject
     {
+
+        // IMPORTANT: OriginX and OriginY are map coordinates NOT Room coordinates
+        // These are used to prevent enemies from spawning repeatidly if they move from their original position.
+        public int OriginX { get; set; }
+        public int OriginY { get; set; }
+
         /// <summary>
         /// Making this true tells the engine to unload the object.
         /// </summary>
-        public bool Unload { get; set; }
+        private bool unload;
+
+        public bool Unload
+        {
+            get { return unload; }
+            set
+            {
+                unload = value;
+                if(OriginX > 0 || OriginY > 0)
+                    RoomManager.MapData.Loaded[OriginX, OriginY] = false;
+            }
+        }
+
 
         /// <summary>
         /// A simple constructor that handles all of the physics object parameters.
@@ -27,6 +45,8 @@ namespace AstralOutbreak
         public GameObject(Vector2 pos, float width, float height, bool mobile = false) : base(new Vector(pos.X, pos.Y), width, height, mobile)
         {
             Unload = false;
+            OriginX = -1;
+            OriginY = -1;
         }
 
         

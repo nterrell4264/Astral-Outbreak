@@ -42,7 +42,12 @@ namespace AstralOutbreak
         /// </summary>
         public bool Resizable { get; set; }
 
-
+        /// <summary>
+        /// Gets the mapitem at a given coordinate
+        /// </summary>
+        /// <param name="index1">x coordinate</param>
+        /// <param name="index2">y coordinate</param>
+        /// <returns></returns>
         public MapItem this[int index1, int index2]
         {
             get
@@ -61,7 +66,6 @@ namespace AstralOutbreak
                     Resize(index1 + 1, index2 + 1);
                     MapData[index1, index2] = value;
                 }
-
             }
         }
 
@@ -90,6 +94,10 @@ namespace AstralOutbreak
             Loaded = new bool[width, height];
             Width = width;
             Height = height;
+            Resizable = false;
+            PlayerStartX = 0;
+            PlayerStartY = 0;
+
             for (int i = 0; i < Width; i++)
                 for (int j = 0; j < Height; j++)
                 {
@@ -144,6 +152,7 @@ namespace AstralOutbreak
         {
             if (Loaded[x, y])
                 return null;
+            Loaded[x, y] = true;
             switch (MapData[x,y])
             {
                 case MapItem.None:
@@ -162,23 +171,86 @@ namespace AstralOutbreak
             return null;
         }
 
-        public GameObject[] Load(float oldX, float oldY, float newX, float newY, float width, float height, float buffer)
+        /// <summary>
+        /// Returns all of the items that need to be loaded in the buffer area the screen
+        /// </summary>
+        /// <param name="newX">New x for the screen</param>
+        /// <param name="newY">New y for the screen</param>
+        /// <param name="width">Width of the screen</param>
+        /// <param name="height">Height of the screen</param>
+        /// <param name="buffer">Space around the edge of the screen that is to be loaded</param>
+        /// <returns>A list that contains some null values and some gameobjects</returns>
+        public List<GameObject> Load(float newX, float newY, float width, float height, float buffer)
         {
-            int x1 = (int) (oldX / Scale);
-            int x2 = (int) (newX / Scale);
-            int y1 = (int) (oldY / Scale);
-            int y2 = (int) (newY / Scale);
-            int w  = (int) (width / Scale);
-            int h  = (int) (height / Scale);
-            int b  = (int) (buffer / Scale);
-            //int 
+            //Convert to ints in the right scale.
+            int nX = (int) ((newX - buffer) / Scale);
+            int nY = (int) ((newY - buffer) / Scale);
+            int w  = (int) ((width + buffer) / Scale);
+            int h  = (int) ((height + buffer) / Scale);
 
-            //if ()
-            //for (int i = x1, )
+            //Create a list
+            List<GameObject> list = new List<GameObject>(w + h);
+            //Fill the list
+            for (int i = nX; i < w + nX; i++)
+            {
+                for(int j = nY; j < height + nY; j++)
+                {
+                    //for each bit check if it should be loaded (This has to do with not loading enemies on the screen, only in the buffer area)
+                    if ((this[i,j] == MapItem.Wall || this[i,j] == MapItem.None) || ((i*Scale < newX) || (i*Scale > newX + width) || (j * Scale < newY) || (j * Scale > newY + height)))
+                    {
+                        //Get the object
+                        var obj = Get(i, j);
+                        if (obj != null)
+                        {
+                            //Add it to the list
+                            obj.OriginX = i;
+                            obj.OriginY = j;
+                            list.Add(obj);
+                        }
+                    }
+                }
+            }
+            
+            return list;
+        }
+        
+        /// <summary>
+        /// Returns all of the items that need to be loaded onto the screen
+        /// </summary>
+        /// <param name="newX">New x for the screen</param>
+        /// <param name="newY">New y for the screen</param>
+        /// <param name="width">Width of the screen</param>
+        /// <param name="height">Height of the screen</param>
+        /// <param name="buffer">Space around the edge of the screen that is to be loaded</param>
+        /// <returns>A list that contains some null values and some gameobjects</returns>
+        public List<GameObject> LoadHard(float newX, float newY, float width, float height, float buffer)
+        {
+            //Convert to ints in the right scale.
+            int nX = (int)((newX - buffer) / Scale);
+            int nY = (int)((newY - buffer) / Scale);
+            int w = (int)((width + buffer) / Scale);
+            int h = (int)((height + buffer) / Scale);
 
+            //Create a list
+            List<GameObject> list = new List<GameObject>(w + h);
+            //Fill the list
+            for (int i = nX; i < w + nX; i++)
+            {
+                for (int j = nY; j < height + nY; j++)
+                {
+                    //Get the object
+                    var obj = Get(i, j);
+                    if (obj != null)
+                    {
+                        //If it isn't null, add it to the list
+                        obj.OriginX = i;
+                        obj.OriginY = j;
+                        list.Add(obj);
+                    }
+                }
+            }
 
-
-            return null;
+            return list;
         }
 
     }
