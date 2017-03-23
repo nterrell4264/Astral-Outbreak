@@ -10,11 +10,16 @@ namespace AstralOutbreak
 {
     public class SoundManager
     {
+        //Song objects will play consistently behind the sound effects. If soundmanager is loaded when the current room is it's possible the song will start over every time a room is entered
         private Song song;
+        //Sound effects will play once each time they're passed into the sound manager, so each clip must be loaded when the game is loaded
         private SoundEffect effect;
+        //Creating a soundeffectinstance allows us to do more advanced changes to the properties of a soundeffect. Soundeffects that are passed in change to this automatically
         private SoundEffectInstance effectInstance;
 
         private static Random rand = new Random();
+
+        //We can use these properties for testing, not sure if they're neccessary yet
 
         public Song Song
         {
@@ -60,6 +65,7 @@ namespace AstralOutbreak
         private SoundManager(SoundEffect effect = null, float volume = 0.0f, float pan = 0.0f, float pitch = 0.0f, Song song = null)
         {
             this.effect = effect;
+            //Converts from soundeffect to soundeffectinstance
             effectInstance = effect.CreateInstance();
             effectInstance.Volume = volume;
             effectInstance.Pan = pan;
@@ -86,6 +92,7 @@ namespace AstralOutbreak
         public void RandomizePitch()
         {
             float temp = (float)rand.NextDouble();
+            //Makes sure the random pitch stays within -.5 and .5
             if (temp < 0.5f)
                 effectInstance.Pitch = temp;
             else
@@ -93,7 +100,7 @@ namespace AstralOutbreak
         }
 
         /// <summary>
-        /// Uses a MediaPlayer to start the current song
+        /// Uses a MediaPlayer to start the current song, use whenever the song is changed
         /// </summary>
         /// <param name="songVolume">Desired volume of the song between 0.0f and 1.0f (serparate from the volume of the current sound effect)</param>
         public void PlaySong(float songVolume)
@@ -119,6 +126,7 @@ namespace AstralOutbreak
         {
             if (song != null)
             {
+                //Ensures the resulting volume will be between 0 and 1
                 if (MediaPlayer.Volume + volumeChange <= 1.0f && MediaPlayer.Volume + volumeChange >= 0.0f)
                 {
                     MediaPlayer.Volume += volumeChange;
