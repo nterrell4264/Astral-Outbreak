@@ -12,10 +12,8 @@ namespace AstralOutbreak
     {
         //Song objects will play consistently behind the sound effects. If soundmanager is loaded when the current room is it's possible the song will start over every time a room is entered
         private Song song;
-        //Sound effects will play once each time they're passed into the sound manager, so each clip must be loaded when the game is loaded
-        private SoundEffect effect;
-        //Creating a soundeffectinstance allows us to do more advanced changes to the properties of a soundeffect. Soundeffects that are passed in change to this automatically
-        private SoundEffectInstance effectInstance;
+        //Creating a dictionary to store SoundEffectInstances with string names as keys
+        private Dictionary<String, SoundEffectInstance> effects;
 
         private static Random rand = new Random();
 
@@ -27,76 +25,41 @@ namespace AstralOutbreak
             set { song = value; }
         }
 
-        public SoundEffect Effect
-        {
-            get { return effect; }
-            set { effect = value; }
-        }
-
-        //In order to have any control over a SoundEffect object while it's playing, we must convert it to a SoundEffectInstance
-        //This makes our properties seem a little strange, but I promise it's better this way
-
-        public float Volume
-        {
-            get { return effectInstance.Volume; }
-            set { effectInstance.Volume = value; }
-        }
-
-        public float Pitch
-        {
-            get { return effectInstance.Pitch; }
-            set { effectInstance.Pitch = value; }
-        }
-
-        public float Pan
-        {
-            get { return effectInstance.Pan; }
-            set { effectInstance.Pan = value; }
-        }
-
         /// <summary>
         /// Need help optimising this as a singleton
         /// </summary>
-        /// <param name="effect"></param>
-        /// <param name="volume"></param>
-        /// <param name="pan"></param>
-        /// <param name="pitch"></param>
         /// <param name="song"></param>
-        private SoundManager(SoundEffect effect = null, float volume = 0.0f, float pan = 0.0f, float pitch = 0.0f, Song song = null)
+        private SoundManager(Song song = null)
         {
-            this.effect = effect;
-            //Converts from soundeffect to soundeffectinstance
-            effectInstance = effect.CreateInstance();
-            effectInstance.Volume = volume;
-            effectInstance.Pan = pan;
-            effectInstance.Pitch = pitch;
             this.song = song;
         }
 
         /// <summary>
         /// Calculates the ratio of the distance between an object and the player to the distance between the closest wall and the player
         /// </summary>
+        /// <param name="name">Name of the sound effect to change the pan and volume of</param>
         /// <param name="player">Instance of the player</param>
         /// <param name="source">Entity object that acts as the source of the given sound effect</param>
         /// <param name="maxRange">Max distance the player can hear, should be about the radius of the room</param>
-        public void CalculatePanAndVolume(Player player, Entity source, float maxRange)
+        public void CalculatePanAndVolume(string name, Player player, Entity source, float maxRange)
         {
             Vector distance = new Vector(source.Position.X - player.Position.X, source.Position.Y - player.Position.Y);
-            effectInstance.Pan = (float)(Math.Cos(distance.GetAngle()) / 2);
-            effectInstance.Volume = (maxRange - distance.Magnitude()) / maxRange;
+            effects[name].Pan = (float)(Math.Cos(distance.GetAngle()) / 2);
+            effects[name].Volume = (maxRange - distance.Magnitude()) / maxRange;
         }
 
         /// <summary>
         /// Generates a random change in pitch for the current sound effect between a half octave down and a half octave up
         /// </summary>
-        public void RandomizePitch()
+        /// <param name="name">Name of the sound effect to change the pitch of</param>
+        public void RandomizePitch(string name)
         {
             float temp = (float)rand.NextDouble();
             //Makes sure the random pitch stays within -.5 and .5
             if (temp < 0.5f)
-                effectInstance.Pitch = temp;
+                effects[name].Pitch = temp;
             else
-                effectInstance.Pitch = temp - 1f;
+                effects[name].Pitch = temp - 1f;
         }
 
         /// <summary>
@@ -146,21 +109,31 @@ namespace AstralOutbreak
         }
 
         /// <summary>
-        /// Stops the current effect (up for change) then calculates the proper values for the given effect before playing the effect
+        /// Adds the desired sound effect to the dictionary of effects with the name as the key
         /// </summary>
-        /// <param name="effect">SoundEffect object to be played</param>
-        /// <param name="player">Instance of the player</param>
-        /// <param name="source">Entity that the effect originates from</param>
-        /// <param name="maxRange">Maximum range that the player can hear</param>
-        public void SetAndPlayEffect(SoundEffect effect, Player player, Entity source, float maxRange)
+        /// <param name="name">Name to denote the sound effect as the key</param>
+        /// <param name="effect">Sound effect to be added and converted to a sound effect instance</param>
+        public void AddEffect(string name, SoundEffect effect)
         {
-            if (effectInstance.State == SoundState.Playing)
-                effectInstance.Stop();
-            this.effect = effect;
-            effectInstance = effect.CreateInstance();
-            CalculatePanAndVolume(player, source, maxRange);
-            RandomizePitch();
-            effectInstance.Play();
+            //Checks if name is unused and effect exists
+            if(!effects.ContainsKey(name) && effect != null)
+            {
+                //Converts the sound effect to a sound effect instance before adding to give us more control over the effect
+                effects.Add(name, effect.CreateInstance());
+            }
+        }
+
+        /// <summary>
+        /// Plays a sound effect with its current pan, pitch, and volume
+        /// </summary>
+        /// <param name="name">Name of the sound effect in the dictionary</param>
+        public void PlayEffect(string name)
+        {
+            //Checks if the key exists
+            if (effects.ContainsKey(name))
+            {
+                effects[name].Play(); 
+            }
         }
     }
 }
