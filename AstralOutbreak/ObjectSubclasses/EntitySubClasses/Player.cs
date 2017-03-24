@@ -15,7 +15,16 @@ namespace AstralOutbreak
     /// </summary>
     public class Player : Entity
     {
-        public PlayerState CurrentPlayerState { get; set; }
+        public PlayerState CurrentPlayerState
+        {
+            get { return CurrentPlayerState; }
+            set
+            {
+                CurrentPlayerState = value;
+                CurrentActionTime = 0;
+            }
+        
+        }
         public Player(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             Gravity = true;
