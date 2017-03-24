@@ -33,7 +33,7 @@ namespace LevelEditor
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            level = new LevelInterface("LevelMap");
+            level = new LevelInterface("LevelMap.dat");
             unClicked = true;
             kbLast = Keyboard.GetState();
             base.Initialize();
@@ -145,7 +145,7 @@ namespace LevelEditor
                 level.CursorItem = CursorMode.Player;
 
             if (kb.IsKeyDown(Keys.Enter) && kbLast.IsKeyUp(Keys.Enter))
-                level.Save("LevelMap");
+                level.Save("LevelMap.dat");
 
             kbLast = kb;
         }
