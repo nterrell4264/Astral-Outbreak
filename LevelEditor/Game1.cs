@@ -16,6 +16,7 @@ namespace LevelEditor
         private bool unClicked;
         private KeyboardState kbLast;
 
+        private int lastScroll;
 
         public Game1()
         {
@@ -32,14 +33,9 @@ namespace LevelEditor
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            level = new LevelInterface(new AstralOutbreak.Map(1000, 1000));
+            level = new LevelInterface("LevelMap");
             unClicked = true;
             kbLast = Keyboard.GetState();
-            for (int i = 0;  i < 100; i++)
-            {
-                if(i % 2 == 0)
-                    level.MapData[i, 0] = AstralOutbreak.MapItem.Wall;
-            }
             base.Initialize();
         }
 
@@ -95,13 +91,24 @@ namespace LevelEditor
             {
                 if (unClicked)
                 {
-                    level.Click(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / 8 - 2, GraphicsDevice.Viewport.Height / 8 - 2);
+                    level.Click(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / level.Scale - 2, GraphicsDevice.Viewport.Height / level.Scale - 2);
                 }
                 else
                 {
                     unClicked = true;
                 }
             }
+
+            if(Mouse.GetState().ScrollWheelValue - lastScroll > 0 && level.Scale < 32)
+            {
+                level.Scale++;
+            }
+            else if(Mouse.GetState().ScrollWheelValue - lastScroll < 0 && level.Scale > 1)
+            {
+                level.Scale--;
+            }
+
+            lastScroll = Mouse.GetState().ScrollWheelValue;
 
             //Keyboard
             KeyboardState kb = Keyboard.GetState();
@@ -137,6 +144,9 @@ namespace LevelEditor
             if (kb.IsKeyDown(Keys.D5))
                 level.CursorItem = CursorMode.Player;
 
+            if (kb.IsKeyDown(Keys.Enter) && kbLast.IsKeyUp(Keys.Enter))
+                level.Save("LevelMap");
+
             kbLast = kb;
         }
 
@@ -148,7 +158,7 @@ namespace LevelEditor
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            level.Draw(spriteBatch, Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width/8 - 2, GraphicsDevice.Viewport.Height / 8 - 2);
+            level.Draw(spriteBatch, Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / level.Scale - 2, GraphicsDevice.Viewport.Height / level.Scale - 2);
             base.Draw(gameTime);
             spriteBatch.End();
         }
