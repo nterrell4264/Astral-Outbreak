@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AstralOutbreak;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace LevelEditor
 {
@@ -26,6 +28,9 @@ namespace LevelEditor
         //Map Position
         public int MapX { get; set; }
         public int MapY { get; set; }
+
+        //Zoom
+        public int Scale { get; set; }
 
         //Gridlines
         public bool Gridlines { get; set; }
@@ -50,6 +55,48 @@ namespace LevelEditor
             MapX = 0;
             MapY = 0;
             Gridlines = true;
+            Scale = 8;
+        }
+        /// <summary>
+        /// Constructor that reads in a map from file
+        /// </summary>
+        /// <param name="fileName"></param>
+        public LevelInterface(String fileName)
+        {
+            if (File.Exists(fileName))
+                try
+                {
+                    using (StreamReader input = new StreamReader(File.OpenRead(fileName)))
+                    {
+                        MapData = (JsonConvert.DeserializeObject<Map>(input.ReadToEnd()));
+                    }
+                }
+                catch
+                {
+                    MapData = new Map(100, 100);
+                }
+            else
+                MapData = new Map(100, 100);
+            CursorItem = CursorMode.Erase;
+            MapX = 0;
+            MapY = 0;
+            Gridlines = true;
+            Scale = 8;
+        }
+
+        public void Save(String fileName)
+        {
+            try
+            {
+                using (StreamWriter output = new StreamWriter(File.OpenWrite(fileName)))
+                {
+                    output.WriteLine(JsonConvert.SerializeObject(MapData));
+                }
+            }
+            catch
+            {
+                
+            }
         }
 
         /// <summary>
@@ -62,11 +109,11 @@ namespace LevelEditor
         public void Click(int x, int y, int width, int height)
         {
             //Scale x to map coord
-            x /= 8;
+            x /= Scale;
             //Account for the border
             x--;
             //Scale y to map coord
-            y /= 8;
+            y /= Scale;
             //Account for the border
             y--;
             //Ensure that the mouse is on the screen
@@ -136,13 +183,13 @@ namespace LevelEditor
 
                     }
                     //Line that draws the tiles
-                    sb.Draw(text, new Rectangle(8 + (8 * (i - MapX)), 8 + (8 * (j - MapY)), 8, 8), col);
+                    sb.Draw(text, new Rectangle(Scale + (Scale * (i - MapX)), Scale + (Scale * (j - MapY)), Scale, Scale), col);
 
                 }
             }
             //Player Start
             if(MapX <= MapData.PlayerStartX && MapX + width > MapData.PlayerStartX && MapY <= MapData.PlayerStartY && MapY + height > MapData.PlayerStartY)
-                sb.Draw(PlayerStartTexture, new Rectangle(8 + (8 * (MapData.PlayerStartX - MapX)), 8 + (8 * (MapData.PlayerStartY - MapY)), 8, 8), new Color(Color.Green, .125f));
+                sb.Draw(PlayerStartTexture, new Rectangle(Scale + (Scale * (MapData.PlayerStartX - MapX)), Scale + (Scale * (MapData.PlayerStartY - MapY)), Scale, Scale), new Color(Color.Green, .125f));
 
             //Gridlines
             if(Gridlines)
@@ -150,7 +197,7 @@ namespace LevelEditor
                 {
                     for(int j = 0; j < height; j++)
                     {
-                        sb.Draw(GridTexture, new Rectangle(8 + (8 * (i)), 8 + (8 * (j)), 8, 8), Color.Brown);
+                        sb.Draw(GridTexture, new Rectangle(Scale + (Scale * (i)), Scale + (Scale * (j)), Scale, Scale), Color.Brown);
                     }
                 }
 

@@ -19,8 +19,8 @@ namespace AstralOutbreak
         /// All of the data relevant to the map.
         /// </summary>
         public MapItem[,] MapData { get; set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         //Starting position of the player
         public int PlayerStartX { get; set; }

@@ -16,7 +16,7 @@ namespace AstralOutbreak
         //Song objects will play consistently behind the sound effects. If soundmanager is loaded when the current room is it's possible the song will start over every time a room is entered
         private Song song;
         //Creating a dictionary to store SoundEffectInstances with string names as keys
-        private Dictionary<String, SoundEffectInstance> effects;
+        private Dictionary<String, SoundEffectInstance> effects = new Dictionary<string, SoundEffectInstance>();
 
         private static Random rand = new Random();
 
