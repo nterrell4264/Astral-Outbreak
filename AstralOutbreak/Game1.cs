@@ -89,7 +89,7 @@ namespace AstralOutbreak
             Inputs.Update();
             if (CurrentState == GameState.Playing) //Game time updating
             {
-                RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
+                RoomManager.Active.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
             menuManager.Update();
             // TODO: Add your update logic here
@@ -109,17 +109,17 @@ namespace AstralOutbreak
             // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
             if(CurrentState == GameState.Playing)
             {
-                for (int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
+                for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
                 {
-                    if (RoomManager.Data.Current.PhysicsObjects[i] is Player)
+                    if (RoomManager.Active.PhysicsObjects[i] is Player)
                         spriteBatch.Draw(testTexture,
-                        new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
-                        (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
+                        new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X, (int)RoomManager.Active.PhysicsObjects[i].Position.Y,
+                        (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
                         Color.Blue);
                     else
                         spriteBatch.Draw(testTexture,
-                            new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
-                            (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
+                            new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X, (int)RoomManager.Active.PhysicsObjects[i].Position.Y,
+                            (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
                             Color.Black);
                 }
             }
