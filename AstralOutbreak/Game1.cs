@@ -89,23 +89,7 @@ namespace AstralOutbreak
             Inputs.Update();
             if (CurrentState == GameState.Playing) //Game time updating
             {
-                case GameState.MainMenu:
-                    break;
-                case GameState.OptionsMenu:
-                    break;
-                case GameState.PauseMenu:
-                    break;
-                case GameState.LoadMenu:
-                    break;
-                case GameState.SaveMenu:
-                    break;
-                case GameState.Playing:
-                    RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
-                    break;
-                case GameState.GameOverMenu:
-                    break;
-                default:
-                    break;
+                RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
             menuManager.Update();
             // TODO: Add your update logic here
@@ -138,36 +122,6 @@ namespace AstralOutbreak
                             (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
                             Color.Black);
                 }
-            }
-                case GameState.MainMenu:
-                    break;
-                case GameState.OptionsMenu:
-                    break;
-                case GameState.PauseMenu:
-                    break;
-                case GameState.LoadMenu:
-                    break;
-                case GameState.SaveMenu:
-                    break;
-                case GameState.Playing:
-                    for (int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
-                    {
-                        if(RoomManager.Data.Current.PhysicsObjects[i] is Player)
-                            spriteBatch.Draw(testTexture,
-                            new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
-                            (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
-                            Color.Blue);
-                        else
-                            spriteBatch.Draw(testTexture, 
-                                new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
-                                (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height), 
-                                Color.Black);
-                    }
-                    break;
-                case GameState.GameOverMenu:
-                    break;
-                default:
-                    break;
             }
 
             spriteBatch.End();
