@@ -13,6 +13,8 @@ namespace AstralOutbreak
         public float CurrentActionTime { get; set; }
         //Bool that denotes death
         public bool IsDead { get; set; }
+        //Bool that denotes direction faced
+        public bool FaceRight { get; set; }
         //Float that signifies the entities current health
         private float health;
         public float Health
