@@ -123,7 +123,8 @@ namespace AstralOutbreak
                             Color.Black);
                 }
             }
-
+            foreach (MenuContent menuPart in menuManager.items)
+                spriteBatch.Draw(testTexture, new Rectangle(menuPart.Location, new Point(testTexture.Width, testTexture.Height)), Color.Red);
             spriteBatch.End();
 
             base.Draw(gameTime);
