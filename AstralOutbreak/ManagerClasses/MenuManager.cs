@@ -53,11 +53,14 @@ namespace AstralOutbreak
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="type">The desired GameState</param>
         public void Update()
         {
-            if (prevState == Game1.CurrentState) return; //Prevents loading the same menu more than once in a row.
-            else
+            if(prevState == Game1.CurrentState) //Won't check buttons if something else has changed the GameState already.
+                foreach (MenuContent button in items)
+                {
+                    if (button is MenuButton) (button as MenuButton).CheckClicked();
+                }
+            if (!(prevState == Game1.CurrentState)) //Menu only updates on state change.
             {
                 items.Clear();
                 switch (Game1.CurrentState)
@@ -98,10 +101,6 @@ namespace AstralOutbreak
                             break;
                         }
                 }
-            }
-            foreach (MenuContent button in items)
-            {
-                if (button is MenuButton) (button as MenuButton).CheckClicked();
             }
             prevState = Game1.CurrentState;
         }
