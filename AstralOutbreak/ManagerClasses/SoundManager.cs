@@ -50,6 +50,11 @@ namespace AstralOutbreak
             this.song = song;
         }
 
+        public void LoadContent()
+        {
+            //Will load all the sound effects and add them to the dictionary, possibly prints all the keys in the dictionary for debugging
+        }
+
         /// <summary>
         /// Calculates the ratio of the distance between an object and the player to the distance between the closest wall and the player
         /// </summary>
