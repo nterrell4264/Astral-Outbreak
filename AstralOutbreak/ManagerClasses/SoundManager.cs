@@ -10,12 +10,28 @@ namespace AstralOutbreak
 {
     public class SoundManager
     {
+        //Creates an instance if SoundManager
+        private static SoundManager instance;
+
         //Song objects will play consistently behind the sound effects. If soundmanager is loaded when the current room is it's possible the song will start over every time a room is entered
         private Song song;
         //Creating a dictionary to store SoundEffectInstances with string names as keys
         private Dictionary<String, SoundEffectInstance> effects;
 
         private static Random rand = new Random();
+
+        /// <summary>
+        /// Returns instance, or creates a new one if it's null
+        /// </summary>
+        public static SoundManager Instance
+        {
+            get {
+                if(instance == null)
+                {
+                    instance = new SoundManager();
+                }
+                return instance; }
+        }
 
         //We can use these properties for testing, not sure if they're neccessary yet
 
@@ -26,9 +42,9 @@ namespace AstralOutbreak
         }
 
         /// <summary>
-        /// Need help optimising this as a singleton
+        /// Essentially a blank contructor
         /// </summary>
-        /// <param name="song"></param>
+        /// <param name="song">Song to set as the current song</param>
         private SoundManager(Song song = null)
         {
             this.song = song;
