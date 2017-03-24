@@ -48,7 +48,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="ManagerClasses\InputManager.cs" />
     <Compile Include="ObjectSubclasses\Item.cs" />
-    <Compile Include="MenuStuff\Menu.cs" />
+    <Compile Include="ManagerClasses\MenuManager.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Player.cs" />
     <Compile Include="Physics\PhysicsObject.cs" />
     <Compile Include="Physics\Vector.cs" />

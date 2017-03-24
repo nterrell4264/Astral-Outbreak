@@ -24,6 +24,7 @@ namespace AstralOutbreak
         public static InputManager Inputs { get; set; }
         SoundManager soundManager;
         SpriteManager spriteManager;
+        MenuManager menuManager;
         //Current game state
         public static GameState CurrentState { get; set; }
 
@@ -61,6 +62,8 @@ namespace AstralOutbreak
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             testTexture = Content.Load<Texture2D>("rect");
+            CurrentState = GameState.MainMenu;
+            menuManager = new MenuManager();
             // TODO: use this.Content to load your game content here
         }
 
@@ -82,8 +85,9 @@ namespace AstralOutbreak
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if (CurrentState == GameState.Playing && Inputs.PauseButtonState == ButtonStatus.Pressed) CurrentState = GameState.PauseMenu;
             Inputs.Update();
-            switch (CurrentState)
+            if (CurrentState == GameState.Playing) //Game time updating
             {
                 case GameState.MainMenu:
                     break;
@@ -96,13 +100,14 @@ namespace AstralOutbreak
                 case GameState.SaveMenu:
                     break;
                 case GameState.Playing:
-                    RoomManager.Active.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
+                    RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.GameOverMenu:
                     break;
                 default:
                     break;
             }
+            menuManager.Update();
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -118,8 +123,22 @@ namespace AstralOutbreak
 
             spriteBatch.Begin();
             // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
-            switch (CurrentState)
+            if(CurrentState == GameState.Playing)
             {
+                for (int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
+                {
+                    if (RoomManager.Data.Current.PhysicsObjects[i] is Player)
+                        spriteBatch.Draw(testTexture,
+                        new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
+                        (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
+                        Color.Blue);
+                    else
+                        spriteBatch.Draw(testTexture,
+                            new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
+                            (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
+                            Color.Black);
+                }
+            }
                 case GameState.MainMenu:
                     break;
                 case GameState.OptionsMenu:
@@ -131,17 +150,17 @@ namespace AstralOutbreak
                 case GameState.SaveMenu:
                     break;
                 case GameState.Playing:
-                    for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
+                    for (int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
                     {
-                        if(RoomManager.Active.PhysicsObjects[i] is Player)
+                        if(RoomManager.Data.Current.PhysicsObjects[i] is Player)
                             spriteBatch.Draw(testTexture,
-                            new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X, (int)RoomManager.Active.PhysicsObjects[i].Position.Y,
-                            (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                            new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
+                            (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
                             Color.Blue);
                         else
                             spriteBatch.Draw(testTexture, 
-                                new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X, (int)RoomManager.Active.PhysicsObjects[i].Position.Y,
-                                (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height), 
+                                new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
+                                (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height), 
                                 Color.Black);
                     }
                     break;
@@ -150,7 +169,6 @@ namespace AstralOutbreak
                 default:
                     break;
             }
-            
 
             spriteBatch.End();
 
