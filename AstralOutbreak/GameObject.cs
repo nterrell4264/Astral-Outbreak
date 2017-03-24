@@ -12,9 +12,28 @@ namespace AstralOutbreak
     /// </summary>
     public abstract class GameObject : PhysicsObject
     {
-        //Note: This class doesn't do anything important at this time due to the use of my physics instead of Farseer Phyisics.
-        //      The reason it still exists is so that if we decide we want all game objects to do something that isn't physics
-        //      related, we can without putting it in the physics classes.
+
+        // IMPORTANT: OriginX and OriginY are map coordinates NOT Room coordinates
+        // These are used to prevent enemies from spawning repeatidly if they move from their original position.
+        public int OriginX { get; set; }
+        public int OriginY { get; set; }
+
+        /// <summary>
+        /// Making this true tells the engine to unload the object.
+        /// </summary>
+        private bool unload;
+
+        public bool Unload
+        {
+            get { return unload; }
+            set
+            {
+                unload = value;
+                if(OriginX > 0 || OriginY > 0)
+                    RoomManager.MapData.Loaded[OriginX, OriginY] = false;
+            }
+        }
+
 
         /// <summary>
         /// A simple constructor that handles all of the physics object parameters.
@@ -25,6 +44,9 @@ namespace AstralOutbreak
         /// <param name="mobile">Can it move?</param>
         public GameObject(Vector2 pos, float width, float height, bool mobile = false) : base(new Vector(pos.X, pos.Y), width, height, mobile)
         {
+            Unload = false;
+            OriginX = -1;
+            OriginY = -1;
         }
 
         

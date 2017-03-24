@@ -25,8 +25,6 @@ namespace AstralOutbreak
             base.Step(deltaTime);
             Acceleration.X = 0;
             Acceleration.Y = 0;
-            //Order of Movement Reading: Rolling/Dashing -> Left Right -> Jump -> Smooth Direction Changes
-
             if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
                 Acceleration.X += -5;
@@ -36,25 +34,23 @@ namespace AstralOutbreak
                 Acceleration.X += 5;
             }
             //Temporary Jump
-            if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && VelocityY.Y == 0))
+            if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && Velocity.Y == 0))
             {
                 Acceleration.Y -= 100;
             }
             //Makes sure player stops when buttons arent pressed and can change direction easily
-            if (VelocityX.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+            if (Velocity.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
-                VelocityX.X = -30;
+                Velocity.X = -30;
             }
-            else if (VelocityX.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+            else if (Velocity.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
-                VelocityX.X = 30;
+                Velocity.X = 30;
             }
             else if (Acceleration.X == 0)
             {
-                VelocityX.X = 0;
+                Velocity.X = 0;
             }
-
-            
             
         }
     }

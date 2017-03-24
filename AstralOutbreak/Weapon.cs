@@ -88,7 +88,7 @@ namespace AstralOutbreak
         /// <returns></returns>
         public void Shoot(Vector direction)
         {
-            RoomManager.Data.Current.PhysicsObjects.Add( new Projectile(Source.Center, BulletSize, BulletSize, bulletHealth, Damage, Source));
+            RoomManager.Active.PhysicsObjects.Add( new Projectile(Source.Center, BulletSize, BulletSize, bulletHealth, Damage, Source));
         }
 
 

@@ -60,36 +60,34 @@ namespace AstralOutbreak
             {
                 //Prepare the object
                 PhysicsObject obj = PhysicsObjects[i];
-                obj.VelocityX.X += obj.Acceleration.X;
-                obj.VelocityY.Y += obj.Acceleration.Y;
+                obj.Velocity += obj.Acceleration;
                 //Enforce Gravity
                 if (obj.Gravity)
                 {
-                    obj.VelocityX.X += Gravity.X;
-                    obj.VelocityY.Y += Gravity.Y;
+                    obj.Velocity += Gravity;
                 }
                 
                 //Enforce Terminal velocity
-                if(obj.VelocityX.X > TerminalVelX)
+                if(obj.Velocity.X > TerminalVelX)
                 {
-                    obj.VelocityX.X = TerminalVelX;
+                    obj.Velocity.X = TerminalVelX;
                 }
-                else if (obj.VelocityX.X < -TerminalVelX)
+                else if (obj.Velocity.X < -TerminalVelX)
                 {
-                    obj.VelocityX.X = -TerminalVelX;
+                    obj.Velocity.X = -TerminalVelX;
                 }
-                if (obj.VelocityY.Y > TerminalVelY)
+                if (obj.Velocity.Y > TerminalVelY)
                 {
-                    obj.VelocityY.Y = TerminalVelY;
+                    obj.Velocity.Y = TerminalVelY;
                 }
-                else if (obj.VelocityY.Y < -TerminalVelY)
+                else if (obj.Velocity.Y < -TerminalVelY)
                 {
-                    obj.VelocityY.Y = -TerminalVelY;
+                    obj.Velocity.Y = -TerminalVelY;
                 }
 
 
                 //Check for collisions
-                if (obj.VelocityX.X != 0 || obj.VelocityY.Y != 0)
+                if (obj.Velocity.X != 0 || obj.Velocity.Y != 0)
                     //This object is moving, which means we need to check for collisions!
                     for (int j = 0; j < PhysicsObjects.Count; j++)
                     {
@@ -106,12 +104,12 @@ namespace AstralOutbreak
                                     if (obj.Position.X < PhysicsObjects[j].Position.X)
                                     {
                                         //Im to the left, reduce my movement
-                                        obj.VelocityX.X = (PhysicsObjects[j].Position.X - obj.Position.X - obj.Width)/time;
+                                        obj.Velocity.X = (PhysicsObjects[j].Position.X - obj.Position.X - obj.Width)/time;
                                     }
                                     else
                                     {
                                         //Im to the right, reduce my movement
-                                        obj.VelocityX.X = (PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width)/time;
+                                        obj.Velocity.X = (PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width)/time;
                                     }
                                 }
 
@@ -121,12 +119,12 @@ namespace AstralOutbreak
                                     if (obj.Position.Y < PhysicsObjects[j].Position.Y)
                                     {
                                         //Im above, reduce my movement
-                                        obj.VelocityY.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y - obj.Height)/time;
+                                        obj.Velocity.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y - obj.Height)/time;
                                     }
                                     else
                                     {
                                         //Im below, reduce my movement
-                                        obj.VelocityY.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y + PhysicsObjects[j].Height)/time;
+                                        obj.Velocity.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y + PhysicsObjects[j].Height)/time;
                                     }
                                 }
                             }          
