@@ -85,7 +85,7 @@ namespace AstralOutbreak
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            if (Inputs.PauseButtonState == ButtonStatus.Pressed) CurrentState = GameState.PauseMenu;
+            if (CurrentState == GameState.Playing && Inputs.PauseButtonState == ButtonStatus.Pressed) CurrentState = GameState.PauseMenu;
             Inputs.Update();
             if (CurrentState == GameState.Playing) //Game time updating
             {
