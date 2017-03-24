@@ -24,7 +24,7 @@ namespace AstralOutbreak
         public static InputManager Inputs { get; set; }
         SoundManager soundManager;
         SpriteManager spriteManager;
-        Menu menu;
+        MenuManager menuManager;
         //Current game state
         public static GameState CurrentState { get; set; }
 
@@ -62,7 +62,8 @@ namespace AstralOutbreak
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             testTexture = Content.Load<Texture2D>("rect");
-            menu = new Menu();
+            CurrentState = GameState.MainMenu;
+            menuManager = new MenuManager();
             // TODO: use this.Content to load your game content here
         }
 
@@ -84,28 +85,13 @@ namespace AstralOutbreak
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            if (Inputs.PauseButtonState == ButtonStatus.Pressed) CurrentState = GameState.MainMenu;
+            if (Inputs.PauseButtonState == ButtonStatus.Pressed) CurrentState = GameState.PauseMenu;
             Inputs.Update();
-            switch (CurrentState)
+            if (CurrentState == GameState.Playing) //Game time updating
             {
-                case GameState.MainMenu:
-                    break;
-                case GameState.OptionsMenu:
-                    break;
-                case GameState.PauseMenu:
-                    break;
-                case GameState.LoadMenu:
-                    break;
-                case GameState.SaveMenu:
-                    break;
-                case GameState.Playing:
-                    RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
-                    break;
-                case GameState.GameOverMenu:
-                    break;
-                default:
-                    break;
+                RoomManager.Data.Current.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
+            menuManager.Update();
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -121,42 +107,26 @@ namespace AstralOutbreak
 
             spriteBatch.Begin();
             // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
-            switch (CurrentState)
+            if(CurrentState == GameState.Playing)
             {
-                case GameState.MainMenu:
-                    foreach (MenuContent item in menu.items)
-                    {
-                        if (item is MenuButton) spriteBatch.Draw(testTexture, new Rectangle(item.Location, new Point(testTexture.Width, testTexture.Height)), Color.Red);
-                        else spriteBatch.Draw(testTexture, new Rectangle(item.Location, new Point(testTexture.Width, testTexture.Height)), Color.Black);
-                    }
-                    break;
-                case GameState.OptionsMenu:
-                    break;
-                case GameState.PauseMenu:
-                    break;
-                case GameState.LoadMenu:
-                    break;
-                case GameState.SaveMenu:
-                    break;
-                case GameState.Playing:
-                    for (int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
-                    {
-                        if (RoomManager.Data.Current.PhysicsObjects[i] is Player)
-                            spriteBatch.Draw(testTexture,
+                for (int i = 0; i < RoomManager.Data.Current.PhysicsObjects.Count; i++)
+                {
+                    if (RoomManager.Data.Current.PhysicsObjects[i] is Player)
+                        spriteBatch.Draw(testTexture,
+                        new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
+                        (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
+                        Color.Blue);
+                    else
+                        spriteBatch.Draw(testTexture,
                             new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
                             (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
-                            Color.Blue);
-                        else
-                            spriteBatch.Draw(testTexture,
-                                new Rectangle((int)RoomManager.Data.Current.PhysicsObjects[i].Position.X, (int)RoomManager.Data.Current.PhysicsObjects[i].Position.Y,
-                                (int)RoomManager.Data.Current.PhysicsObjects[i].Width, (int)RoomManager.Data.Current.PhysicsObjects[i].Height),
-                                Color.Black);
-                    }
-                    break;
-                case GameState.GameOverMenu:
-                    break;
-                default:
-                    break;
+                            Color.Black);
+                }
+            }
+            foreach (MenuContent item in menuManager.items)
+            {
+                if (item is MenuButton) spriteBatch.Draw(testTexture, new Rectangle(item.Location, new Point(testTexture.Width, testTexture.Height)), Color.Red);
+                else spriteBatch.Draw(testTexture, new Rectangle(item.Location, new Point(testTexture.Width, testTexture.Height)), Color.Black);
             }
 
 
