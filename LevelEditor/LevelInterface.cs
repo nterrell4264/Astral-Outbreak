@@ -95,7 +95,11 @@ namespace LevelEditor
             }
             catch
             {
-                
+
+            }
+            finally
+            {
+
             }
         }
 
@@ -116,6 +120,7 @@ namespace LevelEditor
             y /= Scale;
             //Account for the border
             y--;
+            //MapData.Resizable = true;
             //Ensure that the mouse is on the screen
             if(x >= 0 && x < width && y >= 0 && y < height)
                 switch (CursorItem)
