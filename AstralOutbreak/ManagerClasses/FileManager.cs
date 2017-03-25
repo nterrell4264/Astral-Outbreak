@@ -10,6 +10,12 @@ namespace AstralOutbreak
 {
     public class FileManager
     {
+        //IMPORTANT:
+        // Most the functions of this class have or will become superfluous.
+        // I will remove the unnecessary code, but there are things I want to make sure work first.
+        // -Mark
+
+
         public List<Room> roomsLoaded { get; set; }
 
         //Singleton
