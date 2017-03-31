@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
+using System;
+using System.IO;
 
 namespace AstralOutbreak
 {
@@ -47,9 +50,30 @@ namespace AstralOutbreak
             IsMouseVisible = true;
             CurrentState = GameState.Playing;
             RoomManager.Active = new Room(2000, 2000, new Vector2(0, 3f));
-            RoomManager.Active.PhysicsObjects.Add(new Wall(new Vector2(0, 64), 300, 20));
-            RoomManager.Active.PhysicsObjects.Add(new Player(new Vector2(4, 4), 20, 20, 10));
+            if (File.Exists("MapData.dat"))
+            {
+                StreamReader input = null;
+                try
+                {
+                    input = new StreamReader(File.OpenRead("MapData.dat"));
+                    RoomManager.Active.LoadRoom((JsonConvert.DeserializeObject<Map>(input.ReadToEnd())));
+                }
+                catch(Exception e)
+                {
+                    RoomManager.Active.PhysicsObjects.Add(new Wall(new Vector2(0, 100), 1000, 5));
+                    RoomManager.Active.PlayerOne = new Player(new Vector2(0, 0), 20, 20, 20);
+                    RoomManager.Active.PhysicsObjects.Add(RoomManager.Active.PlayerOne);
 
+                }
+                finally
+                {
+                    if (input != null)
+                        input.Close();
+                    RoomManager.Active.Width = GraphicsDevice.Viewport.Width;
+                    RoomManager.Active.Height = GraphicsDevice.Viewport.Height;
+
+                }
+            }
             base.Initialize();
 
         }
@@ -126,12 +150,14 @@ namespace AstralOutbreak
                 {
                     if (RoomManager.Active.PhysicsObjects[i] is Player)
                         spriteBatch.Draw(testTexture,
-                        new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X, (int)RoomManager.Active.PhysicsObjects[i].Position.Y,
+                        new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX, 
+                        (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                         (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
                         Color.Blue);
                     else
                         spriteBatch.Draw(testTexture,
-                            new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X, (int)RoomManager.Active.PhysicsObjects[i].Position.Y,
+                            new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX, 
+                            (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                             (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
                             Color.Black);
                 }

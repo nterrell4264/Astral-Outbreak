@@ -77,6 +77,7 @@ namespace LevelEditor
                 }
             else
                 MapData = new Map(100, 100);
+            MapData.Scale = 32;
             CursorItem = CursorMode.Erase;
             MapX = 0;
             MapY = 0;
@@ -169,7 +170,7 @@ namespace LevelEditor
                     {
                         case MapItem.None:
                             text = WallTexture;
-                            col = Color.MediumSeaGreen;
+                            col = Color.LightSlateGray;
                             break;
                         case MapItem.Wall:
                             text = WallTexture;

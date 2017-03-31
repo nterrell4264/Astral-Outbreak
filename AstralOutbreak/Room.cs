@@ -28,7 +28,10 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 32;
+        private const float BUFFER = 64;
+
+        //Keep track of the player
+        public Player PlayerOne { get; set; }
 
         /// <summary>
         /// A simple room with gravity
@@ -40,6 +43,7 @@ namespace AstralOutbreak
             Height = height;
             PhysicalLogic = DetermineCollision;
             Collide += HandleCollision;
+            PlayerOne = null;
         }
 
         /// <summary>
@@ -59,7 +63,11 @@ namespace AstralOutbreak
                     //And make sure it isn't dead
                     if (obj.IsDead)
                     {
-                        obj.Unload = true;
+                        lock (listLock)
+                        {
+                            PhysicsObjects.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
                 lock (listLock)
@@ -74,6 +82,8 @@ namespace AstralOutbreak
             }
             //Update Physics
             Update(deltaTime);
+            CameraTrack(PlayerOne);
+            LoadFromMap();
         }
 
         /// <summary>
@@ -82,28 +92,50 @@ namespace AstralOutbreak
         /// <param name="target"></param>
         public void CameraTrack(GameObject target)
         {
-            float newX = target.Position.X - Width / 2;
-            float newY = target.Position.Y - Height / 2;
+            if (target == null)
+                return;
+            float newX = target.Position.X - (Width / 2);
             if (newX < 0)
                 newX = 0;
-            if (newX + Width > MapData.Width * MapData.Scale)
-                newX = MapData.Width * MapData.Scale - Width;
+            float newY = target.Position.Y - (Height / 2);
             if (newY < 0)
                 newY = 0;
-            if (newY + Height > MapData.Height * MapData.Scale)
-                newY = MapData.Height * MapData.Scale - Height;
-
-            List<GameObject> newData = MapData.Load(newX, newY, Width, Height, BUFFER);
-            lock (listLock)
+            if(MapData != null)
             {
-                for(int i = 0; i < newData.Count; i++)
+                if (newX + Width > MapData.Width * MapData.Scale)
+                    newX = MapData.Width * MapData.Scale - Width;
+                if (newY + Height > MapData.Height * MapData.Scale)
+                    newY = MapData.Height * MapData.Scale - Height;
+            }
+            
+            CameraX = newX;
+            CameraY = newY;
+            
+        }
+
+        public void LoadFromMap()
+        {
+            if (MapData != null)
+            {
+                List<GameObject> newData = MapData.Load(CameraX, CameraY, Width, Height, BUFFER);
+                lock (listLock)
                 {
-                    PhysicsObjects.Add(newData[i]);
+                    for (int i = 0; i < newData.Count; i++)
+                    {
+                        PhysicsObjects.Add(newData[i]);
+                    }
                 }
             }
         }
 
-
+        public void LoadRoom(Map mapdata)
+        {
+            MapData = mapdata;
+            float scale = mapdata.Scale;
+            PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), scale, scale, 100);
+            PhysicsObjects.Add(PlayerOne);
+            CameraTrack(PlayerOne);
+        }
 
 
 
