@@ -23,7 +23,7 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(64, 64, 64, 128, () => { Game1.CurrentState = GameState.Playing; }));
+            items.Add(new MenuButton(300, 165, 150, 50, () => { Game1.CurrentState = GameState.Playing; })); //Start button
         }
         private void LoadOptions() //Loads options menu assets
         {
