@@ -30,6 +30,9 @@ namespace AstralOutbreak
         //Buffer width around the screen
         private const float BUFFER = 32;
 
+        //Keep track of the player
+        public Player PlayerOne { get; set; }
+
         /// <summary>
         /// A simple room with gravity
         /// </summary>

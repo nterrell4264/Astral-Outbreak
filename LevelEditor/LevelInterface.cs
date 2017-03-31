@@ -169,7 +169,7 @@ namespace LevelEditor
                     {
                         case MapItem.None:
                             text = WallTexture;
-                            col = Color.MediumSeaGreen;
+                            col = Color.LightSlateGray;
                             break;
                         case MapItem.Wall:
                             text = WallTexture;
