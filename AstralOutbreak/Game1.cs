@@ -15,20 +15,15 @@ namespace AstralOutbreak
     /// </summary>
     public class Game1 : Game
     {
-        //TEST
-        Texture2D testTexture;
-        Texture2D mnuStart;
-        //END TEST
-
-
-
+        //Managers
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         FileManager fileManager;
-        public static InputManager Inputs { get; set; }
         SoundManager soundManager;
         SpriteManager spriteManager;
         MenuManager menuManager;
+        public static InputManager Inputs { get; set; }
+
         //Current game state
         public static GameState CurrentState { get; set; }
 
@@ -46,9 +41,23 @@ namespace AstralOutbreak
         /// </summary>
         protected override void Initialize()
         {
-            Inputs = new InputManager();
+            if (File.Exists("config.txt"))
+                try
+                {
+                    using (StreamReader input = new StreamReader(File.OpenRead("config.txt")))
+                    {
+                        Inputs = (JsonConvert.DeserializeObject<InputManager>(input.ReadToEnd()));
+                    }
+                }
+                catch
+                {
+                    Inputs = new InputManager();
+                }
+            else
+                Inputs = new InputManager();
             IsMouseVisible = true;
             CurrentState = GameState.Playing;
+
             RoomManager.Active = new Room(2000, 2000, new Vector2(0, 3f));
             if (File.Exists("MapData.dat"))
             {
@@ -75,7 +84,6 @@ namespace AstralOutbreak
                 }
             }
             base.Initialize();
-
         }
 
         /// <summary>
@@ -86,8 +94,9 @@ namespace AstralOutbreak
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            testTexture = Content.Load<Texture2D>("rect");
-            mnuStart = Content.Load<Texture2D>("mnuStart");
+            spriteManager = SpriteManager.Instance;
+            spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuStart"));
             CurrentState = GameState.MainMenu;
             menuManager = new MenuManager();
             // TODO: use this.Content to load your game content here
@@ -149,21 +158,23 @@ namespace AstralOutbreak
                 for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
                 {
                     if (RoomManager.Active.PhysicsObjects[i] is Player)
-                        spriteBatch.Draw(testTexture,
+                        spriteBatch.Draw(spriteManager.masterList["rect"],
                         new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX, 
                         (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                         (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
                         Color.Blue);
                     else
-                        spriteBatch.Draw(testTexture,
+                        spriteBatch.Draw(spriteManager.masterList["rect"],
                             new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX, 
                             (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                             (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
                             Color.Black);
                 }
             }
-            foreach (MenuContent menuPart in menuManager.items)
-                spriteBatch.Draw(testTexture, new Rectangle(menuPart.Location, new Point(testTexture.Width, testTexture.Height)), Color.Red);
+            foreach (MenuContent menuPart in menuManager.items) {
+                Texture2D texture = spriteManager.masterList[menuPart.TextureName];
+                spriteBatch.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);

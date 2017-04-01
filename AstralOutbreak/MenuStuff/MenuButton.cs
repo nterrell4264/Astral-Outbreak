@@ -27,17 +27,17 @@ namespace AstralOutbreak
         public ButtonPressDelegate ClickEvent { get; private set; }
 
         //Constructors
-        public MenuButton(int x, int y, int width, int height, ButtonPressDelegate clickAction) : base(x, y)
+        public MenuButton(int x, int y, int width, int height, string texture, ButtonPressDelegate clickAction) : base(x, y, texture)
         {
             hitbox = new Rectangle(base.Location, new Point(width, height));
             ClickEvent = clickAction;
         }
-        public MenuButton(Point location, Point size, ButtonPressDelegate clickAction) : base(location)
+        public MenuButton(Point location, Point size, string texture, ButtonPressDelegate clickAction) : base(location, texture)
         {
             hitbox = new Rectangle(base.Location, size);
             ClickEvent = clickAction;
         }
-        public MenuButton(Rectangle casting, ButtonPressDelegate clickAction) : base(casting.X, casting.Y)
+        public MenuButton(Rectangle casting, string texture, ButtonPressDelegate clickAction) : base(casting.X, casting.Y, texture)
         {
             hitbox = casting;
             ClickEvent = clickAction;

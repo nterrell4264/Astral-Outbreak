@@ -12,15 +12,18 @@ namespace AstralOutbreak
     {
         //Variables
         public Point Location { get; private set; }
+        public string TextureName { get; set; }
 
         //Constructor
-        public MenuContent(int x, int y)
+        public MenuContent(int x, int y, string texture)
         {
             Location = new Point(x, y);
+            TextureName = texture;
         }
-        public MenuContent(Point location)
+        public MenuContent(Point location, string texture)
         {
             Location = location;
+            TextureName = texture;
         }
     }
 }
