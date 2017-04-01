@@ -101,15 +101,11 @@ namespace AstralOutbreak
             else return ButtonStatus.Unpressed;
         }
 
-        public void ConfigKey(Keys key)
-        {
-
-        }
-
         public void SaveToFile()
         {
             StreamWriter savefile = new StreamWriter("config.txt");
             savefile.WriteLine(JsonConvert.SerializeObject(this));
+            savefile.Close();
         }
     }
 }
