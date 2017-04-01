@@ -28,7 +28,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = -64;
+        private const float BUFFER = 64;
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
@@ -83,6 +83,7 @@ namespace AstralOutbreak
             //Update Physics
             Update(deltaTime);
             CameraTrack(PlayerOne);
+            CheckUnload();
             LoadFromMap();
         }
 
@@ -142,7 +143,25 @@ namespace AstralOutbreak
         }
 
         
+        public void CheckUnload()
+        {
+            int i = 0;
+            while (true)
+            {
+                GameObject obj = null;
+                lock (listLock)
+                {
+                    if (i >= PhysicsObjects.Count || !(PhysicsObjects[i] is GameObject))
+                        return;
 
+                    obj = PhysicsObjects[i] as GameObject;
+                }
+                if (obj.Position.X < CameraX - BUFFER || obj.Position.X > CameraX + BUFFER + Width 
+                    || obj.Position.Y < CameraY - BUFFER || obj.Position.Y > CameraY + BUFFER + Height)
+                    obj.Unload = true;
+                i++;
+            }
+        }
 
 
 

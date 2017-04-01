@@ -29,7 +29,7 @@ namespace AstralOutbreak
             set
             {
                 unload = value;
-                if(OriginX > 0 || OriginY > 0)
+                if(unload && (OriginX > 0 || OriginY > 0))
                     RoomManager.MapData.Loaded[OriginX, OriginY] = false;
             }
         }
