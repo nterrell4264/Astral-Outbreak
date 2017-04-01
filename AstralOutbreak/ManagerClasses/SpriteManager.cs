@@ -9,6 +9,24 @@ namespace AstralOutbreak
 {
     public class SpriteManager
     {
+        private static SpriteManager instance;
+
+        public static SpriteManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new SpriteManager();
+                }
+                return instance;
+            }
+        }
+
+        private SpriteManager()
+        {
+
+        }
         //private Dictionary<string,Texture2D> masterList;
         public Dictionary<string,Texture2D> masterList { get; private set; } //Use until this can draw on its own, then use above
 
