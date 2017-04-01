@@ -9,6 +9,7 @@ namespace AstralOutbreak
 {
     public class SpriteManager
     {
+        //Singleton pattern
         private static SpriteManager instance;
 
         public static SpriteManager Instance
@@ -25,16 +26,12 @@ namespace AstralOutbreak
 
         private SpriteManager()
         {
-
-        }
-        //private Dictionary<string,Texture2D> masterList;
-        public Dictionary<string,Texture2D> masterList { get; private set; } //Use until this can draw on its own, then use above
-
-        //Constructor
-        public SpriteManager()
-        {
             masterList = new Dictionary<string, Texture2D>();
         }
+
+        //Class
+        //private Dictionary<string,Texture2D> masterList;
+        public Dictionary<string,Texture2D> masterList { get; private set; } //Use until this can draw on its own, then use above
 
         //Methods
         public void Draw(SpriteBatch sb) //MAIN DRAW METHOD
