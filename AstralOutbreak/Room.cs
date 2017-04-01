@@ -28,7 +28,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 64;
+        private const float BUFFER = -64;
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
@@ -113,6 +113,9 @@ namespace AstralOutbreak
             
         }
 
+        /// <summary>
+        /// Loads data from the map.
+        /// </summary>
         public void LoadFromMap()
         {
             if (MapData != null)
@@ -127,7 +130,8 @@ namespace AstralOutbreak
                 }
             }
         }
-
+        
+        //Sets up a room from a map
         public void LoadRoom(Map mapdata)
         {
             MapData = mapdata;
@@ -136,6 +140,8 @@ namespace AstralOutbreak
             PhysicsObjects.Add(PlayerOne);
             CameraTrack(PlayerOne);
         }
+
+        
 
 
 
