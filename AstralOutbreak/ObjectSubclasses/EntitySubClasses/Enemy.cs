@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    public enum EnemyType { Slug, }
-
     public class Enemy : Entity
     {
 
