@@ -64,8 +64,9 @@ namespace AstralOutbreak
         {
             ShotDelay = 1;
             Damage = 1;
-            bulletHealth = 1;
-            bulletSpeed = 1;
+            bulletHealth = 100;
+            bulletSpeed = 10;
+            BulletSize = 2;
         }
 
         //Fancy Constructor
@@ -78,6 +79,7 @@ namespace AstralOutbreak
             else
                 bulletSpeed = 1;
             Range = range;
+            BulletSize = 1;
         }
 
         /// <summary>
@@ -88,7 +90,8 @@ namespace AstralOutbreak
         /// <returns></returns>
         public void Shoot(Vector direction)
         {
-            RoomManager.Active.PhysicsObjects.Add( new Projectile(Source.Center, BulletSize, BulletSize, bulletHealth, Damage, Source));
+            if(Source != null)
+                RoomManager.Active.AddBullet( new Projectile(new Vector(Source.Center.X - BulletSize/2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), direction*BulletSpeed/direction.Magnitude());
         }
 
 

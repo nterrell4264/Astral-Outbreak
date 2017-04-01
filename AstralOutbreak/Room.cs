@@ -170,7 +170,7 @@ namespace AstralOutbreak
         //Returns true if we want both objects to collide with each other in a physical sense
         public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)
         {
-            return true;
+            return !(obj2 is Projectile) && !(obj1 is Projectile);
         }
 
         //Handles nonphysical results of physical collisions
@@ -189,6 +189,16 @@ namespace AstralOutbreak
         }
 
 
+
+        //Adds a bullet
+        public void AddBullet(GameObject obj, Vector vel)
+        {
+            lock (listLock)
+            {
+                PhysicsObjects.Add(obj);
+            }
+            obj.Velocity = vel;
+        }
 
 
 

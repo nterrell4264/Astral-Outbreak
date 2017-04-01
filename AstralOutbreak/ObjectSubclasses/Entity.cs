@@ -29,6 +29,8 @@ namespace AstralOutbreak
 
         //If the entity does not shoot/frag, MyWeapon should equal null
         public Weapon MyWeapon { get; set; }
+        //Time till next weapon shot
+        public float ShotTimer { get; set; }
 
         /// <summary>
         /// Makes a mobile entity with the given constraints.
@@ -42,6 +44,17 @@ namespace AstralOutbreak
             IsDead = false;
             Health = health;
             MyWeapon = null;
+            ShotTimer = 0;
+        }
+
+        public void Shoot(Vector direction)
+        {
+            if (MyWeapon != null)
+                if (ShotTimer <= 0)
+                {
+                    MyWeapon.Shoot(direction);
+                    ShotTimer = MyWeapon.ShotDelay;
+                }
         }
 
         /// <summary>
@@ -51,6 +64,8 @@ namespace AstralOutbreak
         public virtual void Step(float deltaTime)
         {
             CurrentActionTime += deltaTime;
+            if (ShotTimer > 0)
+                ShotTimer -= deltaTime;
         }
     }
 }

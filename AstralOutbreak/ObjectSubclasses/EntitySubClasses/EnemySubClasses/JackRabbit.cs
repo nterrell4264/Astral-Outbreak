@@ -33,13 +33,13 @@ namespace AstralOutbreak.ObjectSubclasses.EntitySubClasses.EnemySubClasses
             if (RoomManager.Active.PlayerOne.Position.X + MyWeapon.Range > Position.X)
             {
                 currentState = JackRabbitState.ShootingLeft;
-                MyWeapon.Shoot(new Vector(-1, 0));
+                Shoot(new Vector(-1, 0));
             }
             //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
             else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range)
             {
                 currentState = JackRabbitState.ShootingRight;
-                MyWeapon.Shoot(new Vector(1, 0));
+                Shoot(new Vector(1, 0));
             }
             //Checks if the player is to the left of the JackRabbit, and will move towards the player
             else if (RoomManager.Active.PlayerOne.Position.X < Position.X)

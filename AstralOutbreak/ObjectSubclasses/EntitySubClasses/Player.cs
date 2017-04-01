@@ -30,6 +30,9 @@ namespace AstralOutbreak
         public Player(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             Gravity = true;
+            MyWeapon = new Weapon(.6f, 10, 50, 500);
+            MyWeapon.Source = this;
+            MyWeapon.BulletSize = 5;
         }
 
         public override void Step(float deltaTime)
@@ -73,6 +76,8 @@ namespace AstralOutbreak
                 Velocity.X = 0;
                 CurrentPlayerState = PlayerState.Idle;
             }
+            if (Game1.Inputs.M1Clicked)
+                Shoot(new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y));
             
         }
     }
