@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,11 +51,9 @@ namespace AstralOutbreak
         {
             get { return mouseState.RightButton.Equals(ButtonState.Pressed); }
         }
-
-        //Default constructor
-        public InputManager()
+        
+        public InputManager() //Hard codes keys - only called if JSON fails to load from file
         {
-            //Hard codes keys - REMOVE when we get config working
             jumpButton = Keys.W;
             leftButton = Keys.A;
             rightButton = Keys.D;
@@ -95,12 +95,21 @@ namespace AstralOutbreak
         {
             if (keyState.IsKeyDown(key))
             {
-                if (!prevKeyState.IsKeyDown(key)) return ButtonStatus.Held;
+                if (prevKeyState.IsKeyDown(key)) return ButtonStatus.Held;
                 else return ButtonStatus.Pressed;
             }
             else return ButtonStatus.Unpressed;
         }
 
-        private void ReConfig() { } //To be used for config files
+        public void ConfigKey(Keys key)
+        {
+
+        }
+
+        public void SaveToFile()
+        {
+            StreamWriter savefile = new StreamWriter("config.txt");
+            savefile.WriteLine(JsonConvert.SerializeObject(this));
+        }
     }
 }
