@@ -15,6 +15,9 @@ namespace AstralOutbreak.ObjectSubclasses.EntitySubClasses.EnemySubClasses
 
         //prevY is a float used to store the previous Y value of the position, letting us know if the object is falling
         private float prevY;
+
+        public SlugState CurrentState { get { return currentState; } }
+
         public Slug(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             prevY = pos.Y;
