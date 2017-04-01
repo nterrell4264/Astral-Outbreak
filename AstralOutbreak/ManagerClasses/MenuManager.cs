@@ -23,7 +23,7 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(300, 165, 150, 50, () => { Game1.CurrentState = GameState.Playing; })); //Start button
+            items.Add(new MenuButton(300, 165, 150, 50, "mnuStart", () => { Game1.CurrentState = GameState.Playing; })); //Start button
         }
         private void LoadOptions() //Loads options menu assets
         {
@@ -31,7 +31,7 @@ namespace AstralOutbreak
         }
         private void LoadPause() //Loads pause menu assets
         {
-            items.Add(new MenuButton(32, 32, 64, 32, () => { Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(32, 32, 64, 128, "rect", () => { Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadScreen() //Loads loading screen assets
         {
