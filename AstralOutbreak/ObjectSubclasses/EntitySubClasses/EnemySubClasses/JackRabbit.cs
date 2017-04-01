@@ -1,0 +1,65 @@
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AstralOutbreak.ObjectSubclasses.EntitySubClasses.EnemySubClasses
+{
+    public enum JackRabbitState { MovingLeft, MovingRight, Jumping, Falling, ShootingRight, ShootingLeft }
+
+    class JackRabbit : Enemy
+    {
+        private JackRabbitState currentState;
+
+        //prevY is a float used to store the previous Y value of the position, letting us know if the object is falling
+        private float prevY;
+
+        public JackRabbitState CurrentState { get { return currentState; } }
+
+        public JackRabbit(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
+        {
+            //Creates a weapon for the JackRabbit, set at default values currently, we'll have to agree on better values later
+            MyWeapon = new Weapon();
+            MyWeapon.Source = this;
+
+            prevY = pos.Y;
+        }
+
+        public override void Step(float deltaTime)
+        {
+            //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
+            if (RoomManager.Active.PlayerOne.Position.X + MyWeapon.Range > Position.X)
+            {
+                currentState = JackRabbitState.ShootingLeft;
+                MyWeapon.Shoot(new Vector(-1, 0));
+            }
+            //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
+            else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range)
+            {
+                currentState = JackRabbitState.ShootingRight;
+                MyWeapon.Shoot(new Vector(1, 0));
+            }
+            //Checks if the player is to the left of the JackRabbit, and will move towards the player
+            else if (RoomManager.Active.PlayerOne.Position.X < Position.X)
+            {
+                currentState = JackRabbitState.MovingLeft;
+                Position.X -= 1;
+            }
+            //Checks if the player is to the right of the JackRabbit, and will move towards the player
+            else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
+            {
+                currentState = JackRabbitState.MovingRight;
+                Position.X += 1;
+            }
+            //If the the previous y position is larger than the current, sets the JackRabbit to falling, move this to the top of the if statements to give this state priority
+            else if (prevY > Position.Y)
+            {
+                currentState = JackRabbitState.Falling;
+            }
+            base.Step(deltaTime);
+            prevY = Position.Y;
+        }
+    }
+}

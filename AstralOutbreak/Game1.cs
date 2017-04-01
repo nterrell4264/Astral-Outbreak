@@ -47,6 +47,7 @@ namespace AstralOutbreak
                     using (StreamReader input = new StreamReader(File.OpenRead("config.txt")))
                     {
                         Inputs = (JsonConvert.DeserializeObject<InputManager>(input.ReadToEnd()));
+                        input.Close();
                     }
                 }
                 catch
