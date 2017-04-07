@@ -49,14 +49,14 @@ namespace AstralOutbreak
             {
                 currentState = JackRabbitState.MovingLeft;
                 FaceRight = false;
-                Velocity.X = -1;
+                Velocity.X = -10;
             }
             //Checks if the player is to the right of the JackRabbit, and will move towards the player
             else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
             {
                 currentState = JackRabbitState.MovingRight;
                 FaceRight = true;
-                Velocity.X = 1;
+                Velocity.X = 10;
             }
             //If the the previous y position is larger than the current, sets the JackRabbit to falling, move this to the top of the if statements to give this state priority
             else if (prevY > Position.Y)

@@ -68,22 +68,22 @@ namespace AstralOutbreak
                 }
                 
                 //Enforce Terminal velocity
-                if(obj.Velocity.X > TerminalVelX)
-                {
-                    obj.Velocity.X = TerminalVelX;
-                }
-                else if (obj.Velocity.X < -TerminalVelX)
-                {
-                    obj.Velocity.X = -TerminalVelX;
-                }
-                if (obj.Velocity.Y > TerminalVelY)
-                {
-                    obj.Velocity.Y = TerminalVelY;
-                }
-                else if (obj.Velocity.Y < -TerminalVelY)
-                {
-                    obj.Velocity.Y = -TerminalVelY;
-                }
+                //if(obj.Velocity.X > TerminalVelX)
+                //{
+                //    obj.Velocity.X = TerminalVelX;
+                //}
+                //else if (obj.Velocity.X < -TerminalVelX)
+                //{
+                //    obj.Velocity.X = -TerminalVelX;
+                //}
+                //if (obj.Velocity.Y > TerminalVelY)
+                //{
+                //    obj.Velocity.Y = TerminalVelY;
+                //}
+                //else if (obj.Velocity.Y < -TerminalVelY)
+                //{
+                //    obj.Velocity.Y = -TerminalVelY;
+                //}
 
 
                 //Check for collisions
