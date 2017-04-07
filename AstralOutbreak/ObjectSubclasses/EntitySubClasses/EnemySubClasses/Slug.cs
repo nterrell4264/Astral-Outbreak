@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AstralOutbreak.ObjectSubclasses.EntitySubClasses.EnemySubClasses
+namespace AstralOutbreak
 {
     public enum SlugState { MovingRight, MovingLeft, Falling }
 
