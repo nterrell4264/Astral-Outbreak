@@ -25,6 +25,7 @@ namespace AstralOutbreak
             MyWeapon.Source = this;
 
             prevY = pos.Y;
+            Gravity = true;
         }
 
         public override void Step(float deltaTime)
@@ -48,14 +49,14 @@ namespace AstralOutbreak
             {
                 currentState = JackRabbitState.MovingLeft;
                 FaceRight = false;
-                Position.X -= 1;
+                Velocity.X = -1;
             }
             //Checks if the player is to the right of the JackRabbit, and will move towards the player
             else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
             {
                 currentState = JackRabbitState.MovingRight;
                 FaceRight = true;
-                Position.X += 1;
+                Velocity.X = 1;
             }
             //If the the previous y position is larger than the current, sets the JackRabbit to falling, move this to the top of the if statements to give this state priority
             else if (prevY > Position.Y)
