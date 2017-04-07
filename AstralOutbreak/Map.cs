@@ -162,8 +162,10 @@ namespace AstralOutbreak
                     return new Wall(new Vector(x*Scale, y*Scale), Scale, Scale);
                     break;
                 case MapItem.Slug:
+                    return new Slug(new Vector(x * Scale, y * Scale), Scale, Scale, 20);
                     break;
                 case MapItem.Demon:
+
                     break;
                 default:
                     break;
