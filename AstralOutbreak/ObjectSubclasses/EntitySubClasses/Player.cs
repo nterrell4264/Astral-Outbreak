@@ -57,7 +57,12 @@ namespace AstralOutbreak
                     if (Velocity.Y == 0) currentplayerstate = PlayerState.Idle;
                     else currentplayerstate = PlayerState.Falling;
                 }
-                else return;
+                else
+                {
+                    if (FaceRight) Velocity.X = -50;
+                    else Velocity.X = 50;
+                    return;
+                }
             }
             if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
