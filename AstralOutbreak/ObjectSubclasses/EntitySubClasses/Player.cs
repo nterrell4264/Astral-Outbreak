@@ -40,7 +40,7 @@ namespace AstralOutbreak
         public Player(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             Gravity = true;
-            MyWeapon = new Weapon(.6f, 10, 50, 500);
+            MyWeapon = new Weapon(.6f, 10, 500, 5000);
             MyWeapon.Source = this;
             MyWeapon.BulletSize = 5;
         }

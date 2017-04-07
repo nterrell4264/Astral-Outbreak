@@ -56,6 +56,7 @@ namespace LevelEditor
             MapY = 0;
             Gridlines = true;
             Scale = 8;
+            mapdata.Scale = 16;
         }
         /// <summary>
         /// Constructor that reads in a map from file
@@ -83,6 +84,8 @@ namespace LevelEditor
             MapY = 0;
             Gridlines = true;
             Scale = 8;
+            MapData.Scale = 16;
+
         }
 
         public void Save(String fileName)

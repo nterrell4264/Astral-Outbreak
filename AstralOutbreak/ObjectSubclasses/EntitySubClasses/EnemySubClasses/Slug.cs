@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AstralOutbreak.ObjectSubclasses.EntitySubClasses.EnemySubClasses
+namespace AstralOutbreak
 {
     public enum SlugState { MovingRight, MovingLeft, Falling }
 
@@ -18,9 +18,10 @@ namespace AstralOutbreak.ObjectSubclasses.EntitySubClasses.EnemySubClasses
 
         public SlugState CurrentState { get { return currentState; } }
 
-        public Slug(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
+        public Slug(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
             prevY = pos.Y;
+            Gravity = true;
         }
 
         public override void Step(float deltaTime)
@@ -29,13 +30,15 @@ namespace AstralOutbreak.ObjectSubclasses.EntitySubClasses.EnemySubClasses
             if (RoomManager.Active.PlayerOne.Position.X < Position.X)
             {
                 currentState = SlugState.MovingLeft;
-                Position.X -= 1;
+                FaceRight = false;
+                Velocity.X = -10;
             }
             //Checks if the player is to the right of the Slug, and will move towards the player
             else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
             {
                 currentState = SlugState.MovingRight;
-                Position.X += 1;
+                FaceRight = true;
+                Velocity.X = 10;
             }
             //If the the previous y position is larger than the current, sets the Slug to falling, move this to the top of the if statements to give this state priority
             else if (prevY > Position.Y)
