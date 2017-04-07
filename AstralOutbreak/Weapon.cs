@@ -33,7 +33,7 @@ namespace AstralOutbreak
                 if (value > 0)
                     bulletHealth = Range / value;
                 else if (value < 0)
-                    bulletHealth = -Range / value;
+                    bulletHealth = Range / value;
                 if(value != 0)
                     bulletSpeed = value;
             }
@@ -55,7 +55,7 @@ namespace AstralOutbreak
                 if(value >= 0)
                     bulletHealth = value / bulletSpeed;
                 else
-                    bulletHealth = -value / bulletSpeed;
+                    bulletHealth = value / bulletSpeed;
             }
         }
 
@@ -64,9 +64,10 @@ namespace AstralOutbreak
         {
             ShotDelay = 1;
             Damage = 1;
-            bulletHealth = 100;
-            bulletSpeed = 10;
-            BulletSize = 2;
+            bulletHealth = 10;
+            bulletSpeed = 100;
+            Range = 50;
+            BulletSize = 8;
         }
 
         //Fancy Constructor

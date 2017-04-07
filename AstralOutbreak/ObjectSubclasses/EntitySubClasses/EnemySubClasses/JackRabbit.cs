@@ -30,14 +30,14 @@ namespace AstralOutbreak
         public override void Step(float deltaTime)
         {
             //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
-            if (RoomManager.Active.PlayerOne.Position.X + MyWeapon.Range > Position.X)
+            if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X)
             {
                 currentState = JackRabbitState.ShootingLeft;
                 FaceRight = false;
                 Shoot(new Vector(-1, 0));
             }
             //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
-            else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range)
+            else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X)
             {
                 currentState = JackRabbitState.ShootingRight;
                 FaceRight = true;
