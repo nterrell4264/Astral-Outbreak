@@ -21,6 +21,7 @@ namespace AstralOutbreak
         public Slug(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
             prevY = pos.Y;
+            Gravity = true;
         }
 
         public override void Step(float deltaTime)
@@ -30,14 +31,14 @@ namespace AstralOutbreak
             {
                 currentState = SlugState.MovingLeft;
                 FaceRight = false;
-                Position.X -= 1;
+                Velocity.X = -10;
             }
             //Checks if the player is to the right of the Slug, and will move towards the player
             else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
             {
                 currentState = SlugState.MovingRight;
                 FaceRight = true;
-                Position.X += 1;
+                Velocity.X = 10;
             }
             //If the the previous y position is larger than the current, sets the Slug to falling, move this to the top of the if statements to give this state priority
             else if (prevY > Position.Y)
