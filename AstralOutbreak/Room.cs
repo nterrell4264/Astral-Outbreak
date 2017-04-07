@@ -186,6 +186,14 @@ namespace AstralOutbreak
                 (obj2 as Projectile).Strike(obj1 as GameObject);
             }
 
+            if(obj1 is Enemy && obj2 is Player)
+            {
+                (obj1 as Enemy).Strike(obj2 as GameObject);
+            }
+            if (obj2 is Enemy && obj1 is Player)
+            {
+                (obj2 as Enemy).Strike(obj1 as GameObject);
+            }
         }
 
 
