@@ -17,7 +17,7 @@ namespace AstralOutbreak
         public bool FaceRight { get; set; }
         //Float that signifies the entities current health
         private float health;
-        public float Health
+        public virtual float Health
         {
             get { return health; }
             set

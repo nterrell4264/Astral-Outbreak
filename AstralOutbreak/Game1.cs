@@ -136,6 +136,7 @@ namespace AstralOutbreak
             Inputs.Update();
             if (CurrentState == GameState.Playing) //Game time updating
             {
+                if (RoomManager.Active.PlayerOne.IsDead) CurrentState = GameState.GameOverMenu;
                 RoomManager.Active.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
             menuManager.Update();

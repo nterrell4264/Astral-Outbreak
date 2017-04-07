@@ -24,7 +24,17 @@ namespace AstralOutbreak
                 currentplayerstate = value;
                 CurrentActionTime = 0;
             }
-        
+        }
+
+        public override float Health
+        {
+            get { return base.Health; }
+            set
+            {
+                if (value < Health) CurrentPlayerState = PlayerState.Damaged;
+                base.Health = value;
+                IsDead = Health <= 0;
+            }
         }
 
         public Player(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
@@ -40,6 +50,15 @@ namespace AstralOutbreak
             base.Step(deltaTime);
             Acceleration.X = 0;
             Acceleration.Y = 0;
+            if(CurrentPlayerState == PlayerState.Damaged)
+            {
+                if (CurrentActionTime >= 1)
+                {
+                    if (Velocity.Y == 0) currentplayerstate = PlayerState.Idle;
+                    else currentplayerstate = PlayerState.Falling;
+                }
+                else return;
+            }
             if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
                 Acceleration.X += -5;
@@ -53,7 +72,7 @@ namespace AstralOutbreak
                 CurrentPlayerState = PlayerState.Running;
             }
             //Temporary Jump
-            if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && Velocity.Y == 0))
+            if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && CurrentPlayerState != PlayerState.Falling))
             {
                 Acceleration.Y -= 100;
                 CurrentPlayerState = PlayerState.Falling;
