@@ -59,7 +59,7 @@ namespace AstralOutbreak
             IsMouseVisible = true;
             CurrentState = GameState.Playing;
 
-            RoomManager.Active = new Room(2000, 2000, new Vector2(0, 3f));
+            RoomManager.Active = new Room(2000, 2000, new Vector2(0, 8f));
             if (File.Exists("MapData.dat"))
             {
                 StreamReader input = null;
