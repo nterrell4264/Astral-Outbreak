@@ -18,6 +18,7 @@ namespace AstralOutbreak
     public class Player : Entity
     {
         private PlayerState currentplayerstate;
+        private float speedLimit = 500;
         public PlayerState CurrentPlayerState
         {
             get { return currentplayerstate; }
@@ -26,6 +27,12 @@ namespace AstralOutbreak
                 currentplayerstate = value;
                 CurrentActionTime = 0;
             }
+        }
+
+        public float SpeedLimit
+        {
+            get { return speedLimit; }
+            set { speedLimit = value; }
         }
 
         public override bool Unload
@@ -50,7 +57,7 @@ namespace AstralOutbreak
         public Player(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             Gravity = true;
-            MyWeapon = new Weapon(.6f, 10, 500, 5000);
+            MyWeapon = new Weapon(.2f, 3, 500, 5000);
             MyWeapon.Source = this;
             MyWeapon.BulletSize = 5;
         }
@@ -62,46 +69,50 @@ namespace AstralOutbreak
             Acceleration.Y = 0;
             if(CurrentPlayerState == PlayerState.Damaged)
             {
-                if (CurrentActionTime >= 1)
+                if (CurrentActionTime >= 0.1f)
                 {
                     if (Velocity.Y == 0) currentplayerstate = PlayerState.Idle;
                     else currentplayerstate = PlayerState.Falling;
                 }
                 else
                 {
-                    if (FaceRight) Velocity.X = -50;
-                    else Velocity.X = 50;
+                    if (FaceRight) Velocity.X = -100;
+                    else Velocity.X = 100;
                     return;
                 }
             }
             if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
+                if (Velocity.X > -speedLimit / 10)
+                    Velocity.X = -speedLimit / 10;
                 Acceleration.X += -5;
                 FaceRight = false;
                 CurrentPlayerState = PlayerState.Running;
             }
             if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
+                if (Velocity.X < speedLimit / 10)
+                    Velocity.X = speedLimit / 10;
                 Acceleration.X += 5;
                 FaceRight = true;
                 CurrentPlayerState = PlayerState.Running;
             }
             //Temporary Jump
-            if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && CurrentPlayerState != PlayerState.Falling))
+            if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && CurrentPlayerState != PlayerState.Falling) && Velocity.Y == 0)
             {
-                Acceleration.Y -= 100;
+                Velocity.Y -= 200;
                 CurrentPlayerState = PlayerState.Falling;
             }
             //Makes sure player stops when buttons arent pressed and can change direction easily
             if (Velocity.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
-                Velocity.X = -30;
+                Velocity.X = 0;
                 FaceRight = false;
                 CurrentPlayerState = PlayerState.Running;
             }
             else if (Velocity.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
-                Velocity.X = 30;
+                Velocity.X = 0;
                 FaceRight = true;
                 CurrentPlayerState = PlayerState.Running;
             }
