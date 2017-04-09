@@ -18,6 +18,7 @@ namespace AstralOutbreak
         public bool Mobile { get; set; }
         public bool Gravity { get; set; }
         public Vector Position { get; set; }
+        public Vector MaxVelocity { get; set; }
         public Vector Velocity { get; set; }
         public Vector VelocityY
         {
@@ -63,6 +64,7 @@ namespace AstralOutbreak
             Height = height;
             Velocity = new Vector(0, 0);
             Acceleration = new Vector(0, 0);
+            MaxVelocity = new Vector(-1, -1);
         }
 
         /// <summary>
