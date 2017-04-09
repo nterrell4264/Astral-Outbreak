@@ -9,7 +9,7 @@ namespace AstralOutbreak
 {
     public enum SlugState { MovingRight, MovingLeft, Falling }
 
-    class Slug : Enemy
+    public class Slug : Enemy
     {
         private SlugState currentState;
 
@@ -31,14 +31,14 @@ namespace AstralOutbreak
             {
                 currentState = SlugState.MovingLeft;
                 FaceRight = false;
-                Velocity.X = -10;
+                Velocity.X = -50;
             }
             //Checks if the player is to the right of the Slug, and will move towards the player
             else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
             {
                 currentState = SlugState.MovingRight;
                 FaceRight = true;
-                Velocity.X = 10;
+                Velocity.X = 50;
             }
             //If the the previous y position is larger than the current, sets the Slug to falling, move this to the top of the if statements to give this state priority
             else if (prevY > Position.Y)
