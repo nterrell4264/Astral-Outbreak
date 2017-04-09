@@ -59,15 +59,59 @@ namespace AstralOutbreak
         //Sub methods of Draw made for each type of entity
         public void Draw(SpriteBatch sb, Player player)
         {
-
+            switch(player.CurrentPlayerState)
+            {
+                default:
+                    break;
+                case PlayerState.Idle:
+                    break;
+                case PlayerState.Damaged:
+                    break;
+                case PlayerState.Dashing:
+                    break;
+                case PlayerState.Falling:
+                    break;
+                case PlayerState.Rolling:
+                    break;
+                case PlayerState.Running:
+                    break;
+            }
         }
         public void Draw(SpriteBatch sb, Slug enemy)
         {
+            switch (enemy.CurrentState)
+            {
+                default:
+                    break;
+                case SlugState.Falling:
+                    break;
+                case SlugState.MovingLeft:
+                    break;
+                case SlugState.MovingRight:
+                    break;
 
+            }
         }
         public void Draw(SpriteBatch sb, JackRabbit enemy)
         {
+            switch (enemy.CurrentState)
+            {
+                default:
+                    break;
+                case JackRabbitState.Falling:
+                    break;
+                case JackRabbitState.Jumping:
+                    break;
+                case JackRabbitState.MovingLeft:
+                    break;
+                case JackRabbitState.MovingRight:
+                    break;
+                case JackRabbitState.ShootingLeft:
+                    break;
+                case JackRabbitState.ShootingRight:
+                    break;
 
+            }
         }
 
         public void AddTexture(Texture2D texture)
