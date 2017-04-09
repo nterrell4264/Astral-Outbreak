@@ -57,6 +57,7 @@ namespace AstralOutbreak
         public Player(Vector2 pos, float width, float height, float health, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             Gravity = true;
+            MaxVelocity.X = speedLimit;
             MyWeapon = new Weapon(.2f, 3, 500, 5000);
             MyWeapon.Source = this;
             MyWeapon.BulletSize = 5;
