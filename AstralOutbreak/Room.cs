@@ -139,6 +139,14 @@ namespace AstralOutbreak
             float scale = mapdata.Scale;
             PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), scale, scale, 100);
             PhysicsObjects.Add(PlayerOne);
+            List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
+            lock (listLock)
+            {
+                for (int i = 0; i < newData.Count; i++)
+                {
+                    PhysicsObjects.Add(newData[i]);
+                }
+            }
             CameraTrack(PlayerOne);
         }
 

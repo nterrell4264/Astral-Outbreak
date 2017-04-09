@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework;
 namespace AstralOutbreak
 {
     public enum PlayerState { Idle, Falling, Rolling, Dashing, Running, Damaged}
+
+    
     /// <summary>
     /// Unit controlled directly by the player
     /// </summary>
@@ -23,6 +25,14 @@ namespace AstralOutbreak
             {
                 currentplayerstate = value;
                 CurrentActionTime = 0;
+            }
+        }
+
+        public override bool Unload
+        {
+            get
+            {
+                return false;
             }
         }
 

@@ -23,7 +23,7 @@ namespace AstralOutbreak
         /// </summary>
         private bool unload;
 
-        public bool Unload
+        public virtual bool Unload
         {
             get { return unload; }
             set

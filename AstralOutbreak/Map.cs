@@ -61,7 +61,7 @@ namespace AstralOutbreak
             {
                 if (index1 < Width && index2 < Height)
                     MapData[index1, index2] = value;
-                if (Resizable)
+                else if (Resizable)
                 {
                     Resize(index1 + 1, index2 + 1);
                     MapData[index1, index2] = value;
@@ -174,7 +174,7 @@ namespace AstralOutbreak
         }
 
         /// <summary>
-        /// Returns all of the items that need to be loaded in the buffer area the screen
+        /// Returns all of the items that need to be loaded in the buffer area the screen. Will only load enemies in the buffer area.
         /// </summary>
         /// <param name="newX">New x for the screen</param>
         /// <param name="newY">New y for the screen</param>
@@ -219,7 +219,49 @@ namespace AstralOutbreak
             
             return list;
         }
-       
+
+        /// <summary>
+        /// Returns all of the items that need to be loaded in the buffer area the screen. Enemies can load anywhere on screen.
+        /// </summary>
+        /// <param name="newX">New x for the screen</param>
+        /// <param name="newY">New y for the screen</param>
+        /// <param name="width">Width of the screen</param>
+        /// <param name="height">Height of the screen</param>
+        /// <param name="buffer">Space around the edge of the screen that is to be loaded</param>
+        /// <returns>A list that contains some null values and some gameobjects</returns>
+        public List<GameObject> LoadHard(float newX, float newY, float width, float height, float buffer)
+        {
+            //Convert to ints in the right scale.
+            int nX = (int)((newX - buffer) / Scale);
+            if (nX < 0)
+                nX = 0;
+            int nY = (int)((newY - buffer) / Scale);
+            if (nY < 0)
+                nY = 0;
+            int w = (int)((width + 2 * buffer) / Scale);
+            int h = (int)((height + 2 * buffer) / Scale);
+
+            //Create a list
+            List<GameObject> list = new List<GameObject>(w + h);
+            //Fill the list
+            for (int i = nX; i < w + nX && i < Width; i++)
+            {
+                for (int j = nY; j < height + nY && j < Height; j++)
+                {
+                    //Get the object
+                    var obj = Get(i, j);
+                    if (obj != null)
+                    {
+                        //Add it to the list
+                        obj.OriginX = i;
+                        obj.OriginY = j;
+                        list.Add(obj);
+                    }
+                }
+            }
+
+            return list;
+        }
 
     }
 }
