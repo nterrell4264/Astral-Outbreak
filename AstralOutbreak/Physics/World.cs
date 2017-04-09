@@ -59,24 +59,25 @@ namespace AstralOutbreak
                 }
 
                 //Enforce Terminal velocity
-                if(obj.MaxVelocity.X >= 0 && obj.MaxVelocity.Y >= 0)
-                if (obj.Velocity.X > obj.MaxVelocity.X)
+                if (obj.MaxVelocity.X >= 0 && obj.MaxVelocity.Y >= 0)
                 {
-                    obj.Velocity.X = obj.MaxVelocity.X;
+                    if (obj.Velocity.X > obj.MaxVelocity.X)
+                    {
+                        obj.Velocity.X = obj.MaxVelocity.X;
+                    }
+                    else if (obj.Velocity.X < -obj.MaxVelocity.X)
+                    {
+                        obj.Velocity.X = -obj.MaxVelocity.X;
+                    }
+                    if (obj.Velocity.Y > obj.MaxVelocity.Y)
+                    {
+                        obj.Velocity.Y = obj.MaxVelocity.Y;
+                    }
+                    else if (obj.Velocity.Y < -obj.MaxVelocity.Y)
+                    {
+                        obj.Velocity.Y = -obj.MaxVelocity.Y;
+                    }
                 }
-                else if (obj.Velocity.X < -obj.MaxVelocity.X)
-                {
-                    obj.Velocity.X = -obj.MaxVelocity.X;
-                }
-                if (obj.Velocity.Y > obj.MaxVelocity.Y)
-                {
-                    obj.Velocity.Y = obj.MaxVelocity.Y;
-                }
-                else if (obj.Velocity.Y < -obj.MaxVelocity.Y)
-                {
-                    obj.Velocity.Y = -obj.MaxVelocity.Y;
-                }
-
 
                 //Check for collisions
                 if (obj.Velocity.X != 0 || obj.Velocity.Y != 0)
