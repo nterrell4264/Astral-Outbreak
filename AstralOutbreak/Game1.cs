@@ -95,11 +95,11 @@ namespace AstralOutbreak
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("mnuStart"));
             CurrentState = GameState.MainMenu;
             menuManager = new MenuManager();
             spriteManager = new SpriteManager(spriteBatch);
+            spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuStart"));
             // TODO: use this.Content to load your game content here
         }
 
