@@ -9,24 +9,26 @@ namespace AstralOutbreak
 {
     public class SpriteManager
     {
+        SpriteBatch sb;
         //Singleton pattern
-        private static SpriteManager instance;
+        //private static SpriteManager instance;
 
-        public static SpriteManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new SpriteManager();
-                }
-                return instance;
-            }
-        }
+        //public static SpriteManager Instance
+        //{
+        //    get
+        //    {
+        //        if (instance == null)
+        //        {
+        //            instance = new SpriteManager();
+        //        }
+        //        return instance;
+        //    }
+        //}
 
-        private SpriteManager()
+        public SpriteManager(SpriteBatch import)
         {
             masterList = new Dictionary<string, Texture2D>();
+            SpriteBatch sb = (import);
         }
 
         //Class
@@ -34,7 +36,38 @@ namespace AstralOutbreak
         public Dictionary<string,Texture2D> masterList { get; private set; } //Use until this can draw on its own, then use above
 
         //Methods
+        public void Update()//Will call individual Draw Methods for each entity based on what called it
+        {
+            //Roommanager.active.physicsobjects is the list of objects
+            for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
+            {
+                if (RoomManager.Active.PhysicsObjects[i] is Player)
+                {
+                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player);
+                }
+                else if (RoomManager.Active.PhysicsObjects[i] is Slug)
+                {
+
+                }
+                else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
+                {
+
+                }
+            }
+        }
         public void Draw(SpriteBatch sb) //MAIN DRAW METHOD
+        {
+            
+        }
+        public void Draw(SpriteBatch sb, Player player)
+        {
+
+        }
+        public void Draw(SpriteBatch sb, Slug enemy)
+        {
+
+        }
+        public void Draw(SpriteBatch sb, JackRabbit enemy)
         {
 
         }

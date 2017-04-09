@@ -9,7 +9,7 @@ namespace AstralOutbreak
 {
     public enum JackRabbitState { MovingLeft, MovingRight, Jumping, Falling, ShootingRight, ShootingLeft }
 
-    class JackRabbit : Enemy
+        class JackRabbit : Enemy
     {
         private JackRabbitState currentState;
 

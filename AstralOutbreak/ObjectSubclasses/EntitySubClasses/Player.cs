@@ -112,6 +112,8 @@ namespace AstralOutbreak
             }
             if (Game1.Inputs.M1Clicked)
                 Shoot(new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y));
+
+            
             
         }
     }
