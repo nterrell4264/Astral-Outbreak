@@ -47,18 +47,16 @@ namespace AstralOutbreak
                 }
                 else if (RoomManager.Active.PhysicsObjects[i] is Slug)
                 {
-
+                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug);
                 }
                 else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
                 {
-
+                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit);
                 }
             }
         }
-        public void Draw(SpriteBatch sb) //MAIN DRAW METHOD
-        {
-            
-        }
+       
+        //Sub methods of Draw made for each type of entity
         public void Draw(SpriteBatch sb, Player player)
         {
 
