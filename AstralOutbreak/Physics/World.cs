@@ -20,11 +20,6 @@ namespace AstralOutbreak
         public List<PhysicsObject> PhysicsObjects { get; set; }
         //Gravity as an acceleration
         public Vector Gravity { get; set; }
-        //Terminal velocities
-        public float TerminalVelX { get; set; }
-        public float TerminalVelY { get; set; }
-
-
 
         /// <summary>
         /// Returns true if the objects collide and stop.
@@ -38,8 +33,6 @@ namespace AstralOutbreak
         {
             PhysicsObjects = new List<PhysicsObject>();
             Gravity = new Vector(0,0);
-            TerminalVelX = 10;
-            TerminalVelY = 10;
         }
         /// <summary>
         /// A simple empty world with gravity and a terminal velocity.
@@ -48,8 +41,6 @@ namespace AstralOutbreak
         {
             PhysicsObjects = new List<PhysicsObject>();
             Gravity = new Vector(grav.X, grav.Y);
-            TerminalVelX = terminal.X;
-            TerminalVelY = terminal.Y;
         }
 
 
@@ -66,24 +57,25 @@ namespace AstralOutbreak
                 {
                     obj.Velocity += Gravity;
                 }
-                
+
                 //Enforce Terminal velocity
-                //if(obj.Velocity.X > TerminalVelX)
-                //{
-                //    obj.Velocity.X = TerminalVelX;
-                //}
-                //else if (obj.Velocity.X < -TerminalVelX)
-                //{
-                //    obj.Velocity.X = -TerminalVelX;
-                //}
-                //if (obj.Velocity.Y > TerminalVelY)
-                //{
-                //    obj.Velocity.Y = TerminalVelY;
-                //}
-                //else if (obj.Velocity.Y < -TerminalVelY)
-                //{
-                //    obj.Velocity.Y = -TerminalVelY;
-                //}
+                if(obj.MaxVelocity.X >= 0 && obj.MaxVelocity.Y >= 0)
+                if (obj.Velocity.X > obj.MaxVelocity.X)
+                {
+                    obj.Velocity.X = obj.MaxVelocity.X;
+                }
+                else if (obj.Velocity.X < -obj.MaxVelocity.X)
+                {
+                    obj.Velocity.X = -obj.MaxVelocity.X;
+                }
+                if (obj.Velocity.Y > obj.MaxVelocity.Y)
+                {
+                    obj.Velocity.Y = obj.MaxVelocity.Y;
+                }
+                else if (obj.Velocity.Y < -obj.MaxVelocity.Y)
+                {
+                    obj.Velocity.Y = -obj.MaxVelocity.Y;
+                }
 
 
                 //Check for collisions
