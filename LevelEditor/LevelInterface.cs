@@ -216,7 +216,7 @@ namespace LevelEditor
             {
                 case CursorMode.Erase:
                     text = WallTexture;
-                    col = Color.MediumSeaGreen;
+                    col = Color.LightSlateGray;
                     break;
                 case CursorMode.Wall:
                     text = WallTexture;
