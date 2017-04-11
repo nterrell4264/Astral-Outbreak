@@ -59,7 +59,7 @@ namespace AstralOutbreak
                 }
 
                 //Enforce Terminal velocity
-                if (obj.MaxVelocity.X >= 0 && obj.MaxVelocity.Y >= 0)
+                if (obj.MaxVelocity.X >= 0)
                 {
                     if (obj.Velocity.X > obj.MaxVelocity.X)
                     {
@@ -69,6 +69,9 @@ namespace AstralOutbreak
                     {
                         obj.Velocity.X = -obj.MaxVelocity.X;
                     }
+                }
+                if (obj.MaxVelocity.Y >= 0)
+                {
                     if (obj.Velocity.Y > obj.MaxVelocity.Y)
                     {
                         obj.Velocity.Y = obj.MaxVelocity.Y;
