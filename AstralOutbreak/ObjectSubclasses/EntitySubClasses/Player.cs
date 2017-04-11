@@ -18,7 +18,7 @@ namespace AstralOutbreak
     public class Player : Entity
     {
         private PlayerState currentplayerstate;
-        private float speedLimit = 500;
+        private float speedLimit = 300;
         public PlayerState CurrentPlayerState
         {
             get { return currentplayerstate; }
@@ -84,16 +84,16 @@ namespace AstralOutbreak
             }
             if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
             {
-                if (Velocity.X > -speedLimit / 10)
-                    Velocity.X = -speedLimit / 10;
+                if (Velocity.X > -speedLimit / 2)
+                    Velocity.X = -speedLimit / 2;
                 Acceleration.X += -5;
                 FaceRight = false;
                 CurrentPlayerState = PlayerState.Running;
             }
             if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
             {
-                if (Velocity.X < speedLimit / 10)
-                    Velocity.X = speedLimit / 10;
+                if (Velocity.X < speedLimit / 2)
+                    Velocity.X = speedLimit / 2;
                 Acceleration.X += 5;
                 FaceRight = true;
                 CurrentPlayerState = PlayerState.Running;

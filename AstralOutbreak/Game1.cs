@@ -18,6 +18,7 @@ namespace AstralOutbreak
         //Managers
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
         FileManager fileManager;
         SoundManager soundManager;
         SpriteManager spriteManager;
@@ -95,6 +96,7 @@ namespace AstralOutbreak
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("font");
             CurrentState = GameState.MainMenu;
             menuManager = new MenuManager();
             spriteManager = new SpriteManager(spriteBatch);
@@ -154,6 +156,7 @@ namespace AstralOutbreak
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            spriteBatch.DrawString(font, "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
             if(CurrentState == GameState.Playing)
             {
