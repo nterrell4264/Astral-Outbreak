@@ -178,7 +178,12 @@ namespace AstralOutbreak
         //Returns true if we want both objects to collide with each other in a physical sense
         public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)
         {
-            return !(obj2 is Projectile) && !(obj1 is Projectile);
+            if (obj1 is Player && obj2 is Enemy)
+                return false;
+            else if (obj1 is Enemy && obj2 is Player)
+                return false;
+            else
+                return !(obj2 is Projectile) && !(obj1 is Projectile);
         }
 
         //Handles nonphysical results of physical collisions
