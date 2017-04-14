@@ -19,6 +19,8 @@ namespace AstralOutbreak
     {
         private PlayerState currentplayerstate;
         private float speedLimit = 300;
+        private float invulnTime = 0;
+
         public PlayerState CurrentPlayerState
         {
             get { return currentplayerstate; }
@@ -35,6 +37,12 @@ namespace AstralOutbreak
             set { speedLimit = value; }
         }
 
+        public float InvulnTime
+        {
+            get { return invulnTime; }
+            set { invulnTime = value; }
+        }
+
         public override bool Unload
         {
             get
@@ -48,7 +56,11 @@ namespace AstralOutbreak
             get { return base.Health; }
             set
             {
-                if (value < Health) CurrentPlayerState = PlayerState.Damaged;
+                if (value < Health && invulnTime == 0)
+                {
+                    CurrentPlayerState = PlayerState.Damaged;
+                    invulnTime = 30;
+                }
                 base.Health = value;
                 IsDead = Health <= 0;
             }
@@ -68,6 +80,8 @@ namespace AstralOutbreak
             base.Step(deltaTime);
             Acceleration.X = 0;
             Acceleration.Y = 0;
+            if (invulnTime > 0)
+                invulnTime--;
             if(CurrentPlayerState == PlayerState.Damaged)
             {
                 if (CurrentActionTime >= 0.1f)
@@ -77,8 +91,8 @@ namespace AstralOutbreak
                 }
                 else
                 {
-                    if (FaceRight) Velocity.X = -100;
-                    else Velocity.X = 100;
+                    if (FaceRight) Velocity.X = 100;
+                    else Velocity.X = -100;
                     return;
                 }
             }

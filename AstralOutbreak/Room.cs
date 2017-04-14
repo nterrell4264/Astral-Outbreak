@@ -137,7 +137,7 @@ namespace AstralOutbreak
         {
             MapData = mapdata;
             float scale = mapdata.Scale;
-            PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), scale, scale, 100);
+            PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), scale, scale, 10);
             PhysicsObjects.Add(PlayerOne);
             List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
             lock (listLock)
@@ -187,20 +187,26 @@ namespace AstralOutbreak
             //Bullets damage entities
             if(obj1 is Projectile && obj2 is GameObject)
             {
-                (obj1 as Projectile).Strike(obj2 as GameObject);
+                if (obj2 is Player && (obj2 as Player).InvulnTime > 0) { }
+                else
+                    (obj1 as Projectile).Strike(obj2 as GameObject);
             }
             if (obj2 is Projectile && obj1 is GameObject)
             {
-                (obj2 as Projectile).Strike(obj1 as GameObject);
+                if (obj1 is Player && (obj1 as Player).InvulnTime > 0) { }
+                else
+                    (obj2 as Projectile).Strike(obj1 as GameObject);
             }
 
             if(obj1 is Enemy && obj2 is Player)
             {
-                (obj1 as Enemy).Strike(obj2 as GameObject);
+                if((obj2 as Player).InvulnTime == 0)
+                    (obj1 as Enemy).Strike(obj2 as GameObject);
             }
             if (obj2 is Enemy && obj1 is Player)
             {
-                (obj2 as Enemy).Strike(obj1 as GameObject);
+                if ((obj1 as Player).InvulnTime == 0)
+                    (obj2 as Enemy).Strike(obj1 as GameObject);
             }
         }
 
