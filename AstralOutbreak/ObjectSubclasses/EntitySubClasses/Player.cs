@@ -142,5 +142,29 @@ namespace AstralOutbreak
             
             
         }
-    }
+
+
+
+        public void Consume(Item other)
+        {
+            switch (other.MyType)
+            {
+                case ItemType.HealthPickup:
+                    Health += other.Value;
+                    break;
+                case ItemType.WeaponUpgrade:
+                    MyWeapon.Damage += other.Value;
+                    break;
+                case ItemType.AbilityUnlock:
+                    break;
+                default:
+                    break;
+            }
+            other.Unload = true;
+        }
+
+
+
+
+    }//End Class
 }
