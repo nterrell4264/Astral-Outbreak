@@ -7,10 +7,17 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
+    public enum ItemType { HealthPickup, WeaponUpgrade, AbilityUnlock}
     public class Item : GameObject
     {
-        public Item(Vector2 pos, float width, float height, bool mobile = false) : base(pos, width, height, mobile)
+
+        public ItemType MyType { get; set; }
+        public int Value { get; set; }
+
+        public Item(Vector2 pos, float width, float height, ItemType type, int val, bool mobile = false) : base(pos, width, height, mobile)
         {
+            MyType = type;
+            Value = val;
         }
     }
 }
