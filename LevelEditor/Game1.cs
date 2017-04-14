@@ -132,6 +132,16 @@ namespace LevelEditor
                 if (level.MapY > 0)
                     level.MapY--;
             }
+            if (kb.IsKeyDown(Keys.Up) && (kbLast.IsKeyUp(Keys.Up)))
+            {
+                if (level.CursorSize < 5)
+                    level.CursorSize++;
+            }
+            if (kb.IsKeyDown(Keys.Down) && (kbLast.IsKeyUp(Keys.Down)))
+            {
+                if (level.CursorSize > 1)
+                    level.CursorSize--;
+            }
 
             if (kb.IsKeyDown(Keys.D1))
                 level.CursorItem = CursorMode.Erase;

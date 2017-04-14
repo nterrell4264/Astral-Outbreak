@@ -35,6 +35,9 @@ namespace LevelEditor
         //Gridlines
         public bool Gridlines { get; set; }
 
+        //Square width/height of placement
+        public int CursorSize { get; set; }
+
         //Textures
         public static Texture2D PlayerStartTexture { get; set; }
         public static Texture2D SlugTexture { get; set; }
@@ -80,6 +83,7 @@ namespace LevelEditor
                 MapData = new Map(100, 100);
             MapData.Scale = 32;
             CursorItem = CursorMode.Erase;
+            CursorSize = 1;
             MapX = 0;
             MapY = 0;
             Gridlines = true;
@@ -130,20 +134,28 @@ namespace LevelEditor
                 switch (CursorItem)
                 {
                     case CursorMode.Erase:
-                        MapData[MapX + x, MapY + y] = MapItem.None;
+                        for(int i = 0; i < CursorSize; i++)
+                            for (int j = 0; j < CursorSize; j++)
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.None;
                         break;
                     case CursorMode.Player:
                         MapData.PlayerStartX = MapX + x;
                         MapData.PlayerStartY = MapY + y;
                         break;
                     case CursorMode.Wall:
-                        MapData[MapX + x, MapY + y] = MapItem.Wall;
+                        for (int i = 0; i < CursorSize; i++)
+                            for (int j = 0; j < CursorSize; j++)
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Wall;
                         break;
                     case CursorMode.Slug:
-                        MapData[MapX + x, MapY + y] = MapItem.Slug;
+                        for (int i = 0; i < CursorSize; i++)
+                            for (int j = 0; j < CursorSize; j++)
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Slug;
                         break;
                     case CursorMode.Demon:
-                        MapData[MapX + x, MapY + y] = MapItem.Demon;
+                        for(int i = 0; i < CursorSize; i++)
+                            for (int j = 0; j < CursorSize; j++)
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Demon;
                         break;
                     default:
                         break;
@@ -238,8 +250,9 @@ namespace LevelEditor
                     break;
             }
 
-            sb.Draw(RoundTexture, new Rectangle(mouseX - 2, mouseY - 2, 5, 5), new Color(Color.Brown, 1));
-            sb.Draw(text, new Rectangle(mouseX - 1, mouseY - 1, 3, 3), col);
+            //sb.Draw(RoundTexture, new Rectangle(mouseX - 2, mouseY - 2, 5, 5), new Color(Color.Brown, 1));
+            //sb.Draw(text, new Rectangle(mouseX - 1, mouseY - 1, 3, 3), col);
+            sb.Draw(RoundTexture, new Rectangle(mouseX - mouseX % Scale, mouseY - mouseY % Scale, CursorSize * Scale, CursorSize * Scale), new Color(col, .125f));
 
 
 
