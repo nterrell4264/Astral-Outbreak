@@ -59,7 +59,7 @@ namespace AstralOutbreak
                 if (value < Health && invulnTime == 0)
                 {
                     CurrentPlayerState = PlayerState.Damaged;
-                    invulnTime = 30;
+                    invulnTime = 0.2f;
                 }
                 base.Health = value;
                 IsDead = Health <= 0;
@@ -81,7 +81,7 @@ namespace AstralOutbreak
             Acceleration.X = 0;
             Acceleration.Y = 0;
             if (invulnTime > 0)
-                invulnTime--;
+                invulnTime -= deltaTime;
             if(CurrentPlayerState == PlayerState.Damaged)
             {
                 if (CurrentActionTime >= 0.1f)
@@ -91,8 +91,10 @@ namespace AstralOutbreak
                 }
                 else
                 {
-                    if (FaceRight) Velocity.X = 100;
-                    else Velocity.X = -100;
+                    SpeedLimit = 400;
+                    if (FaceRight) Velocity.X = 400;
+                    else Velocity.X = -400;
+                    SpeedLimit = speedLimit;
                     return;
                 }
             }
