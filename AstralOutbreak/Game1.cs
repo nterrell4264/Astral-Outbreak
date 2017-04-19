@@ -101,6 +101,9 @@ namespace AstralOutbreak
             spriteManager = new SpriteManager();
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("mnuStart"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuOptions"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuResume"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuQuit"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
             
@@ -123,8 +126,6 @@ namespace AstralOutbreak
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             if (Inputs.PauseButtonState == ButtonStatus.Pressed)
             {
                 switch (CurrentState)
