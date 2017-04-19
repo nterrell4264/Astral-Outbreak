@@ -98,9 +98,12 @@ namespace AstralOutbreak
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
             menuManager = new MenuManager();
-            spriteManager = new SpriteManager(spriteBatch);
+            spriteManager = new SpriteManager();
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("mnuStart"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -159,21 +162,7 @@ namespace AstralOutbreak
             // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
             if(CurrentState == GameState.Playing)
             {
-                for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
-                {
-                    if (RoomManager.Active.PhysicsObjects[i] is Player)
-                        spriteBatch.Draw(spriteManager.masterList["rect"],
-                        new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX, 
-                        (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                        (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
-                        Color.Blue);
-                    else
-                        spriteBatch.Draw(spriteManager.masterList["rect"],
-                            new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX, 
-                            (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                            (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
-                            Color.Black);
-                }
+                spriteManager.Update(spriteBatch);
             }
             foreach (MenuContent menuPart in menuManager.items) {
                 Texture2D texture = spriteManager.masterList[menuPart.TextureName];

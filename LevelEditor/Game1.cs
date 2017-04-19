@@ -33,7 +33,7 @@ namespace LevelEditor
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            level = new LevelInterface("LevelMap.dat");
+            level = new LevelInterface("MapData.dat");
             unClicked = true;
             kbLast = Keyboard.GetState();
             base.Initialize();
