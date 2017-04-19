@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +27,9 @@ namespace AstralOutbreak
         //    }
         //}
 
-        public SpriteManager(SpriteBatch import)
+        public SpriteManager()
         {
             masterList = new Dictionary<string, Texture2D>();
-            SpriteBatch sb = (import);
         }
 
         //Class
@@ -36,48 +37,82 @@ namespace AstralOutbreak
         public Dictionary<string,Texture2D> masterList { get; private set; } //Use until this can draw on its own, then use above
 
         //Methods
-        public void Update()//Will call individual Draw Methods for each entity based on what called it
+        public void Update(SpriteBatch sb)//Will call individual Draw Methods for each entity based on what called it
         {
             //Roommanager.active.physicsobjects is the list of objects
             for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
             {
                 if (RoomManager.Active.PhysicsObjects[i] is Player)
                 {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player);
+                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
                 }
                 else if (RoomManager.Active.PhysicsObjects[i] is Slug)
                 {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug);
+                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
                 }
                 else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
                 {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit);
+                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
+                }
+                else
+                {
+                    sb.Draw(masterList["rect"],
+                    new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                    (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                    (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                    Color.Black);
                 }
             }
         }
-       
+        // spriteBatch.Draw(spriteManager.masterList["rect"],
+       // new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX, 
+         //               (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+           //             (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+             //           Color.Blue);
         //Sub methods of Draw made for each type of entity
-        public void Draw(SpriteBatch sb, Player player)
+        public void Draw(SpriteBatch sb, Player player, int i)
         {
+            Rectangle pos = new Rectangle();
             switch(player.CurrentPlayerState)
             {
                 default:
                     break;
                 case PlayerState.Idle:
+                    pos = new Rectangle(3, 181, 32, 64);
                     break;
-                case PlayerState.Damaged:
+                case PlayerState.Damaged: 
                     break;
                 case PlayerState.Dashing:
                     break;
-                case PlayerState.Falling:
+                case PlayerState.Falling: pos = new Rectangle(4,78,32,55);
                     break;
                 case PlayerState.Rolling:
                     break;
-                case PlayerState.Running:
+                case PlayerState.Running: int t = (int)(player.CurrentActionTime * 8) % 6;
+                    switch (t)
+                    {
+                        default: pos = new Rectangle(5, 5, 32, 64);
+                            break;
+                        case 1: pos = new Rectangle(70,7,32,64);
+                            break;
+                        case 2: pos = new Rectangle(141,6,32,64);
+                            break;
+                        case 3: pos = new Rectangle(201,6,32,64);
+                            break;
+                        case 4: pos = new Rectangle(260,7,32,64);
+                            break;
+                        case 5: pos = new Rectangle(333,6,32,64);
+                            break;
+                    }
                     break;
             }
+                  sb.Draw(masterList["PlayerSprites"],
+                  new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                  pos, Color.White);
         }
-        public void Draw(SpriteBatch sb, Slug enemy)
+        public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
             switch (enemy.CurrentState)
             {
@@ -92,7 +127,7 @@ namespace AstralOutbreak
 
             }
         }
-        public void Draw(SpriteBatch sb, JackRabbit enemy)
+        public void Draw(SpriteBatch sb, JackRabbit enemy, int i)
         {
             switch (enemy.CurrentState)
             {
