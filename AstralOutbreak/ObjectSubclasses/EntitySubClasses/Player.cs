@@ -20,6 +20,7 @@ namespace AstralOutbreak
         private PlayerState currentplayerstate;
         private float speedLimit = 300;
         private float invulnTime = 0;
+        private float previousY;
 
         public PlayerState CurrentPlayerState
         {
@@ -73,6 +74,7 @@ namespace AstralOutbreak
             MyWeapon = new Weapon(.2f, 3, 500, 5000);
             MyWeapon.Source = this;
             MyWeapon.BulletSize = 5;
+            previousY = Velocity.Y;
         }
 
         public override void Step(float deltaTime)
@@ -90,7 +92,55 @@ namespace AstralOutbreak
                     break;
 
                 case PlayerState.Falling:
+                    if(previousY == Velocity.Y)
+                    {
+                        if(Velocity.X == 0)
+                        {
+                            CurrentPlayerState = PlayerState.Idle;
+                        }
+                        else
+                        {
+                            CurrentPlayerState = PlayerState.Running;
+                        }
+                        break;
+                    }
+                    if (FaceRight)
+                    {
+                        if (Velocity.X < speedLimit / 2)
+                            Velocity.X = speedLimit / 2;
+                        Acceleration.X += 5;
 
+                        if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                        {
+                            Velocity.X = 0;
+                            FaceRight = false;
+                            break;
+                        }
+                        if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
+                        {
+                            Velocity.X = 0;
+                            Acceleration.X = 0;
+                        }
+                    }
+
+                    else
+                    {
+                        if (Velocity.X > -speedLimit / 2)
+                            Velocity.X = -speedLimit / 2;
+                        Acceleration.X += -5;
+
+                        if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+                        {
+                            Velocity.X = 0;
+                            FaceRight = true;
+                            break;
+                        }
+                        if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
+                        {
+                            Velocity.X = 0;
+                            Acceleration.X = 0;
+                        }
+                    }
                     break;
 
                 case PlayerState.Idle:
@@ -119,7 +169,7 @@ namespace AstralOutbreak
                         CurrentPlayerState = PlayerState.Rolling;
                         break;
                     }
-                    if (Velocity.Y != 0)
+                    if (Velocity.Y != previousY)
                             CurrentPlayerState = PlayerState.Falling;
                     break;
 
@@ -128,13 +178,84 @@ namespace AstralOutbreak
                     break;
 
                 case PlayerState.Running:
+                    if (FaceRight)
+                    {
+                        if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
+                        {
+                            Velocity.X = 0;
+                            currentplayerstate = PlayerState.Idle;
+                            break;
+                        }
+                        if (Velocity.X < speedLimit / 2)
+                            Velocity.X = speedLimit / 2;
+                        Acceleration.X += 5;
 
+                        if (Velocity.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                        {
+                            Velocity.X = 0;
+                            FaceRight = false;
+                            CurrentPlayerState = PlayerState.Running;
+                        }
+                        if(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
+                        {
+                            Velocity.X = 0;
+                            currentplayerstate = PlayerState.Idle;
+                        }
+                    }
+                    else
+                    {
+                        if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
+                        {
+                            Velocity.X = 0;
+                            currentplayerstate = PlayerState.Idle;
+                            break;
+                        }
+                        if (Velocity.X > -speedLimit / 2)
+                            Velocity.X = -speedLimit / 2;
+                        Acceleration.X += -5;
+
+                        if (Velocity.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+                        {
+                            Velocity.X = 0;
+                            FaceRight = true;
+                            CurrentPlayerState = PlayerState.Running;
+                        }
+                        
+                    }
+
+                    if (Acceleration.X == 0)
+                    {
+                        Velocity.X = 0;
+                        CurrentPlayerState = PlayerState.Idle;
+                    }
+
+                    if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
+                    {
+                        Velocity.Y -= 200;
+                        CurrentPlayerState = PlayerState.Falling;
+                        break;
+                    }
+                    if ((Game1.Inputs.RollButtonState == ButtonStatus.Held || Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
+                    {
+                        CurrentPlayerState = PlayerState.Rolling;
+                        break;
+                    }
+                    if (Velocity.Y != previousY)
+                    {
+                        CurrentPlayerState = PlayerState.Falling;
+                        break;
+                    }
+                    if (Velocity.X == 0)
+                        CurrentPlayerState = PlayerState.Idle;
                     break;
 
                 default:
                     CurrentPlayerState = PlayerState.Idle;
                     break;
             }
+            if (Game1.Inputs.M1Clicked)
+                Shoot(new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y));
+            previousY = Velocity.Y;
 
             //if(CurrentPlayerState == PlayerState.Damaged)
             //{
