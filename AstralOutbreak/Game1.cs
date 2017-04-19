@@ -58,7 +58,7 @@ namespace AstralOutbreak
             else
                 Inputs = new InputManager();
             IsMouseVisible = true;
-            CurrentState = GameState.Playing;
+            CurrentState = GameState.MainMenu;
 
             RoomManager.Active = new Room(2000, 2000, new Vector2(0, 8f));
             if (File.Exists("MapData.dat"))
@@ -97,7 +97,6 @@ namespace AstralOutbreak
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            CurrentState = GameState.MainMenu;
             menuManager = new MenuManager();
             spriteManager = new SpriteManager(spriteBatch);
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
