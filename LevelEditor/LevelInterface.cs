@@ -80,7 +80,7 @@ namespace LevelEditor
                     MapData = new Map(100, 100);
                 }
             else
-                MapData = new Map(100, 100);
+                MapData = new Map(300, 100);
             MapData.Scale = 32;
             CursorItem = CursorMode.Erase;
             CursorSize = 1;
@@ -252,7 +252,8 @@ namespace LevelEditor
 
             //sb.Draw(RoundTexture, new Rectangle(mouseX - 2, mouseY - 2, 5, 5), new Color(Color.Brown, 1));
             //sb.Draw(text, new Rectangle(mouseX - 1, mouseY - 1, 3, 3), col);
-            sb.Draw(RoundTexture, new Rectangle(mouseX - mouseX % Scale, mouseY - mouseY % Scale, CursorSize * Scale, CursorSize * Scale), new Color(col, .125f));
+            sb.Draw(RoundTexture, new Rectangle(mouseX - mouseX % (Scale), mouseY - mouseY % (Scale), CursorSize * Scale, CursorSize * Scale), new Color(col, .25f));
+            
 
 
 
