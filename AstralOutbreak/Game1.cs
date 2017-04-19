@@ -97,10 +97,13 @@ namespace AstralOutbreak
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            menuManager = new MenuManager();
+            menuManager = new MenuManager(this);
             spriteManager = new SpriteManager(spriteBatch);
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("mnuStart"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuOptions"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuResume"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("mnuQuit"));
             // TODO: use this.Content to load your game content here
         }
 
@@ -120,8 +123,6 @@ namespace AstralOutbreak
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             if (Inputs.PauseButtonState == ButtonStatus.Pressed)
             {
                 switch (CurrentState)
