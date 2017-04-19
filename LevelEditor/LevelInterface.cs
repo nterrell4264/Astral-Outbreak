@@ -81,7 +81,7 @@ namespace LevelEditor
                 }
             else
                 MapData = new Map(300, 100);
-            MapData.Scale = 32;
+            MapData.Scale = 28;
             CursorItem = CursorMode.Erase;
             CursorSize = 1;
             MapX = 0;

@@ -59,7 +59,7 @@ namespace AstralOutbreak
             rightButton = Keys.D;
             rollButton = Keys.LeftShift;
             dashButton = Keys.Space;
-            pauseButton = Keys.LeftControl;
+            pauseButton = Keys.Escape;
         }
 
         public void Update() //Updates all buttons

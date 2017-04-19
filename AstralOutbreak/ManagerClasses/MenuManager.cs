@@ -13,10 +13,12 @@ namespace AstralOutbreak
     {
         public List<MenuContent> items { get; private set; } //List of things to draw
         private GameState prevState; //Holds last frame's GameState for automatic updating
+        private Game1 main; //Used for Exit command
 
-        public MenuManager() //Automatically loads the main menu on instantiating.
+        public MenuManager(Game1 game) //Automatically loads the main menu on instantiating.
         {
             items = new List<MenuContent>();
+            main = game;
             LoadMain();
             prevState = GameState.MainMenu;
         }
@@ -24,7 +26,8 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(300, 165, 150, 50, "mnuStart", () => { Game1.CurrentState = GameState.Playing; })); //Start button
+            items.Add(new MenuButton(32, 32, 150, 50, "mnuStart", () => { Game1.CurrentState = GameState.Playing; }));
+            items.Add(new MenuButton(32, 182, 150, 50, "mnuQuit", () => { main.Exit(); }));
         }
         private void LoadOptions() //Loads options menu assets
         {
@@ -32,7 +35,9 @@ namespace AstralOutbreak
         }
         private void LoadPause() //Loads pause menu assets
         {
-            items.Add(new MenuButton(32, 32, 64, 128, "rect", () => { Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(32, 32, 150, 50, "mnuResume", () => { Game1.CurrentState = GameState.Playing; }));
+            items.Add(new MenuButton(32, 107, 150, 50, "mnuOptions", () => { Game1.CurrentState = GameState.OptionsMenu; }));
+            items.Add(new MenuButton(32, 182, 150, 50, "mnuQuit", () => { Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadScreen() //Loads loading screen assets
         {
@@ -44,7 +49,7 @@ namespace AstralOutbreak
         }
         private void LoadGameOver() //Loads game over menu assets
         {
-
+            items.Add(new MenuButton(32, 182, 150, 50, "mnuQuit", () => { Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadUI() //Loads GUI assets
         {

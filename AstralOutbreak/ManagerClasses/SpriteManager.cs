@@ -73,6 +73,10 @@ namespace AstralOutbreak
         public void Draw(SpriteBatch sb, Player player, int i)
         {
             Rectangle pos = new Rectangle();
+            //Mark: Added horizontal flipping
+            SpriteEffects flip = SpriteEffects.None;
+            if (!player.FaceRight)
+                flip = SpriteEffects.FlipHorizontally;
             switch(player.CurrentPlayerState)
             {
                 default:
@@ -107,10 +111,10 @@ namespace AstralOutbreak
                     break;
             }
                   sb.Draw(masterList["PlayerSprites"],
-                  new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                  destinationRectangle: new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
                   (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                   (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
-                  pos, Color.White);
+                  sourceRectangle: pos, color: Color.White, effects: flip);
         }
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
