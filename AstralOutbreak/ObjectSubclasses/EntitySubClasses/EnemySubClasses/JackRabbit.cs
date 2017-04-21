@@ -31,6 +31,7 @@ namespace AstralOutbreak
         {
             //Creates a weapon for the JackRabbit, set at default values currently, we'll have to agree on better values later
             MyWeapon = new Weapon(.8f, 1, 350, 300);
+            MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
 
             prevY = Velocity.Y;
