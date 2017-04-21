@@ -87,13 +87,32 @@ namespace AstralOutbreak
                 case PlayerState.Damaged: 
                     break;
                 case PlayerState.Dashing:
+                    Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
+                    dest.X -= 30;
+                    dest.Width += 60;
+
+                    int t = (int)(player.CurrentActionTime * 8) % 3;
+                    switch (t)
+                    {
+                        default:
+                            pos = new Rectangle(4, 255, 92, 60);
+                            break;
+                        case 1:
+                            pos = new Rectangle(112, 258, 88, 60);
+                            break;
+                        case 2:
+                            pos = new Rectangle(199, 269, 88, 55);
+                            break;
+                    }
                     break;
                 case PlayerState.Falling: pos = new Rectangle(4,78,32,55);
                     break;
                 case PlayerState.Rolling:
                     break;
-                case PlayerState.Running: int t = (int)(player.CurrentActionTime * 8) % 6;
-                    switch (t)
+                case PlayerState.Running: int o = (int)(player.CurrentActionTime * 8) % 6;
+                    switch (o)
                     {
                         default: pos = new Rectangle(6, 6, 28, 55);
                             break;
