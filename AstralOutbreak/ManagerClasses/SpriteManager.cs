@@ -118,6 +118,7 @@ namespace AstralOutbreak
         }
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
+
             switch (enemy.CurrentState)
             {
                 default:
@@ -133,21 +134,23 @@ namespace AstralOutbreak
         }
         public void Draw(SpriteBatch sb, JackRabbit enemy, int i)
         {
+            Rectangle pos = new Rectangle();
+
+            SpriteEffects flip = SpriteEffects.None;
+            if (!enemy.FaceRight)
+                flip = SpriteEffects.FlipHorizontally;
             switch (enemy.CurrentState)
             {
                 default:
                     break;
                 case JackRabbitState.Falling:
+                    pos = new Rectangle();
                     break;
-                case JackRabbitState.Jumping:
+                case JackRabbitState.Idle:
                     break;
-                case JackRabbitState.MovingLeft:
+                case JackRabbitState.Moving:
                     break;
-                case JackRabbitState.MovingRight:
-                    break;
-                case JackRabbitState.ShootingLeft:
-                    break;
-                case JackRabbitState.ShootingRight:
+                case JackRabbitState.Shooting:
                     break;
 
             }
