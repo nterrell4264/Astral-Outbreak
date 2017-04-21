@@ -22,7 +22,7 @@ namespace AstralOutbreak
         private float invulnTime = 0;
         private float previousY;
         private const float DASHSPEED = 900;
-        private const float ROLLSPEED = 900;
+        private const float ROLLSPEED = 450;
 
 
         public PlayerState CurrentPlayerState

@@ -118,6 +118,7 @@ namespace AstralOutbreak
                 case PlayerState.Falling: pos = new Rectangle(4,78,32,55);
                     break;
                 case PlayerState.Rolling:
+                    pos = new Rectangle(3, 181, 32, 56);
                     break;
                 case PlayerState.Running: int o = (int)(player.CurrentActionTime * 8) % 6;
                     switch (o)
