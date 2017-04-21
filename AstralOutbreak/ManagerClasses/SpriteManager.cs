@@ -95,17 +95,17 @@ namespace AstralOutbreak
                 case PlayerState.Running: int t = (int)(player.CurrentActionTime * 8) % 6;
                     switch (t)
                     {
-                        default: pos = new Rectangle(6, 6, 32, 55);
+                        default: pos = new Rectangle(6, 6, 28, 55);
                             break;
-                        case 1: pos = new Rectangle(71,7,32,54);
+                        case 1: pos = new Rectangle(71,7,28,54);
                             break;
-                        case 2: pos = new Rectangle(141,6,32,55);
+                        case 2: pos = new Rectangle(141,6,28,55);
                             break;
-                        case 3: pos = new Rectangle(200,6,32,55);
+                        case 3: pos = new Rectangle(200,6,28,55);
                             break;
-                        case 4: pos = new Rectangle(261,7,32,53);
+                        case 4: pos = new Rectangle(261,7,28,53);
                             break;
-                        case 5: pos = new Rectangle(333,6,32,55);
+                        case 5: pos = new Rectangle(333,6,28,55);
                             break;
                     }
                     break;
