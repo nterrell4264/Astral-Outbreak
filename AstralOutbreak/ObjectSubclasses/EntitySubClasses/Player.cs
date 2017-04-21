@@ -108,7 +108,7 @@ namespace AstralOutbreak
                     {
                         if (Velocity.X < speedLimit / 2)
                             Velocity.X = speedLimit / 2;
-                        Acceleration.X += 5;
+                        Acceleration.X += 10;
 
                         if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
                         {
@@ -127,7 +127,7 @@ namespace AstralOutbreak
                     {
                         if (Velocity.X > -speedLimit / 2)
                             Velocity.X = -speedLimit / 2;
-                        Acceleration.X += -5;
+                        Acceleration.X += -10;
 
                         if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
                         {
@@ -160,7 +160,7 @@ namespace AstralOutbreak
                     }
                     if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
                     {
-                        Velocity.Y -= 200;
+                        Velocity.Y -= 310;
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
@@ -188,7 +188,7 @@ namespace AstralOutbreak
                         }
                         if (Velocity.X < speedLimit / 2)
                             Velocity.X = speedLimit / 2;
-                        Acceleration.X += 5;
+                        Acceleration.X += 10;
 
                         if (Velocity.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
                         {
@@ -212,7 +212,7 @@ namespace AstralOutbreak
                         }
                         if (Velocity.X > -speedLimit / 2)
                             Velocity.X = -speedLimit / 2;
-                        Acceleration.X += -5;
+                        Acceleration.X += -10;
 
                         if (Velocity.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
                         {
@@ -231,7 +231,7 @@ namespace AstralOutbreak
 
                     if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
                     {
-                        Velocity.Y -= 200;
+                        Velocity.Y -= 310;
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
