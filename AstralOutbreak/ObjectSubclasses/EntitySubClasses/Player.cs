@@ -104,7 +104,11 @@ namespace AstralOutbreak
                         }
                         break;
                     }
-                    if (FaceRight)
+                    if (!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
+                    {
+                        Velocity.X = 0;
+                    }
+                    if (Velocity.X > 0)
                     {
                         if (Velocity.X < speedLimit / 2)
                             Velocity.X = speedLimit / 2;
@@ -112,18 +116,16 @@ namespace AstralOutbreak
 
                         if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
                         {
-                            Velocity.X = 0;
-                            FaceRight = false;
+                            Velocity.X = -.1f;
                             break;
                         }
-                        if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
+                        else if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
                     }
-
-                    else
+                    else if(Velocity.X < 0)
                     {
                         if (Velocity.X > -speedLimit / 2)
                             Velocity.X = -speedLimit / 2;
@@ -131,31 +133,57 @@ namespace AstralOutbreak
 
                         if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
                         {
-                            Velocity.X = 0;
-                            FaceRight = true;
+                            Velocity.X = .1f;
                             break;
                         }
-                        if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
+                        else if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
                     }
+                    else
+                    {
+                        if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+                        {
+                            if(!(Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                                Velocity.X = .1f;
+                            break;
+                        }
+                        else if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                        {
+                            Velocity.X = -.1f;
+                            break;
+                        }
+                    }
                     break;
 
                 case PlayerState.Idle:
+                    Velocity.X = 0;
                     if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed)
                         && !(Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
                     {
+                        Velocity.X = -.1f;
                         CurrentPlayerState = PlayerState.Running;
-                        FaceRight = false;
+                        if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
+                        {
+                            Velocity.Y -= 310;
+                            CurrentPlayerState = PlayerState.Falling;
+                            break;
+                        }
                         break;
                     }
                     if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed)
                         && !(Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
                     {
+                        Velocity.X = .1f;
                         CurrentPlayerState = PlayerState.Running;
-                        FaceRight = true;
+                        if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
+                        {
+                            Velocity.Y -= 310;
+                            CurrentPlayerState = PlayerState.Falling;
+                            break;
+                        }
                         break;
                     }
                     if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
@@ -178,7 +206,13 @@ namespace AstralOutbreak
                     break;
 
                 case PlayerState.Running:
-                    if (FaceRight)
+                    if(!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
+                    {
+                        Velocity.X = 0;
+                        currentplayerstate = PlayerState.Idle;
+                        break;
+                    }
+                    if (Velocity.X > 0)
                     {
                         if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
                         {
@@ -192,8 +226,7 @@ namespace AstralOutbreak
 
                         if (Velocity.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
                         {
-                            Velocity.X = 0;
-                            FaceRight = false;
+                            Velocity.X = -.1f;
                             CurrentPlayerState = PlayerState.Running;
                         }
                         if(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
@@ -202,7 +235,7 @@ namespace AstralOutbreak
                             currentplayerstate = PlayerState.Idle;
                         }
                     }
-                    else
+                    else if(Velocity.X < 0)
                     {
                         if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
                         {
@@ -216,18 +249,31 @@ namespace AstralOutbreak
 
                         if (Velocity.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
                         {
-                            Velocity.X = 0;
-                            FaceRight = true;
+                            Velocity.X = .1f;
                             CurrentPlayerState = PlayerState.Running;
                         }
                         
                     }
-
-                    if (Acceleration.X == 0)
+                    else
                     {
-                        Velocity.X = 0;
-                        CurrentPlayerState = PlayerState.Idle;
+                        if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed)
+                        && (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed))
+                        {
+                            Velocity.X = -.1f;
+                        }
+                        else if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed)
+                            && (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
+                        {
+                            Velocity.X = .1f;
+                        }
+                        else
+                            currentplayerstate = PlayerState.Idle;
                     }
+                    //else if (Acceleration.X == 0)
+                    //{
+                    //    Velocity.X = 0;
+                    //    CurrentPlayerState = PlayerState.Idle;
+                    //}
 
                     if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
                     {
@@ -245,16 +291,28 @@ namespace AstralOutbreak
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
-                    if (Velocity.X == 0)
-                        CurrentPlayerState = PlayerState.Idle;
                     break;
 
                 default:
                     CurrentPlayerState = PlayerState.Idle;
                     break;
             }
+            Vector aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
             if (Game1.Inputs.M1Clicked)
-                Shoot(new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y));
+            {
+                Shoot(aim);
+                if (aim.X > 0)
+                    FaceRight = true;
+                else if (aim.X < 0)
+                    FaceRight = false;
+            }
+            else
+            {
+                if (Velocity.X > 0)
+                    FaceRight = true;
+                else if (Velocity.X < 0)
+                    FaceRight = false;
+            }
             previousY = Velocity.Y;
 
             //if(CurrentPlayerState == PlayerState.Damaged)
