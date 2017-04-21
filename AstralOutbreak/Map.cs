@@ -165,7 +165,7 @@ namespace AstralOutbreak
                     return new Slug(new Vector(x * Scale, y * Scale), Scale, Scale, 20);
                     break;
                 case MapItem.Demon:
-                    return new JackRabbit(new Vector(x * Scale, y * Scale), Scale, Scale, 20);
+                    return new JackRabbit(new Vector(x * Scale, y * Scale), 35, 61, 20);
                     break;
                 default:
                     break;
