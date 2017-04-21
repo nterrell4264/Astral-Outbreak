@@ -79,7 +79,7 @@
 /processorParam:TextureFormat=Color
 /build:mnuResume.png
 
-#begin PlayerSprites
+#begin mnuRetry.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -89,7 +89,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:PlayerSprites
+/build:mnuRetry.png
 
 #begin JackrabbitSprites
 /importer:TextureImporter
@@ -103,7 +103,7 @@
 /processorParam:TextureFormat=Color
 /build:JackrabbitSprites
 
-#begin mnuRetry.png
+#begin PlayerSprites
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -113,5 +113,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:mnuRetry.png
+/build:PlayerSprites
 
