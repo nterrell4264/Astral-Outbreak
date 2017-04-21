@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
-    public enum PlayerState { Idle, Falling, Rolling, Dashing, Running, Damaged}
+    public enum PlayerState { Idle, Falling, Rolling, Dashing, Running}
 
     
     /// <summary>
@@ -25,7 +25,7 @@ namespace AstralOutbreak
         public PlayerState CurrentPlayerState
         {
             get { return currentplayerstate; }
-            set
+            private set
             {
                 currentplayerstate = value;
                 CurrentActionTime = 0;
@@ -59,8 +59,7 @@ namespace AstralOutbreak
             {
                 if (value < Health && invulnTime == 0)
                 {
-                    CurrentPlayerState = PlayerState.Damaged;
-                    invulnTime = 0.2f;
+                    invulnTime = 0.2f;  
                 }
                 base.Health = value;
                 IsDead = Health <= 0;
@@ -95,9 +94,9 @@ namespace AstralOutbreak
             {
                 //Dash
                 case PlayerState.Dashing:
-                    if (CurrentActionTime > .5f)
+                    if (CurrentActionTime > .25f)
                     {
-                        CurrentPlayerState = PlayerState.Running;
+                        CurrentPlayerState = PlayerState.Falling;
                         MaxVelocity.X = 300f;
                         Velocity.X /= 2;
                         Gravity = true;
@@ -138,6 +137,15 @@ namespace AstralOutbreak
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        {
+                            MaxVelocity.X = 600f;
+                            Velocity.X = MaxVelocity.X;
+                            CurrentPlayerState = PlayerState.Dashing;
+                            Velocity.Y = 0;
+                            Gravity = false;
+                            break;
+                        }
                     }
                     else if(Velocity.X < 0)
                     {
@@ -156,6 +164,15 @@ namespace AstralOutbreak
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        {
+                            MaxVelocity.X = 600f;
+                            Velocity.X = -MaxVelocity.X;
+                            CurrentPlayerState = PlayerState.Dashing;
+                            Velocity.Y = 0;
+                            Gravity = false;
+                            break;
+                        }
                     }
                     else
                     {
@@ -168,6 +185,18 @@ namespace AstralOutbreak
                         else if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
                         {
                             Velocity.X = -.1f;
+                            break;
+                        }
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        {
+                            MaxVelocity.X = 600f;
+                            if (FaceRight)
+                                Velocity.X = MaxVelocity.X;
+                            else
+                                Velocity.X = -MaxVelocity.X;
+                            CurrentPlayerState = PlayerState.Dashing;
+                            Velocity.Y = 0;
+                            Gravity = false;
                             break;
                         }
                     }
@@ -311,11 +340,6 @@ namespace AstralOutbreak
                         else
                             CurrentPlayerState = PlayerState.Idle;
                     }
-                    //else if (Acceleration.X == 0)
-                    //{
-                    //    Velocity.X = 0;
-                    //    CurrentPlayerState = PlayerState.Idle;
-                    //}
 
                     if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
                     {
@@ -340,7 +364,7 @@ namespace AstralOutbreak
                     break;
             }
             Vector aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
-            if (Game1.Inputs.M1Clicked)
+            if (Game1.Inputs.M1Clicked && CurrentPlayerState != PlayerState.Dashing)
             {
                 Shoot(aim);
                 if (aim.X > 0)
@@ -357,76 +381,7 @@ namespace AstralOutbreak
             }
             previousY = Velocity.Y;
 
-            //if(CurrentPlayerState == PlayerState.Damaged)
-            //{
-            //    if (CurrentActionTime >= 0.1f)
-            //    {
-            //        if (Velocity.Y == 0) currentplayerstate = PlayerState.Idle;
-            //        else currentplayerstate = PlayerState.Falling;
-            //    }
-            //    else
-            //    {
-            //        SpeedLimit = 400;
-            //        if (FaceRight) Velocity.X = 400;
-            //        else Velocity.X = -400;
-            //        SpeedLimit = speedLimit;
-            //        return;
-            //    }
-            //}
-            //if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
-            //{
-            //    if (Velocity.X > -speedLimit / 2)
-            //        Velocity.X = -speedLimit / 2;
-            //    Acceleration.X += -5;
-            //    FaceRight = false;
-            //    CurrentPlayerState = PlayerState.Running;
-            //}
-            //if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
-            //{
-            //    if (Velocity.X < speedLimit / 2)
-            //        Velocity.X = speedLimit / 2;
-            //    Acceleration.X += 5;
-            //    FaceRight = true;
-            //    CurrentPlayerState = PlayerState.Running;
-            //}
-            ////Temporary Jump
-            //if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed && CurrentPlayerState != PlayerState.Falling) && Velocity.Y == 0)
-            //{
-            //    Velocity.Y -= 200;
-            //    CurrentPlayerState = PlayerState.Falling;
-            //}
-            //if ((Game1.Inputs.RollButtonState == ButtonStatus.Held || Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
-            //{
-            //    invulnTime = 0.3f;
-            //    CurrentActionTime = 0.3f;
-            //    SpeedLimit = 2 * speedLimit;
-            //    if (FaceRight) Velocity.X = 2 * speedLimit;
-            //    else Velocity.X = -2 * speedLimit;
-            //    SpeedLimit = speedLimit;
-            //    CurrentPlayerState = PlayerState.Rolling;
-            //}
-            //
-            ////Makes sure player stops when buttons arent pressed and can change direction easily
-            //if (Velocity.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
-            //{
-            //    Velocity.X = 0;
-            //    FaceRight = false;
-            //    CurrentPlayerState = PlayerState.Running;
-            //}
-            //else if (Velocity.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
-            //{
-            //    Velocity.X = 0;
-            //    FaceRight = true;
-            //    CurrentPlayerState = PlayerState.Running;
-            //}
-            //else if (Acceleration.X == 0)
-            //{
-            //    Velocity.X = 0;
-            //    CurrentPlayerState = PlayerState.Idle;
-            //}
-            //if (Game1.Inputs.M1Clicked)
-            //    Shoot(new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y));
-
+           
             
             
         }

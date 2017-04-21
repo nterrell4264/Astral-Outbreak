@@ -28,7 +28,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 64;
+        private const float BUFFER = 1400;
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
@@ -121,7 +121,7 @@ namespace AstralOutbreak
         {
             if (MapData != null)
             {
-                List<GameObject> newData = MapData.Load(CameraX, CameraY, Width, Height, BUFFER);
+                List<GameObject> newData = MapData.Load(CameraX, CameraY, Width, Height, BUFFER / 2);
                 lock (listLock)
                 {
                     for (int i = 0; i < newData.Count; i++)

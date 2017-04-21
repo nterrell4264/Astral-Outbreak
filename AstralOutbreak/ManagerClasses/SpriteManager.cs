@@ -87,8 +87,6 @@ namespace AstralOutbreak
                 case PlayerState.Idle:
                     pos = new Rectangle(3, 181, 32, 56);
                     break;
-                case PlayerState.Damaged: 
-                    break;
                 case PlayerState.Dashing:
                     dest.Width += 60;
                     if (player.FaceRight == true)
