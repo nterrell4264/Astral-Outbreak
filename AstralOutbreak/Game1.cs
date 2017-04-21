@@ -160,7 +160,6 @@ namespace AstralOutbreak
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
             if(CurrentState == GameState.Playing)
             {
@@ -170,6 +169,7 @@ namespace AstralOutbreak
                 Texture2D texture = spriteManager.masterList[menuPart.TextureName];
                 spriteBatch.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
             }
+            spriteBatch.DrawString(font, "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

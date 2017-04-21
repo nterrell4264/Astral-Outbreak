@@ -76,21 +76,34 @@ namespace AstralOutbreak
             MyWeapon.BulletSize = 5;
             previousY = Velocity.Y;
         }
-
+        
+        /// <summary>
+        /// Called once per update
+        /// </summary>
+        /// <param name="deltaTime"></param>
         public override void Step(float deltaTime)
         {
             base.Step(deltaTime);
+            //Reset accel
             Acceleration.X = 0;
             Acceleration.Y = 0;
             if (invulnTime > 0)
                 invulnTime -= deltaTime;
 
+            //Single state drive for the player
             switch (CurrentPlayerState)
             {
+                //Dash
                 case PlayerState.Dashing:
-
+                    if (CurrentActionTime > .5f)
+                    {
+                        CurrentPlayerState = PlayerState.Running;
+                        MaxVelocity.X = 300f;
+                        Velocity.X /= 2;
+                        Gravity = true;
+                    }
                     break;
-
+                //In the air
                 case PlayerState.Falling:
                     if(previousY == Velocity.Y)
                     {
@@ -159,7 +172,7 @@ namespace AstralOutbreak
                         }
                     }
                     break;
-
+                //Not moving
                 case PlayerState.Idle:
                     Velocity.X = 0;
                     if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed)
@@ -201,17 +214,28 @@ namespace AstralOutbreak
                     }
                     if (Velocity.Y != previousY)
                             CurrentPlayerState = PlayerState.Falling;
+                    if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                    {
+                        MaxVelocity.X = 600f;
+                        if (FaceRight)
+                            Velocity.X = MaxVelocity.X;
+                        else
+                            Velocity.X = -MaxVelocity.X;
+                        CurrentPlayerState = PlayerState.Dashing;
+                        Gravity = false;
+                        break;
+                    }
                     break;
-
+                //Roll sequence
                 case PlayerState.Rolling:
 
                     break;
-
+                //Moving on the ground
                 case PlayerState.Running:
                     if(!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
                     {
                         Velocity.X = 0;
-                        currentplayerstate = PlayerState.Idle;
+                        CurrentPlayerState = PlayerState.Idle;
                         break;
                     }
                     if (Velocity.X > 0)
@@ -219,7 +243,7 @@ namespace AstralOutbreak
                         if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
-                            currentplayerstate = PlayerState.Idle;
+                            CurrentPlayerState = PlayerState.Idle;
                             break;
                         }
                         if (Velocity.X < speedLimit / 2)
@@ -234,7 +258,15 @@ namespace AstralOutbreak
                         if(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
-                            currentplayerstate = PlayerState.Idle;
+                            CurrentPlayerState = PlayerState.Idle;
+                        }
+                        if(Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        {
+                            MaxVelocity.X = 600f;
+                            Velocity.X = MaxVelocity.X;
+                            CurrentPlayerState = PlayerState.Dashing;
+                            Gravity = false;
+                            break;
                         }
                     }
                     else if(Velocity.X < 0)
@@ -242,7 +274,7 @@ namespace AstralOutbreak
                         if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
-                            currentplayerstate = PlayerState.Idle;
+                            CurrentPlayerState = PlayerState.Idle;
                             break;
                         }
                         if (Velocity.X > -speedLimit / 2)
@@ -254,7 +286,15 @@ namespace AstralOutbreak
                             Velocity.X = .1f;
                             CurrentPlayerState = PlayerState.Running;
                         }
-                        
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        {
+                            MaxVelocity.X = 600f;
+                            Velocity.X = -MaxVelocity.X;
+                            CurrentPlayerState = PlayerState.Dashing;
+                            Gravity = false;
+                            break;
+                        }
+
                     }
                     else
                     {
@@ -269,7 +309,7 @@ namespace AstralOutbreak
                             Velocity.X = .1f;
                         }
                         else
-                            currentplayerstate = PlayerState.Idle;
+                            CurrentPlayerState = PlayerState.Idle;
                     }
                     //else if (Acceleration.X == 0)
                     //{
