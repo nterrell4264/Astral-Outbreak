@@ -100,13 +100,15 @@ namespace AstralOutbreak
             menuManager = new MenuManager(this);
             spriteManager = new SpriteManager();
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("mnuStart"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("mnuOptions"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("mnuResume"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("mnuQuit"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
-           
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/StartButton"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/OptionsButton"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/ResumeButton"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/RetryButton"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/QuitButton"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/SmallMenuBG"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/LargeMenuBG"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -160,16 +162,8 @@ namespace AstralOutbreak
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            // TEST DRAW WILL REMOVE WHEN SPRITEMANAGER WORKS
-            if(CurrentState == GameState.Playing)
-            {
-                spriteManager.Update(spriteBatch);
-            }
-            foreach (MenuContent menuPart in menuManager.items) {
-                Texture2D texture = spriteManager.masterList[menuPart.TextureName];
-                spriteBatch.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
-            }
             spriteBatch.DrawString(font, "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
+            spriteManager.Update(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
