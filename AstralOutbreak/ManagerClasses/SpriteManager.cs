@@ -72,6 +72,9 @@ namespace AstralOutbreak
         //Sub methods of Draw made for each type of entity
         public void Draw(SpriteBatch sb, Player player, int i)
         {
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
             Rectangle pos = new Rectangle();
             //Mark: Added horizontal flipping
             SpriteEffects flip = SpriteEffects.None;
@@ -87,12 +90,11 @@ namespace AstralOutbreak
                 case PlayerState.Damaged: 
                     break;
                 case PlayerState.Dashing:
-                    Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
-                    dest.X -= 30;
                     dest.Width += 60;
-
+                    if (player.FaceRight == true)
+                    {
+                        dest.X -= 60;
+                    }
                     int t = (int)(player.CurrentActionTime * 8) % 3;
                     switch (t)
                     {
@@ -100,10 +102,10 @@ namespace AstralOutbreak
                             pos = new Rectangle(4, 255, 92, 60);
                             break;
                         case 1:
-                            pos = new Rectangle(112, 258, 88, 60);
+                            pos = new Rectangle(105, 258, 82, 60);
                             break;
                         case 2:
-                            pos = new Rectangle(199, 269, 88, 55);
+                            pos = new Rectangle(199, 257, 88, 55);
                             break;
                     }
                     break;
@@ -130,9 +132,7 @@ namespace AstralOutbreak
                     break;
             }
                   sb.Draw(masterList["PlayerSprites"],
-                  destinationRectangle: new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                  destinationRectangle: dest,
                   sourceRectangle: pos, color: Color.White, effects: flip);
         }
         public void Draw(SpriteBatch sb, Slug enemy, int i)

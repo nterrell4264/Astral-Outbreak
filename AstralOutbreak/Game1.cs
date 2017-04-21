@@ -106,7 +106,7 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("mnuQuit"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("DashSprite"));
+           
 
             // TODO: use this.Content to load your game content here
         }
