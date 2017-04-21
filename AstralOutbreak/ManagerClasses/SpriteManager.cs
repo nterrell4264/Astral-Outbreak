@@ -139,7 +139,7 @@ namespace AstralOutbreak
             SpriteEffects flip = SpriteEffects.None;
             if (!enemy.FaceRight)
                 flip = SpriteEffects.FlipHorizontally;
-            switch (enemy.CurrentState)
+            switch (enemy.CurrentJackRabbitState)
             {
                 default:
                     break;
