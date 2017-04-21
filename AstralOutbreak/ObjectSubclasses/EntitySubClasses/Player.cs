@@ -21,6 +21,7 @@ namespace AstralOutbreak
         private float speedLimit = 300;
         private float invulnTime = 0;
         private float previousY;
+        private const float DASHSPEED = 900;
 
         public PlayerState CurrentPlayerState
         {
@@ -97,7 +98,7 @@ namespace AstralOutbreak
                     if (CurrentActionTime > .25f)
                     {
                         CurrentPlayerState = PlayerState.Falling;
-                        MaxVelocity.X = 300f;
+                        MaxVelocity.X = speedLimit;
                         Velocity.X /= 2;
                         Gravity = true;
                     }
@@ -139,7 +140,7 @@ namespace AstralOutbreak
                         }
                         if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
                         {
-                            MaxVelocity.X = 600f;
+                            MaxVelocity.X = DASHSPEED;
                             Velocity.X = MaxVelocity.X;
                             CurrentPlayerState = PlayerState.Dashing;
                             Velocity.Y = 0;
@@ -166,7 +167,7 @@ namespace AstralOutbreak
                         }
                         if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
                         {
-                            MaxVelocity.X = 600f;
+                            MaxVelocity.X = DASHSPEED;
                             Velocity.X = -MaxVelocity.X;
                             CurrentPlayerState = PlayerState.Dashing;
                             Velocity.Y = 0;
@@ -189,7 +190,7 @@ namespace AstralOutbreak
                         }
                         if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
                         {
-                            MaxVelocity.X = 600f;
+                            MaxVelocity.X = DASHSPEED;
                             if (FaceRight)
                                 Velocity.X = MaxVelocity.X;
                             else
@@ -245,7 +246,7 @@ namespace AstralOutbreak
                             CurrentPlayerState = PlayerState.Falling;
                     if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
                     {
-                        MaxVelocity.X = 600f;
+                        MaxVelocity.X = DASHSPEED;
                         if (FaceRight)
                             Velocity.X = MaxVelocity.X;
                         else
@@ -291,7 +292,7 @@ namespace AstralOutbreak
                         }
                         if(Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
                         {
-                            MaxVelocity.X = 600f;
+                            MaxVelocity.X = DASHSPEED;
                             Velocity.X = MaxVelocity.X;
                             CurrentPlayerState = PlayerState.Dashing;
                             Gravity = false;
@@ -317,7 +318,7 @@ namespace AstralOutbreak
                         }
                         if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
                         {
-                            MaxVelocity.X = 600f;
+                            MaxVelocity.X = DASHSPEED;
                             Velocity.X = -MaxVelocity.X;
                             CurrentPlayerState = PlayerState.Dashing;
                             Gravity = false;
