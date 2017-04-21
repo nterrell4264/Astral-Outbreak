@@ -117,6 +117,7 @@ namespace AstralOutbreak
                         if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
                         {
                             Velocity.X = -.1f;
+                            Acceleration.X = -10;
                             break;
                         }
                         else if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
@@ -134,6 +135,7 @@ namespace AstralOutbreak
                         if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
                         {
                             Velocity.X = .1f;
+                            Acceleration.X = 10;
                             break;
                         }
                         else if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
