@@ -15,6 +15,9 @@ namespace AstralOutbreak
         public bool IsDead { get; set; }
         //Bool that denotes direction faced
         public bool FaceRight { get; set; }
+        //Bool that denotes if the entity is trying to shoot
+        public bool Shooting { get; set; }
+
         //Float that signifies the entities current health
         private float health;
         public virtual float Health
@@ -50,11 +53,18 @@ namespace AstralOutbreak
         public void Shoot(Vector direction)
         {
             if (MyWeapon != null)
-                if (ShotTimer <= 0)
+            {
+                if (ShotTimer >= MyWeapon.ShotDelay)
                 {
                     MyWeapon.Shoot(direction);
-                    ShotTimer = MyWeapon.ShotDelay;
+                    ShotTimer = 0;
+                    Shooting = false;
                 }
+                else
+                {
+                    Shooting = true;
+                }
+            }
         }
 
         /// <summary>
@@ -64,8 +74,10 @@ namespace AstralOutbreak
         public virtual void Step(float deltaTime)
         {
             CurrentActionTime += deltaTime;
-            if (ShotTimer > 0)
-                ShotTimer -= deltaTime;
+            if (Shooting)
+                ShotTimer += deltaTime;
+            else
+                ShotTimer = 0;
         }
     }
 }

@@ -22,6 +22,8 @@ namespace AstralOutbreak
         private float invulnTime = 0;
         private float previousY;
         private const float DASHSPEED = 900;
+        private const float ROLLSPEED = 900;
+
 
         public PlayerState CurrentPlayerState
         {
@@ -239,6 +241,13 @@ namespace AstralOutbreak
                     }
                     if ((Game1.Inputs.RollButtonState == ButtonStatus.Held || Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
                     {
+                        MaxVelocity.X = ROLLSPEED;
+                        if (FaceRight)
+                            Velocity.X = MaxVelocity.X;
+                        else
+                            Velocity.X = -MaxVelocity.X;
+                        Position.Y += Height / 2;
+                        Height = Height / 2;
                         CurrentPlayerState = PlayerState.Rolling;
                         break;
                     }
@@ -258,7 +267,15 @@ namespace AstralOutbreak
                     break;
                 //Roll sequence
                 case PlayerState.Rolling:
+                    if (CurrentActionTime > .25f)
+                    {
+                        CurrentPlayerState = PlayerState.Falling;
+                        MaxVelocity.X = speedLimit;
+                        Velocity.X /= 2;
+                        Position.Y -= Height;
+                        Height *= 2;
 
+                    }
                     break;
                 //Moving on the ground
                 case PlayerState.Running:
@@ -350,6 +367,17 @@ namespace AstralOutbreak
                     }
                     if ((Game1.Inputs.RollButtonState == ButtonStatus.Held || Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
                     {
+                        MaxVelocity.X = ROLLSPEED;
+                        if (Velocity.X > 0)
+                            Velocity.X = MaxVelocity.X;
+                        else if(Velocity.X < 0)
+                            Velocity.X = -MaxVelocity.X;
+                        else if (FaceRight)
+                            Velocity.X = MaxVelocity.X;
+                        else
+                            Velocity.X = -MaxVelocity.X;
+                        Position.Y += Height / 2;
+                        Height = Height / 2;
                         CurrentPlayerState = PlayerState.Rolling;
                         break;
                     }
