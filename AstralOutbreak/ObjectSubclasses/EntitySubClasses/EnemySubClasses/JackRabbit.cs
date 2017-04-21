@@ -30,7 +30,7 @@ namespace AstralOutbreak
         public JackRabbit(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
             //Creates a weapon for the JackRabbit, set at default values currently, we'll have to agree on better values later
-            MyWeapon = new Weapon();
+            MyWeapon = new Weapon(.8f, 1, 350, 300);
             MyWeapon.Source = this;
 
             prevY = Velocity.Y;
