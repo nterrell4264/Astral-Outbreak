@@ -144,16 +144,44 @@ namespace AstralOutbreak
                 default:
                     break;
                 case JackRabbitState.Falling:
-                    pos = new Rectangle();
+                    pos = new Rectangle(5,160,31,61);
                     break;
                 case JackRabbitState.Idle:
+                    pos = new Rectangle(4, 227, 35, 59);
                     break;
                 case JackRabbitState.Moving:
+                    int t = (int)(enemy.CurrentActionTime * 8) % 6;
+                    switch (t)
+                    {
+                        default:
+                            pos = new Rectangle(6, 6, 32, 55);
+                            break;
+                        case 1:
+                            pos = new Rectangle(71, 7, 32, 54);
+                            break;
+                        case 2:
+                            pos = new Rectangle(141, 6, 32, 55);
+                            break;
+                        case 3:
+                            pos = new Rectangle(200, 6, 32, 55);
+                            break;
+                        case 4:
+                            pos = new Rectangle(261, 7, 32, 53);
+                            break;
+                        case 5:
+                            pos = new Rectangle(333, 6, 32, 55);
+                            break;
+                    }
                     break;
                 case JackRabbitState.Shooting:
                     break;
 
             }
+            sb.Draw(masterList["JackrabbitSprites"],
+                  destinationRectangle: new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                  sourceRectangle: pos, color: Color.White, effects: flip);
         }
 
         public void AddTexture(Texture2D texture)
