@@ -16,7 +16,15 @@ namespace AstralOutbreak
         //prevY is a float used to store the previous Y value of the position, letting us know if the object is falling
         private float prevY;
 
-        public JackRabbitState CurrentState { get { return currentState; } }
+        public JackRabbitState CurrentJackRabbitState
+        {
+            get { return currentState; }
+            set
+            {
+                currentState = value;
+                CurrentActionTime = 0;
+            }
+        }
 
         public JackRabbit(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
