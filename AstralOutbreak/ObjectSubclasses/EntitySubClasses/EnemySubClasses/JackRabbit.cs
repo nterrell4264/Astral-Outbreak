@@ -42,6 +42,34 @@ namespace AstralOutbreak
             {
                 case JackRabbitState.Moving:
 
+                    if (Position.X == RoomManager.Active.PlayerOne.Position.X && Position.Y != RoomManager.Active.PlayerOne.Position.Y)
+                    {
+                        currentState = JackRabbitState.Idle;
+                        break;
+                    }
+
+                    if (FaceRight)
+                    {
+                        //Checks if the player is to the left of the JackRabbit, and will move towards the player
+                        if (RoomManager.Active.PlayerOne.Position.X < Position.X)
+                        {
+                            FaceRight = false;
+                            Velocity.X = -50;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        //Checks if the player is to the right of the JackRabbit, and will move towards the player
+                        if (RoomManager.Active.PlayerOne.Position.X > Position.X)
+                        {
+                            currentState = JackRabbitState.Moving;
+                            FaceRight = true;
+                            Velocity.X = 50;
+                            break;
+                        }
+                    }
+
                     //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
                     if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
                     {
@@ -65,7 +93,9 @@ namespace AstralOutbreak
                     if (prevY > Velocity.Y)
                     {
                         currentState = JackRabbitState.Falling;
+                        break;
                     }
+
                     break;
 
                 case JackRabbitState.Idle:
