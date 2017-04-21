@@ -204,6 +204,33 @@ namespace AstralOutbreak
                     }
                     break;
                 case JackRabbitState.Shooting:
+
+                    int s = (int)(enemy.CurrentActionTime * 8) % 6;
+                    switch (s)
+                    {
+                        default:
+                            pos = new Rectangle(6, 28, 32, 63);
+                            break;
+                        case 1:
+                            pos = new Rectangle(68, 28, 37, 63);
+                            break;
+                        case 2:
+                            pos = new Rectangle(131, 28, 41, 63);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 3:
+                            pos = new Rectangle(205, 28, 34, 63);
+                            break;
+                        case 4:
+                            pos = new Rectangle(270, 28, 41, 63);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 5:
+                            pos = new Rectangle(329, 28, 30, 63);
+                            break;
+                    }
                     break;
 
             }
