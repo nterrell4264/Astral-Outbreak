@@ -39,29 +39,37 @@ namespace AstralOutbreak
         //Methods
         public void Update(SpriteBatch sb)//Will call individual Draw Methods for each entity based on what called it
         {
-            //Roommanager.active.physicsobjects is the list of objects
-            for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
+            if (Game1.CurrentState == GameState.Playing)
             {
-                if (RoomManager.Active.PhysicsObjects[i] is Player)
+                //Roommanager.active.physicsobjects is the list of objects
+                for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
                 {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
+                    if (RoomManager.Active.PhysicsObjects[i] is Player)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
+                    }
+                    else if (RoomManager.Active.PhysicsObjects[i] is Slug)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
+                    }
+                    else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
+                    }
+                    else
+                    {
+                        sb.Draw(masterList["rect"],
+                        new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                        (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                        (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                        Color.Black);
+                    }
                 }
-                else if (RoomManager.Active.PhysicsObjects[i] is Slug)
-                {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
-                }
-                else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
-                {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
-                }
-                else
-                {
-                    sb.Draw(masterList["rect"],
-                    new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                    (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                    (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
-                    Color.Black);
-                }
+            }
+            foreach (MenuContent menuPart in MenuManager.items)
+            {
+                Texture2D texture = masterList["Menus/" + menuPart.TextureName];
+                sb.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
             }
         }
         // spriteBatch.Draw(spriteManager.masterList["rect"],

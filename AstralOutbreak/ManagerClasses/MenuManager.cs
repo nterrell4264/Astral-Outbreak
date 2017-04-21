@@ -11,7 +11,7 @@ namespace AstralOutbreak
 {
    class MenuManager
     {
-        public List<MenuContent> items { get; private set; } //List of things to draw
+        public static List<MenuContent> items { get; private set; } //List of things to draw
         private GameState prevState; //Holds last frame's GameState for automatic updating
         private Game1 main; //Used for Exit command
 
@@ -26,18 +26,27 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(32, 32, 150, 50, "mnuStart", () => { Game1.CurrentState = GameState.Playing; }));
-            items.Add(new MenuButton(32, 182, 150, 50, "mnuQuit", () => { main.Exit(); }));
+            items.Add(new MenuButton(300, 250, 150, 75, "StartButton", () => { Game1.CurrentState = GameState.Playing; }));
+            items.Add(new MenuButton(200, 350, 150, 75, "OptionsButton", () => { Game1.CurrentState = GameState.OptionsMenu; }));
+            items.Add(new MenuButton(400, 350, 150, 75, "QuitButton", () => { main.Exit(); }));
         }
         private void LoadOptions() //Loads options menu assets
         {
-
+            items.Add(new MenuContent(475, 50, "SmallMenuBG"));
+            items.Add(new MenuContent(475, 100, "SmallMenuBG"));
+            items.Add(new MenuContent(475, 150, "SmallMenuBG"));
+            items.Add(new MenuContent(475, 200, "SmallMenuBG"));
+            items.Add(new MenuContent(475, 250, "SmallMenuBG"));
+            items.Add(new MenuContent(475, 300, "SmallMenuBG"));
+            items.Add(new MenuContent(475, 350, "SmallMenuBG"));
+            items.Add(new MenuContent(50, 50, "LargeMenuBG"));
+            items.Add(new MenuContent(50, 200, "LargeMenuBG"));
         }
         private void LoadPause() //Loads pause menu assets
         {
-            items.Add(new MenuButton(32, 32, 150, 50, "mnuResume", () => { Game1.CurrentState = GameState.Playing; }));
-            items.Add(new MenuButton(32, 107, 150, 50, "mnuOptions", () => { Game1.CurrentState = GameState.OptionsMenu; }));
-            items.Add(new MenuButton(32, 182, 150, 50, "mnuQuit", () => { Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(300, 50, 150, 75, "ResumeButton", () => { Game1.CurrentState = GameState.Playing; }));
+            items.Add(new MenuButton(300, 200, 150, 75, "OptionsButton", () => { Game1.CurrentState = GameState.OptionsMenu; }));
+            items.Add(new MenuButton(300, 350, 150, 75, "QuitButton", () => { Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadScreen() //Loads loading screen assets
         {
@@ -49,7 +58,8 @@ namespace AstralOutbreak
         }
         private void LoadGameOver() //Loads game over menu assets
         {
-            items.Add(new MenuButton(32, 182, 150, 50, "mnuQuit", () => { Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(32, 182, 150, 75, "RetryButton", () => { Game1.CurrentState = GameState.Playing; })); //Change to RoomManager.Active.LoadMap once that function exists.
+            items.Add(new MenuButton(32, 282, 150, 75, "QuitButton", () => { Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadUI() //Loads GUI assets
         {

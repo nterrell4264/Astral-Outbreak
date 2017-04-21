@@ -52,7 +52,7 @@ namespace AstralOutbreak
             get { return mouseState.RightButton.Equals(ButtonState.Pressed); }
         }
         
-        public InputManager() //Hard codes keys - only called if JSON fails to load from file
+        public InputManager() //Hard codes keys - Called on first boot or if JSON fails to load from file
         {
             jumpButton = Keys.W;
             leftButton = Keys.A;
