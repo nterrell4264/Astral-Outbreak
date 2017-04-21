@@ -44,82 +44,84 @@ namespace AstralOutbreak
             switch (CurrentJackRabbitState)
             {
                 case JackRabbitState.Moving:
-
-                    if (Position.X >= RoomManager.Active.PlayerOne.Position.X - 10 && Position.X <= RoomManager.Active.PlayerOne.Position.X + 10 && Position.Y != RoomManager.Active.PlayerOne.Position.Y)
-                    {
-                        CurrentJackRabbitState = JackRabbitState.Idle;
-                        Velocity.X = 0;
-                        break;
-                    }
-
-                    if (FaceRight)
-                    {
-                        //Checks if the player is to the left of the JackRabbit, and will move towards the player
-                        if (RoomManager.Active.PlayerOne.Position.X < Position.X)
+                    if (CheckLineOfSight(RoomManager.MapData))
+                    { 
+                        if (Position.X >= RoomManager.Active.PlayerOne.Position.X - 10 && Position.X <= RoomManager.Active.PlayerOne.Position.X + 10 && Position.Y != RoomManager.Active.PlayerOne.Position.Y)
                         {
-                            FaceRight = false;
-                            Velocity.X = -50;
-                            //if (Velocity.X < 0 && prevX == Position.X)
-                            //{
-                            //    currentState = JackRabbitState.Idle;
-                            //    break;
-                            //}
+                            CurrentJackRabbitState = JackRabbitState.Idle;
+                            Velocity.X = 0;
                             break;
                         }
-                        Velocity.X = 50;
-                        //if (Velocity.X > 0 && prevX == Position.X)
-                        //{
-                        //    currentState = JackRabbitState.Idle;
-                        //    break;
-                        //}
-                    }
-                    else
-                    {
-                        //Checks if the player is to the right of the JackRabbit, and will move towards the player
-                        if (RoomManager.Active.PlayerOne.Position.X > Position.X)
+
+                        if (FaceRight)
                         {
-                            CurrentJackRabbitState = JackRabbitState.Moving;
-                            FaceRight = true;
+                            //Checks if the player is to the left of the JackRabbit, and will move towards the player
+                            if (RoomManager.Active.PlayerOne.Position.X < Position.X)
+                            {
+                                FaceRight = false;
+                                Velocity.X = -50;
+                                //if (Velocity.X < 0 && prevX == Position.X)
+                                //{
+                                //    currentState = JackRabbitState.Idle;
+                                //    break;
+                                //}
+                                break;
+                            }
                             Velocity.X = 50;
                             //if (Velocity.X > 0 && prevX == Position.X)
                             //{
                             //    currentState = JackRabbitState.Idle;
                             //    break;
                             //}
+                        }
+                        else
+                        {
+                            //Checks if the player is to the right of the JackRabbit, and will move towards the player
+                            if (RoomManager.Active.PlayerOne.Position.X > Position.X)
+                            {
+                                CurrentJackRabbitState = JackRabbitState.Moving;
+                                FaceRight = true;
+                                Velocity.X = 50;
+                                //if (Velocity.X > 0 && prevX == Position.X)
+                                //{
+                                //    currentState = JackRabbitState.Idle;
+                                //    break;
+                                //}
+                                break;
+                            }
+                            Velocity.X = -50;
+                            //if (Velocity.X < 0 && prevX == Position.X)
+                            //{
+                            //    currentState = JackRabbitState.Idle;
+                            //    break;
+                            //}
+                        }
+
+                        //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
+                        if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                        {
+                            Velocity.X = 0;
+                            CurrentJackRabbitState = JackRabbitState.Shooting;
+                            FaceRight = false;
+                            Shoot(new Vector(-1, 0));
                             break;
                         }
-                        Velocity.X = -50;
-                        //if (Velocity.X < 0 && prevX == Position.X)
-                        //{
-                        //    currentState = JackRabbitState.Idle;
-                        //    break;
-                        //}
-                    }
+                        //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
+                        else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                        {
+                            Velocity.X = 0;
+                            CurrentJackRabbitState = JackRabbitState.Shooting;
+                            FaceRight = true;
+                            Shoot(new Vector(1, 0));
+                            break;
+                        }
 
-                    //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
-                    if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
-                    {
-                        Velocity.X = 0;
-                        CurrentJackRabbitState = JackRabbitState.Shooting;
-                        FaceRight = false;
-                        Shoot(new Vector(-1, 0));
-                        break;
-                    }
-                    //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
-                    else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
-                    {
-                        Velocity.X = 0;
-                        CurrentJackRabbitState = JackRabbitState.Shooting;
-                        FaceRight = true;
-                        Shoot(new Vector(1, 0));
-                        break;
-                    }
-
-                    //If the the previous y position is larger than the current, sets the JackRabbit to falling, move this to the top of the if statements to give this state priority
-                    if (prevY < Velocity.Y)
-                    {
-                        CurrentJackRabbitState = JackRabbitState.Falling;
-                        break;
+                        //If the the previous y position is larger than the current, sets the JackRabbit to falling, move this to the top of the if statements to give this state priority
+                        if (prevY < Velocity.Y)
+                        {
+                            CurrentJackRabbitState = JackRabbitState.Falling;
+                            break;
+                        }
                     }
                     break;
 

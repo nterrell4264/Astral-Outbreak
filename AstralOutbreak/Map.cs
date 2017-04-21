@@ -263,5 +263,46 @@ namespace AstralOutbreak
             return list;
         }
 
+        public bool CheckLineOfSight(float x1, float y1, float x2, float y2)
+        {
+            x1 = (int)((x1) / Scale);
+            y1 = (int)((y1) / Scale);
+            x2 = (int)((x2) / Scale);
+            y2 = (int)((y2) / Scale);
+
+            if(y1 == y2)
+            {
+                for (int xActive = (int)x2; xActive < x1; xActive++)
+                {
+                    if (MapData[xActive, (int)y1] == MapItem.Wall)
+                        return false;
+                }
+                return true;
+            }
+            float slope = (y2 - y1) / (x2 - x1);
+            float yIntercept = y1 - (x1 * slope);
+            if(x1 < x2)
+                for(int xActive = (int)x1; xActive < x2; xActive++)
+                {
+                    if (MapData[xActive, (int)(yIntercept + (xActive * slope))] == MapItem.Wall)
+                        return false;
+                }
+            else if (x2 < x1)
+                for (int xActive = (int)x2; xActive < x1; xActive++)
+                {
+                    if (MapData[xActive, (int)(yIntercept + (xActive * slope))] == MapItem.Wall)
+                        return false;
+                }
+            else
+            {
+                for (int yActive = (int)y2; yActive < y1; yActive++)
+                {
+                    if (MapData[(int)x1, yActive] == MapItem.Wall)
+                        return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
