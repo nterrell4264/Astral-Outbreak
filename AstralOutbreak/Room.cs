@@ -150,7 +150,24 @@ namespace AstralOutbreak
             CameraTrack(PlayerOne);
         }
 
-        
+        //Re-sets up the room from the current map
+        public void ReloadRoom()
+        {
+            MapData.Reload();
+            float scale = MapData.Scale;
+            PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 32, 55, 10);
+            PhysicsObjects.Add(PlayerOne);
+            List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
+            lock (listLock)
+            {
+                for (int i = 0; i < newData.Count; i++)
+                {
+                    PhysicsObjects.Add(newData[i]);
+                }
+            }
+            CameraTrack(PlayerOne);
+        }
+
         public void CheckUnload()
         {
             int i = 0;

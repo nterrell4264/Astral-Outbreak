@@ -58,7 +58,7 @@ namespace AstralOutbreak
         }
         private void LoadGameOver() //Loads game over menu assets
         {
-            items.Add(new MenuButton(32, 182, 150, 75, "RetryButton", () => { Game1.CurrentState = GameState.Playing; })); //Change to RoomManager.Active.LoadMap once that function exists.
+            items.Add(new MenuButton(32, 182, 150, 75, "RetryButton", () => { RoomManager.Active.ReloadRoom();  Game1.CurrentState = GameState.Playing; })); 
             items.Add(new MenuButton(32, 282, 150, 75, "QuitButton", () => { Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadUI() //Loads GUI assets

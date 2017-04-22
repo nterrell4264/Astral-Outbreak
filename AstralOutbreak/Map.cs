@@ -269,6 +269,8 @@ namespace AstralOutbreak
             y1 = (int)((y1) / Scale);
             x2 = (int)((x2) / Scale);
             y2 = (int)((y2) / Scale);
+            if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0 || x1 >= MapData.GetLength(0) || y1 >= MapData.GetLength(1) || x2 >= MapData.GetLength(0) || y2 >= MapData.GetLength(1))
+                return false;
 
             if(y1 == y2)
             {
@@ -302,6 +304,13 @@ namespace AstralOutbreak
                 }
             }
             return true;
+        }
+
+        public void Reload()
+        {
+            for (int i = 0; i < Loaded.GetLength(0); i++)
+                for (int j = 0; j < Loaded.GetLength(1); j++)
+                    Loaded[i, j] = false;
         }
 
     }
