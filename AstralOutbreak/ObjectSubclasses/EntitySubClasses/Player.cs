@@ -32,6 +32,8 @@ namespace AstralOutbreak
             {
                 currentplayerstate = value;
                 CurrentActionTime = 0;
+                if (currentplayerstate == PlayerState.Dashing || currentplayerstate == PlayerState.Rolling)
+                    Shooting = false;
             }
         }
 
@@ -393,7 +395,7 @@ namespace AstralOutbreak
                     break;
             }
             Vector aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
-            if (Game1.Inputs.M1Clicked && CurrentPlayerState != PlayerState.Dashing)
+            if (Game1.Inputs.M1Clicked && CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
             {
                 Shoot(aim);
                 if (aim.X > 0)

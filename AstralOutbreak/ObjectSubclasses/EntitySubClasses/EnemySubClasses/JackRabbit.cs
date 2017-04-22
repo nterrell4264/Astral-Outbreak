@@ -24,6 +24,8 @@ namespace AstralOutbreak
             {
                 currentState = value;
                 CurrentActionTime = 0;
+                if (currentState != JackRabbitState.Shooting)
+                    Shooting = false;
             }
         }
 
