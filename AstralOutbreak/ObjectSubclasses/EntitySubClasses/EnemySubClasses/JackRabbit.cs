@@ -245,6 +245,22 @@ namespace AstralOutbreak
                 case JackRabbitState.Shooting:
                     if (CurrentActionTime > .8f)
                     {
+                        //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
+                        if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                        {
+                            Velocity.X = 0;
+                            FaceRight = false;
+                            Shoot(new Vector(-1, 0));
+                            break;
+                        }
+                        //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
+                        else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                        {
+                            Velocity.X = 0;
+                            FaceRight = true;
+                            Shoot(new Vector(1, 0));
+                            break;
+                        }
                         //Checks if the player is to the left of the JackRabbit, and will move towards the player
                         if (RoomManager.Active.PlayerOne.Position.X < Position.X)
                         {

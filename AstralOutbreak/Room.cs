@@ -154,6 +154,7 @@ namespace AstralOutbreak
         public void ReloadRoom()
         {
             MapData.Reload();
+            PhysicsObjects = new List<PhysicsObject>();
             float scale = MapData.Scale;
             PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 32, 55, 10);
             PhysicsObjects.Add(PlayerOne);
