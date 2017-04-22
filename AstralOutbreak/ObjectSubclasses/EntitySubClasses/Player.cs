@@ -11,7 +11,14 @@ namespace AstralOutbreak
 {
     public enum PlayerState { Idle, Falling, Rolling, Dashing, Running}
 
-    
+    [Flags] public enum Upgrades
+    {
+        None = 0,
+        Dash = 1
+
+    }
+
+
     /// <summary>
     /// Unit controlled directly by the player
     /// </summary>
@@ -36,6 +43,8 @@ namespace AstralOutbreak
                     Shooting = false;
             }
         }
+
+        public Upgrades MyUpgrades { get; set; }
 
         public float SpeedLimit
         {
@@ -142,7 +151,7 @@ namespace AstralOutbreak
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = MaxVelocity.X;
@@ -169,7 +178,7 @@ namespace AstralOutbreak
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = -MaxVelocity.X;
@@ -192,7 +201,7 @@ namespace AstralOutbreak
                             Velocity.X = -.1f;
                             break;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                         {
                             MaxVelocity.X = DASHSPEED;
                             if (FaceRight)
@@ -255,7 +264,7 @@ namespace AstralOutbreak
                     }
                     if (Velocity.Y != previousY)
                             CurrentPlayerState = PlayerState.Falling;
-                    if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                    if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                     {
                         MaxVelocity.X = DASHSPEED;
                         if (FaceRight)
@@ -309,7 +318,7 @@ namespace AstralOutbreak
                             Velocity.X = 0;
                             CurrentPlayerState = PlayerState.Idle;
                         }
-                        if(Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        if(Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = MaxVelocity.X;
@@ -335,7 +344,7 @@ namespace AstralOutbreak
                             Velocity.X = .1f;
                             CurrentPlayerState = PlayerState.Running;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed)
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = -MaxVelocity.X;
@@ -418,7 +427,10 @@ namespace AstralOutbreak
         }
 
 
-
+        /// <summary>
+        /// Player consumes the item
+        /// </summary>
+        /// <param name="other"></param>
         public void Consume(Item other)
         {
             switch (other.MyType)
@@ -430,10 +442,19 @@ namespace AstralOutbreak
                     MyWeapon.Damage += other.Value;
                     break;
                 case ItemType.AbilityUnlock:
+                    switch (other.Value)
+                    {
+                        case 1:
+                            MyUpgrades = MyUpgrades | Upgrades.Dash;
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;
             }
+            other.Consumed = true;
             other.Unload = true;
         }
 

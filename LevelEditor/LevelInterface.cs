@@ -14,7 +14,7 @@ namespace LevelEditor
     
     public enum CursorMode
     {
-        Erase, Player, Wall, Slug, Demon
+        Erase, Player, Wall, Slug, Demon, Item
     }
 
     public class LevelInterface
@@ -24,6 +24,7 @@ namespace LevelEditor
 
         //CursorMode
         public CursorMode CursorItem { get; set; }
+        public int CursorValue { get; set; }
 
         //Map Position
         public int MapX { get; set; }
@@ -59,7 +60,8 @@ namespace LevelEditor
             MapY = 0;
             Gridlines = true;
             Scale = 8;
-            mapdata.Scale = 16;
+            mapdata.Scale = 28;
+            CursorValue = 1;
         }
         /// <summary>
         /// Constructor that reads in a map from file
@@ -88,8 +90,10 @@ namespace LevelEditor
             MapY = 0;
             Gridlines = true;
             Scale = 8;
-            MapData.Scale = 16;
-
+            MapData.Scale = 28;
+            CursorValue = 1;
+            if (MapData.TileValue.GetLength(0) != MapData.Width || MapData.TileValue.GetLength(1) != MapData.Height)
+                MapData.TileValue = new int[MapData.Width, MapData.Height];
         }
 
         public void Save(String fileName)
@@ -130,36 +134,44 @@ namespace LevelEditor
             y--;
             //MapData.Resizable = true;
             //Ensure that the mouse is on the screen
-            if(x >= 0 && x < width && y >= 0 && y < height)
-                switch (CursorItem)
+            if (x >= 0 && x < width && y >= 0 && y < height)
+            {
+                if(CursorItem == CursorMode.Player)
                 {
-                    case CursorMode.Erase:
-                        for(int i = 0; i < CursorSize; i++)
-                            for (int j = 0; j < CursorSize; j++)
-                                MapData[MapX + x + i, MapY + y + j] = MapItem.None;
-                        break;
-                    case CursorMode.Player:
-                        MapData.PlayerStartX = MapX + x;
-                        MapData.PlayerStartY = MapY + y;
-                        break;
-                    case CursorMode.Wall:
-                        for (int i = 0; i < CursorSize; i++)
-                            for (int j = 0; j < CursorSize; j++)
-                                MapData[MapX + x + i, MapY + y + j] = MapItem.Wall;
-                        break;
-                    case CursorMode.Slug:
-                        for (int i = 0; i < CursorSize; i++)
-                            for (int j = 0; j < CursorSize; j++)
-                                MapData[MapX + x + i, MapY + y + j] = MapItem.Slug;
-                        break;
-                    case CursorMode.Demon:
-                        for(int i = 0; i < CursorSize; i++)
-                            for (int j = 0; j < CursorSize; j++)
-                                MapData[MapX + x + i, MapY + y + j] = MapItem.Demon;
-                        break;
-                    default:
-                        break;
+                    MapData.PlayerStartX = MapX + x;
+                    MapData.PlayerStartY = MapY + y;
+                    return;
                 }
+                for (int i = 0; i < CursorSize; i++)
+                    for (int j = 0; j < CursorSize; j++)
+                    {
+                        switch (CursorItem)
+                        {
+                            case CursorMode.Erase:
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.None;
+                                if (MapData.TileValue.GetLength(0) > MapX + x + i && MapX + x + i >= 0 && MapData.TileValue.GetLength(1) > MapY + y + j && MapY + y + j >= 0)
+                                    MapData.TileValue[MapX + x + i, MapY + y + j] = 0;
+                                break;
+                            case CursorMode.Wall:
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Wall;
+                                break;
+                            case CursorMode.Slug:
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Slug;
+                                break;
+                            case CursorMode.Demon:
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Demon;
+                                break;
+                            case CursorMode.Item:
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Item;
+                                break;
+                            default:
+                                break;
+                        }
+                        if(CursorItem != CursorMode.Erase && MapData.TileValue.GetLength(0) > MapX + x + i && MapX + x + i  >= 0 && MapData.TileValue.GetLength(1) > MapY + y + j && MapY + y + j >= 0)
+                            MapData.TileValue[MapX + x + i, MapY + y + j] = CursorValue;
+
+                    }
+            }
         }
 
 
@@ -198,6 +210,10 @@ namespace LevelEditor
                         case MapItem.Demon:
                             text = DemonTexture;
                             col = Color.Red;
+                            break;
+                        case MapItem.Item:
+                            text = WallTexture;
+                            col = Color.Goldenrod;
                             break;
                         default:
                             break;
@@ -245,6 +261,10 @@ namespace LevelEditor
                 case CursorMode.Player:
                     text = PlayerStartTexture;
                     col = Color.Green;
+                    break;
+                case CursorMode.Item:
+                    text = WallTexture;
+                    col = Color.Goldenrod;
                     break;
                 default:
                     break;

@@ -8,7 +8,7 @@ namespace AstralOutbreak
 {
 
     //Represents an object on the map
-    public enum MapItem { None, Wall, Slug, Demon}
+    public enum MapItem { None, Wall, Slug, Demon, Item}
 
     /// <summary>
     /// A grid of objects that are in the game.
@@ -19,6 +19,8 @@ namespace AstralOutbreak
         /// All of the data relevant to the map.
         /// </summary>
         public MapItem[,] MapData { get; set; }
+        public int[,] TileValue { get; set; }
+
         public int Width { get; set; }
         public int Height { get; set; }
 
@@ -77,6 +79,7 @@ namespace AstralOutbreak
             PlayerStartX = 0;
             PlayerStartY = 0;
             MapData = new MapItem[0,0];
+            TileValue = new int[0, 0];
             Loaded = new bool[0, 0];
             Width = 0;
             Height = 0;
@@ -92,6 +95,7 @@ namespace AstralOutbreak
         {
             MapData = new MapItem[width, height];
             Loaded = new bool[width, height];
+            TileValue = new int[width, height];
             Width = width;
             Height = height;
             Resizable = false;
@@ -103,6 +107,7 @@ namespace AstralOutbreak
                 {
                     MapData[i, j] = MapItem.None;
                     Loaded[i, j] = false;
+                    TileValue[i, j] = 0;
                 }
         }
 
@@ -167,6 +172,9 @@ namespace AstralOutbreak
                 case MapItem.Demon:
                     return new JackRabbit(new Vector(x * Scale, y * Scale), 35, 61, 20);
                     break;
+                case MapItem.Item:
+                    return new Item(new Vector(x * Scale, y * Scale), Scale, Scale, ItemType.AbilityUnlock, TileValue[x,y]);
+                    break;
                 default:
                     break;
             }
@@ -201,12 +209,13 @@ namespace AstralOutbreak
             {
                 for(int j = nY; j < height + nY && j < Height; j++)
                 {
-                    //for each bit check if it should be loaded (This has to do with not loading enemies on the screen, only in the buffer area)
-                    if ((this[i,j] == MapItem.Wall || this[i,j] == MapItem.None) || ((i*Scale < newX) || (i*Scale > newX + width) || (j * Scale < newY) || (j * Scale > newY + height)))
+                    //Get the object
+                    var obj = Get(i, j);
+                    if (obj != null)
                     {
-                        //Get the object
-                        var obj = Get(i, j);
-                        if (obj != null)
+                        //for each bit check if it should be loaded (This has to do with not loading enemies on the screen, only in the buffer area)
+                        if ((this[i,j] == MapItem.Wall || this[i,j] == MapItem.None) || ((obj.Position.X + obj.Width < newX) 
+                            || (obj.Position.X > newX + width) || (obj.Position.Y + obj.Height < newY) || (obj.Position.Y > newY + height)))
                         {
                             //Add it to the list
                             obj.OriginX = i;
