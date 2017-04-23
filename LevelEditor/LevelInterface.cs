@@ -46,6 +46,7 @@ namespace LevelEditor
         public static Texture2D WallTexture { get; set; }
         public static Texture2D RoundTexture { get; set; }
         public static Texture2D GridTexture { get; set; }
+        public static SpriteFont Font { get; set; }
 
 
         /// <summary>
@@ -273,8 +274,8 @@ namespace LevelEditor
             //sb.Draw(RoundTexture, new Rectangle(mouseX - 2, mouseY - 2, 5, 5), new Color(Color.Brown, 1));
             //sb.Draw(text, new Rectangle(mouseX - 1, mouseY - 1, 3, 3), col);
             sb.Draw(RoundTexture, new Rectangle(mouseX - mouseX % (Scale), mouseY - mouseY % (Scale), CursorSize * Scale, CursorSize * Scale), new Color(col, .25f));
-            
 
+            sb.DrawString(Font, ""+ CursorValue, new Vector2(0, 0), Color.Black);
 
 
         }

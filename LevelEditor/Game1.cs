@@ -53,6 +53,8 @@ namespace LevelEditor
             LevelInterface.PlayerStartTexture = Content.Load<Texture2D>("rect");
             LevelInterface.RoundTexture = Content.Load<Texture2D>("rounded");
             LevelInterface.GridTexture = Content.Load<Texture2D>("grid");
+            LevelInterface.Font = Content.Load<SpriteFont>("font");
+
 
 
             // TODO: use this.Content to load your game content here
