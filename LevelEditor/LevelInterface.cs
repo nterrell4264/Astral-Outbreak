@@ -275,7 +275,7 @@ namespace LevelEditor
             //sb.Draw(text, new Rectangle(mouseX - 1, mouseY - 1, 3, 3), col);
             sb.Draw(RoundTexture, new Rectangle(mouseX - mouseX % (Scale), mouseY - mouseY % (Scale), CursorSize * Scale, CursorSize * Scale), new Color(col, .25f));
 
-            sb.DrawString(Font, ""+ CursorValue, new Vector2(0, 0), Color.Black);
+            sb.DrawString(Font, ""+ CursorValue, new Vector2(0, 0), Color.Red);
 
 
         }

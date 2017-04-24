@@ -250,7 +250,7 @@ namespace AstralOutbreak
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
-                    if ((Game1.Inputs.RollButtonState == ButtonStatus.Held || Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
                     {
                         MaxVelocity.X = ROLLSPEED;
                         if (FaceRight)
@@ -278,7 +278,7 @@ namespace AstralOutbreak
                     break;
                 //Roll sequence
                 case PlayerState.Rolling:
-                    if (CurrentActionTime > .25f)
+                    if (CurrentActionTime > .25f && !RoomManager.Active.CheckCollision(this, new Vector(0, -Height)))
                     {
                         CurrentPlayerState = PlayerState.Falling;
                         MaxVelocity.X = speedLimit;
@@ -376,7 +376,7 @@ namespace AstralOutbreak
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
-                    if ((Game1.Inputs.RollButtonState == ButtonStatus.Held || Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
                     {
                         MaxVelocity.X = ROLLSPEED;
                         if (Velocity.X > 0)

@@ -19,3 +19,10 @@ Map Editor Controls
 		6: Upgrade Item
 			-Cursor Value 1: Dash
 			-Cursor Value 2-5: Unimplemented Upgrades/Extra Upgrades 
+
+	IMPORTANT: The map editing tool will NOT override the current map.
+				If you want to override the map you MUST MANUALY DRAG THE FILE INTO THE OTHER PROJECT.
+				This is intentional and acts as a failsafe against accidently deleting the entire map and saving.
+
+	Note: The Map Editor will open up the currently saved LevelMap file if it is avaialable (this is the file saved by the editor).
+			If it cannot find a LevelMap.dat, it eill just grab the current map from the main game instead.
