@@ -27,6 +27,7 @@ namespace AstralOutbreak
         //Current game state
         public static GameState CurrentState { get; set; }
         public static GameState prevMenu { get; set; } //Tracks previous menu state for options and new games.
+        public static GraphicsDeviceManager Graphics { get; set; }
 
         public Game1()
         {
@@ -58,6 +59,8 @@ namespace AstralOutbreak
             else
                 Inputs = new InputManager();
             IsMouseVisible = true;
+            Graphics = graphics;
+            //graphics.ToggleFullScreen();
             CurrentState = GameState.MainMenu;
 
             RoomManager.Active = new Room(2000, 2000, new Vector2(0, 9f));

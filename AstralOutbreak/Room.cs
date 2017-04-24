@@ -102,7 +102,7 @@ namespace AstralOutbreak
                 newX = target.Position.X;
             if (newX + Width < target.Position.X + target.Width)
                 newX = target.Position.X - Width + target.Width;
-            float newY = (Game1.Inputs.MouseY + RoomManager.Active.CameraY + target.Position.Y * 3) / 4 - (Height / 2);
+            float newY = ((Game1.Inputs.MouseY + RoomManager.Active.CameraY) * 3 + target.Position.Y * 7) / 10 - (Height / 2);
             if (newY < 0)
                 newY = 0;
             if (newY > target.Position.Y)

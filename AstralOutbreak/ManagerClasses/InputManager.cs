@@ -37,11 +37,27 @@ namespace AstralOutbreak
         //Mouse stuff
         public int MouseX
         {
-            get { return mouseState.Position.X; }
+            get
+            {
+                if (Game1.Graphics.IsFullScreen)
+                {
+                    return mouseState.Position.X * Game1.Graphics.PreferredBackBufferWidth / Game1.Graphics.GraphicsDevice.DisplayMode.Width;
+                }
+                else
+                    return mouseState.Position.X;
+            }
         }
         public int MouseY
         {
-            get { return mouseState.Position.Y; }
+            get
+            {
+                if (Game1.Graphics.IsFullScreen)
+                {
+                    return mouseState.Position.Y * Game1.Graphics.PreferredBackBufferHeight / Game1.Graphics.GraphicsDevice.DisplayMode.Height;
+                }
+                else
+                    return mouseState.Position.Y;
+            }
         }
         public ButtonStatus M1State
         {
