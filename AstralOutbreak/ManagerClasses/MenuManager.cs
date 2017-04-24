@@ -26,7 +26,7 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(300, 250, 150, 75, "StartButton", () => { Game1.CurrentState = GameState.Playing;}));
+            items.Add(new MenuButton(300, 250, 150, 75, "StartButton", () => { RoomManager.Active.ReloadRoom(); Game1.CurrentState = GameState.Playing;}));
             items.Add(new MenuButton(200, 350, 150, 75, "OptionsButton", () => {
                 Game1.CurrentState = GameState.OptionsMenu;
                 Game1.prevMenu = GameState.MainMenu;

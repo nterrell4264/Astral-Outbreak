@@ -28,7 +28,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 1400;
+        private const float BUFFER = 14000;
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
