@@ -74,7 +74,6 @@ namespace AstralOutbreak
                     RoomManager.Active.PhysicsObjects.Add(new Wall(new Vector2(0, 100), 1000, 5));
                     RoomManager.Active.PlayerOne = new Player(new Vector2(0, 0), 20, 20, 20);
                     RoomManager.Active.PhysicsObjects.Add(RoomManager.Active.PlayerOne);
-
                 }
                 finally
                 {
