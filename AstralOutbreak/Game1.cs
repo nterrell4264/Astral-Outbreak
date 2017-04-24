@@ -18,7 +18,6 @@ namespace AstralOutbreak
         //Managers
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteFont font;
         FileManager fileManager;
         SoundManager soundManager;
         SpriteManager spriteManager;
@@ -27,6 +26,7 @@ namespace AstralOutbreak
 
         //Current game state
         public static GameState CurrentState { get; set; }
+        public static GameState prevMenu { get; set; } //Tracks previous menu state for options and new games.
 
         public Game1()
         {
@@ -95,9 +95,9 @@ namespace AstralOutbreak
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = Content.Load<SpriteFont>("font");
             menuManager = new MenuManager(this);
             spriteManager = new SpriteManager();
+            spriteManager.font = Content.Load<SpriteFont>("font");
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
@@ -158,10 +158,9 @@ namespace AstralOutbreak
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Gray);
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             spriteManager.Update(spriteBatch);
             spriteBatch.End();
 

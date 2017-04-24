@@ -46,7 +46,7 @@ namespace AstralOutbreak
         public void CheckClicked() //Checks if it has been pressed and takes appropriate action
         {
             //Makes the click check (mouse is down and over button)
-            if (Game1.Inputs.M1State == ButtonStatus.Held && 
+            if (Game1.Inputs.M1State == ButtonStatus.Pressed && 
                 Game1.Inputs.MouseX >= hitbox.X && Game1.Inputs.MouseX < (hitbox.X + hitbox.Width) && Game1.Inputs.MouseY >= hitbox.Y && Game1.Inputs.MouseY < (hitbox.Y + hitbox.Height))
             {
                 ClickEvent();

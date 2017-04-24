@@ -59,9 +59,9 @@ namespace AstralOutbreak
         {
             get
             {
-                if (mouseState.LeftButton.Equals(ButtonState.Pressed))
+                if (mouseState.RightButton.Equals(ButtonState.Pressed))
                 {
-                    if (prevMouseState.LeftButton.Equals(ButtonState.Released)) return ButtonStatus.Pressed;
+                    if (prevMouseState.RightButton.Equals(ButtonState.Released)) return ButtonStatus.Pressed;
                     else return ButtonStatus.Held;
                 }
                 else return ButtonStatus.Unpressed;
@@ -80,6 +80,8 @@ namespace AstralOutbreak
 
         public void Update() //Updates all buttons
         {
+            prevKeyState = keyState;
+            prevMouseState = mouseState;
             keyState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
@@ -90,9 +92,6 @@ namespace AstralOutbreak
             DashButtonState = UpdateKey(dashButton);
             PauseButtonState = UpdateKey(pauseButton);
             ShootButtonState = M1State;
-
-            prevKeyState = keyState;
-            prevMouseState = mouseState;
         }
 
         /// <summary>

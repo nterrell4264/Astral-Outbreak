@@ -11,7 +11,6 @@ namespace AstralOutbreak
 {
     public class SpriteManager
     {
-        SpriteBatch sb;
         //Singleton pattern
         //private static SpriteManager instance;
 
@@ -33,8 +32,9 @@ namespace AstralOutbreak
         }
 
         //Class
-        //private Dictionary<string,Texture2D> masterList;
-        public Dictionary<string,Texture2D> masterList { get; private set; } //Use until this can draw on its own, then use above
+        private Dictionary<string,Texture2D> masterList;
+        SpriteBatch sb;
+        public SpriteFont font;
 
         //Methods
         public void Update(SpriteBatch sb)//Will call individual Draw Methods for each entity based on what called it
@@ -65,11 +65,19 @@ namespace AstralOutbreak
                         Color.Black);
                     }
                 }
+                sb.DrawString(font, "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
             foreach (MenuContent menuPart in MenuManager.items)
             {
-                Texture2D texture = masterList["Menus/" + menuPart.TextureName];
-                sb.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
+                if (menuPart.IsText)
+                {
+                    sb.DrawString(font, menuPart.TextureName, new Vector2(menuPart.Location.X, menuPart.Location.Y), Color.Black);
+                }
+                else
+                {
+                    Texture2D texture = masterList["Menus/" + menuPart.TextureName];
+                    sb.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
+                }
             }
         }
         // spriteBatch.Draw(spriteManager.masterList["rect"],

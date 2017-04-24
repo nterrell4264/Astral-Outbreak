@@ -26,12 +26,16 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(300, 250, 150, 75, "StartButton", () => { Game1.CurrentState = GameState.Playing; }));
-            items.Add(new MenuButton(200, 350, 150, 75, "OptionsButton", () => { Game1.CurrentState = GameState.OptionsMenu; }));
+            items.Add(new MenuButton(300, 250, 150, 75, "StartButton", () => { Game1.CurrentState = GameState.Playing;}));
+            items.Add(new MenuButton(200, 350, 150, 75, "OptionsButton", () => {
+                Game1.CurrentState = GameState.OptionsMenu;
+                Game1.prevMenu = GameState.MainMenu;
+            }));
             items.Add(new MenuButton(400, 350, 150, 75, "QuitButton", () => { main.Exit(); }));
         }
         private void LoadOptions() //Loads options menu assets
         {
+            //Backgrounds
             items.Add(new MenuContent(475, 50, "SmallMenuBG"));
             items.Add(new MenuContent(475, 100, "SmallMenuBG"));
             items.Add(new MenuContent(475, 150, "SmallMenuBG"));
@@ -41,11 +45,24 @@ namespace AstralOutbreak
             items.Add(new MenuContent(475, 350, "SmallMenuBG"));
             items.Add(new MenuContent(50, 50, "LargeMenuBG"));
             items.Add(new MenuContent(50, 200, "LargeMenuBG"));
+            //Text
+            items.Add(new MenuContent(500, 55, "Left = A", true));
+            items.Add(new MenuContent(500, 105, "Right = D", true));
+            items.Add(new MenuContent(500, 155, "Jump = W", true));
+            items.Add(new MenuContent(500, 205, "Dash = Space", true));
+            items.Add(new MenuContent(500, 255, "Roll = LShift", true));
+            items.Add(new MenuContent(500, 305, "Shoot = M1", true));
+            items.Add(new MenuContent(500, 355, "Pause = Escape", true));
+            //Other
+            items.Add(new MenuButton(50, 350, 150, 75, "ResumeButton", () => { Game1.CurrentState = Game1.prevMenu; }));
         }
         private void LoadPause() //Loads pause menu assets
         {
             items.Add(new MenuButton(300, 50, 150, 75, "ResumeButton", () => { Game1.CurrentState = GameState.Playing; }));
-            items.Add(new MenuButton(300, 200, 150, 75, "OptionsButton", () => { Game1.CurrentState = GameState.OptionsMenu; }));
+            items.Add(new MenuButton(300, 200, 150, 75, "OptionsButton", () => {
+                Game1.CurrentState = GameState.OptionsMenu;
+                Game1.prevMenu = GameState.PauseMenu;
+            }));
             items.Add(new MenuButton(300, 350, 150, 75, "QuitButton", () => { Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadScreen() //Loads loading screen assets
