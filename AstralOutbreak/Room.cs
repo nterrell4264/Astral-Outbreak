@@ -95,13 +95,21 @@ namespace AstralOutbreak
         {
             if (target == null)
                 return;
-            float newX = target.Position.X - (Width / 2);
+            float newX = (Game1.Inputs.MouseX + RoomManager.Active.CameraX + target.Position.X * 4) / 5 - (Width / 2);
             if (newX < 0)
                 newX = 0;
-            float newY = target.Position.Y - (Height / 2);
+            if (newX > target.Position.X)
+                newX = target.Position.X;
+            if (newX + Width < target.Position.X + target.Width)
+                newX = target.Position.X - Width + target.Width;
+            float newY = (Game1.Inputs.MouseY + RoomManager.Active.CameraY + target.Position.Y * 3) / 4 - (Height / 2);
             if (newY < 0)
                 newY = 0;
-            if(MapData != null)
+            if (newY > target.Position.Y)
+                newY = target.Position.Y;
+            if (newY + Height < target.Position.Y + target.Height)
+                newY = target.Position.Y - Height + target.Height;
+            if (MapData != null)
             {
                 if (newX + Width > MapData.Width * MapData.Scale)
                     newX = MapData.Width * MapData.Scale - Width;
