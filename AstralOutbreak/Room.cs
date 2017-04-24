@@ -28,7 +28,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 64;
+        private const float BUFFER = 1400;
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
@@ -121,7 +121,7 @@ namespace AstralOutbreak
         {
             if (MapData != null)
             {
-                List<GameObject> newData = MapData.Load(CameraX, CameraY, Width, Height, BUFFER);
+                List<GameObject> newData = MapData.Load(CameraX, CameraY, Width, Height, BUFFER / 2);
                 lock (listLock)
                 {
                     for (int i = 0; i < newData.Count; i++)
@@ -150,7 +150,25 @@ namespace AstralOutbreak
             CameraTrack(PlayerOne);
         }
 
-        
+        //Re-sets up the room from the current map
+        public void ReloadRoom()
+        {
+            MapData.Reload();
+            PhysicsObjects = new List<PhysicsObject>();
+            float scale = MapData.Scale;
+            PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 32, 55, 10);
+            PhysicsObjects.Add(PlayerOne);
+            List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
+            lock (listLock)
+            {
+                for (int i = 0; i < newData.Count; i++)
+                {
+                    PhysicsObjects.Add(newData[i]);
+                }
+            }
+            CameraTrack(PlayerOne);
+        }
+
         public void CheckUnload()
         {
             int i = 0;
@@ -178,6 +196,8 @@ namespace AstralOutbreak
         //Returns true if we want both objects to collide with each other in a physical sense
         public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)
         {
+            if (obj2 is Item)
+                return false;
             if (obj1 is Player && obj2 is Enemy)
                 return false;
             else if (obj1 is Enemy && obj2 is Player)
@@ -212,6 +232,16 @@ namespace AstralOutbreak
             {
                 if ((obj1 as Player).InvulnTime == 0)
                     (obj2 as Enemy).Strike(obj1 as GameObject);
+            }
+
+            //Items
+            if(obj1 is Player && obj2 is Item)
+            {
+                (obj1 as Player).Consume(obj2 as Item);
+            }
+            else if (obj2 is Player && obj1 is Item)
+            {
+                (obj2 as Player).Consume(obj1 as Item);
             }
         }
 

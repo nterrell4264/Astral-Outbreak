@@ -5,6 +5,9 @@ Map Editor Controls
 	WASD: Pan the camera
 	Shift: Hold while panning the camera to speed it up
 	Enter: Save the map
+	UP/DOWN: Change Cursor Size
+	LEFT/RIGHT: Change Cursor Value
+		Note: Cursor Value is only important for items at this moment however, it may be expanded to represent enemy level as a bonus goal.
 
 	Numbers Change Brush Type
 		1: Erase
@@ -13,3 +16,6 @@ Map Editor Controls
 		4: SlugEnemy
 		5: Player Starting position
 			Note: This will remove the old player starting position as there can only be one of these
+		6: Upgrade Item
+			-Cursor Value 1: Dash
+			-Cursor Value 2-5: Unimplemented Upgrades/Extra Upgrades 

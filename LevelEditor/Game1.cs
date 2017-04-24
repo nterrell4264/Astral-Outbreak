@@ -53,6 +53,8 @@ namespace LevelEditor
             LevelInterface.PlayerStartTexture = Content.Load<Texture2D>("rect");
             LevelInterface.RoundTexture = Content.Load<Texture2D>("rounded");
             LevelInterface.GridTexture = Content.Load<Texture2D>("grid");
+            LevelInterface.Font = Content.Load<SpriteFont>("font");
+
 
 
             // TODO: use this.Content to load your game content here
@@ -142,6 +144,16 @@ namespace LevelEditor
                 if (level.CursorSize > 1)
                     level.CursorSize--;
             }
+            if (kb.IsKeyDown(Keys.Left) && (kbLast.IsKeyUp(Keys.Left)))
+            {
+                if (level.CursorValue > 0)
+                    level.CursorValue--;
+            }
+            if (kb.IsKeyDown(Keys.Right) && (kbLast.IsKeyUp(Keys.Right)))
+            {
+                if (level.CursorValue < 5)
+                    level.CursorValue++;
+            }
 
             if (kb.IsKeyDown(Keys.D1))
                 level.CursorItem = CursorMode.Erase;
@@ -153,6 +165,8 @@ namespace LevelEditor
                 level.CursorItem = CursorMode.Slug;
             if (kb.IsKeyDown(Keys.D5))
                 level.CursorItem = CursorMode.Player;
+            if (kb.IsKeyDown(Keys.D6))
+                level.CursorItem = CursorMode.Item;
 
             if (kb.IsKeyDown(Keys.Enter) && kbLast.IsKeyUp(Keys.Enter))
                 level.Save("LevelMap.dat");

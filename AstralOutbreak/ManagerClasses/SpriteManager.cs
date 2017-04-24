@@ -39,29 +39,37 @@ namespace AstralOutbreak
         //Methods
         public void Update(SpriteBatch sb)//Will call individual Draw Methods for each entity based on what called it
         {
-            //Roommanager.active.physicsobjects is the list of objects
-            for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
+            if (Game1.CurrentState == GameState.Playing)
             {
-                if (RoomManager.Active.PhysicsObjects[i] is Player)
+                //Roommanager.active.physicsobjects is the list of objects
+                for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
                 {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
+                    if (RoomManager.Active.PhysicsObjects[i] is Player)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
+                    }
+                    else if (RoomManager.Active.PhysicsObjects[i] is Slug)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
+                    }
+                    else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
+                    }
+                    else
+                    {
+                        sb.Draw(masterList["rect"],
+                        new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                        (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                        (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                        Color.Black);
+                    }
                 }
-                else if (RoomManager.Active.PhysicsObjects[i] is Slug)
-                {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
-                }
-                else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
-                {
-                    Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
-                }
-                else
-                {
-                    sb.Draw(masterList["rect"],
-                    new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                    (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                    (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
-                    Color.Black);
-                }
+            }
+            foreach (MenuContent menuPart in MenuManager.items)
+            {
+                Texture2D texture = masterList["Menus/" + menuPart.TextureName];
+                sb.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
             }
         }
         // spriteBatch.Draw(spriteManager.masterList["rect"],
@@ -72,6 +80,9 @@ namespace AstralOutbreak
         //Sub methods of Draw made for each type of entity
         public void Draw(SpriteBatch sb, Player player, int i)
         {
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
             Rectangle pos = new Rectangle();
             //Mark: Added horizontal flipping
             SpriteEffects flip = SpriteEffects.None;
@@ -84,40 +95,56 @@ namespace AstralOutbreak
                 case PlayerState.Idle:
                     pos = new Rectangle(3, 181, 32, 56);
                     break;
-                case PlayerState.Damaged: 
-                    break;
                 case PlayerState.Dashing:
+                    dest.Width += 60;
+                    if (player.FaceRight == true)
+                    {
+                        dest.X -= 60;
+                    }
+                    int t = (int)(player.CurrentActionTime * 8) % 3;
+                    switch (t)
+                    {
+                        default:
+                            pos = new Rectangle(4, 255, 92, 60);
+                            break;
+                        case 1:
+                            pos = new Rectangle(105, 258, 82, 60);
+                            break;
+                        case 2:
+                            pos = new Rectangle(199, 257, 88, 55);
+                            break;
+                    }
                     break;
                 case PlayerState.Falling: pos = new Rectangle(4,78,32,55);
                     break;
                 case PlayerState.Rolling:
+                    pos = new Rectangle(3, 181, 32, 56);
                     break;
-                case PlayerState.Running: int t = (int)(player.CurrentActionTime * 8) % 6;
-                    switch (t)
+                case PlayerState.Running: int o = (int)(player.CurrentActionTime * 8) % 6;
+                    switch (o)
                     {
-                        default: pos = new Rectangle(6, 6, 32, 55);
+                        default: pos = new Rectangle(6, 6, 28, 55);
                             break;
-                        case 1: pos = new Rectangle(71,7,32,54);
+                        case 1: pos = new Rectangle(71,7,28,54);
                             break;
-                        case 2: pos = new Rectangle(141,6,32,55);
+                        case 2: pos = new Rectangle(141,6,28,55);
                             break;
-                        case 3: pos = new Rectangle(200,6,32,55);
+                        case 3: pos = new Rectangle(200,6,28,55);
                             break;
-                        case 4: pos = new Rectangle(261,7,32,53);
+                        case 4: pos = new Rectangle(261,7,28,53);
                             break;
-                        case 5: pos = new Rectangle(333,6,32,55);
+                        case 5: pos = new Rectangle(333,6,28,55);
                             break;
                     }
                     break;
             }
                   sb.Draw(masterList["PlayerSprites"],
-                  destinationRectangle: new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                  destinationRectangle: dest,
                   sourceRectangle: pos, color: Color.White, effects: flip);
         }
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
+
             switch (enemy.CurrentState)
             {
                 default:
@@ -133,24 +160,90 @@ namespace AstralOutbreak
         }
         public void Draw(SpriteBatch sb, JackRabbit enemy, int i)
         {
-            switch (enemy.CurrentState)
+            Rectangle pos = new Rectangle();
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
+            SpriteEffects flip = SpriteEffects.None;
+            if (!enemy.FaceRight)
+                flip = SpriteEffects.FlipHorizontally;
+            switch (enemy.CurrentJackRabbitState)
             {
                 default:
                     break;
                 case JackRabbitState.Falling:
+                    pos = new Rectangle(5,160,31,61);
                     break;
-                case JackRabbitState.Jumping:
+                case JackRabbitState.Idle:
+                    pos = new Rectangle(4, 227, 35, 59);
                     break;
-                case JackRabbitState.MovingLeft:
+                case JackRabbitState.Moving:
+
+                    int t = (int)(enemy.CurrentActionTime * 8) % 6;
+                    switch (t)
+                    {
+                        default:
+                            pos = new Rectangle(5, 99, 46, 55);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 1:
+                            pos = new Rectangle(68, 99, 47, 54);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 2:
+                            pos = new Rectangle(138, 105, 33, 60);
+                            break;
+                        case 3:
+                            pos = new Rectangle(206, 104, 30, 61);
+                            break;
+                        case 4:
+                            pos = new Rectangle(258, 99, 44, 54);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 5:
+                            pos = new Rectangle(323, 101, 46, 54);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                    }
                     break;
-                case JackRabbitState.MovingRight:
-                    break;
-                case JackRabbitState.ShootingLeft:
-                    break;
-                case JackRabbitState.ShootingRight:
+                case JackRabbitState.Shooting:
+
+                    int s = (int)(enemy.CurrentActionTime * 8) % 6;
+                    switch (s)
+                    {
+                        default:
+                            pos = new Rectangle(6, 28, 32, 63);
+                            break;
+                        case 1:
+                            pos = new Rectangle(68, 28, 37, 63);
+                            break;
+                        case 2:
+                            pos = new Rectangle(131, 28, 41, 63);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 3:
+                            pos = new Rectangle(205, 28, 34, 63);
+                            break;
+                        case 4:
+                            pos = new Rectangle(270, 28, 41, 63);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 5:
+                            pos = new Rectangle(329, 28, 30, 63);
+                            break;
+                    }
                     break;
 
             }
+            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest
+                  ,
+                  sourceRectangle: pos, color: Color.White, effects: flip);
         }
 
         public void AddTexture(Texture2D texture)

@@ -43,16 +43,32 @@ namespace AstralOutbreak
         {
             get { return mouseState.Position.Y; }
         }
-        public bool M1Clicked
+        public ButtonStatus M1State
         {
-            get { return mouseState.LeftButton.Equals(ButtonState.Pressed); }
+            get
+            {
+                if (mouseState.LeftButton.Equals(ButtonState.Pressed))
+                {
+                    if (prevMouseState.LeftButton.Equals(ButtonState.Released)) return ButtonStatus.Pressed;
+                    else return ButtonStatus.Held;
+                }
+                else return ButtonStatus.Unpressed;
+            }
         }
-        public bool M2Clicked
+        public ButtonStatus M2State
         {
-            get { return mouseState.RightButton.Equals(ButtonState.Pressed); }
+            get
+            {
+                if (mouseState.LeftButton.Equals(ButtonState.Pressed))
+                {
+                    if (prevMouseState.LeftButton.Equals(ButtonState.Released)) return ButtonStatus.Pressed;
+                    else return ButtonStatus.Held;
+                }
+                else return ButtonStatus.Unpressed;
+            }
         }
         
-        public InputManager() //Hard codes keys - only called if JSON fails to load from file
+        public InputManager() //Hard codes keys - Called on first boot or if JSON fails to load from file
         {
             jumpButton = Keys.W;
             leftButton = Keys.A;
@@ -73,14 +89,7 @@ namespace AstralOutbreak
             RollButtonState = UpdateKey(rollButton);
             DashButtonState = UpdateKey(dashButton);
             PauseButtonState = UpdateKey(pauseButton);
-
-            //Updates mouse separately because it's a special snowflake
-            if (mouseState.LeftButton.Equals(ButtonState.Pressed))
-            {
-                if (prevMouseState.LeftButton.Equals(ButtonState.Released)) ShootButtonState = ButtonStatus.Pressed;
-                else ShootButtonState = ButtonStatus.Held;
-            }
-            else ShootButtonState = ButtonStatus.Unpressed;
+            ShootButtonState = M1State;
 
             prevKeyState = keyState;
             prevMouseState = mouseState;
@@ -100,6 +109,8 @@ namespace AstralOutbreak
             }
             else return ButtonStatus.Unpressed;
         }
+
+
 
         public void SaveToFile()
         {

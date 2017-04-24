@@ -13,11 +13,27 @@ namespace AstralOutbreak
 
         public ItemType MyType { get; set; }
         public int Value { get; set; }
+        public bool Consumed { get; set; }
+
+        public override bool Unload
+        {
+            get
+            {
+                return base.Unload;
+            }
+            set
+            {
+                base.Unload = value;
+                if (Consumed && (OriginX >= 0 && OriginY >= 0))
+                    RoomManager.MapData.Loaded[OriginX, OriginY] = true;
+            }
+        }
 
         public Item(Vector2 pos, float width, float height, ItemType type, int val, bool mobile = false) : base(pos, width, height, mobile)
         {
             MyType = type;
             Value = val;
+            Consumed = false;
         }
     }
 }

@@ -135,6 +135,22 @@ namespace AstralOutbreak
         }//End of method
 
 
+        public bool CheckCollision(PhysicsObject obj, Vector displacement)
+        {
+            //This object is moving, which means we need to check for collisions!
+            for (int i = 0; i < PhysicsObjects.Count; i++)
+            {
+                //For each other object check for collisions
+                if (!obj.Equals(PhysicsObjects[i]) && obj.CheckCollision(PhysicsObjects[i], displacement))
+                {
+                    //Doing the transform triggers a collision!
+                    if (PhysicalLogic == null || PhysicalLogic(obj, PhysicsObjects[i]))
+                        return true;
+                }
+            }
+            return false;
+        }
+
         //Event that handles non-physical collision results
         public event CollisionResolution Collide;
 

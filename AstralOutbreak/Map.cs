@@ -8,7 +8,7 @@ namespace AstralOutbreak
 {
 
     //Represents an object on the map
-    public enum MapItem { None, Wall, Slug, Demon}
+    public enum MapItem { None, Wall, Slug, Demon, Item}
 
     /// <summary>
     /// A grid of objects that are in the game.
@@ -19,6 +19,8 @@ namespace AstralOutbreak
         /// All of the data relevant to the map.
         /// </summary>
         public MapItem[,] MapData { get; set; }
+        public int[,] TileValue { get; set; }
+
         public int Width { get; set; }
         public int Height { get; set; }
 
@@ -77,6 +79,7 @@ namespace AstralOutbreak
             PlayerStartX = 0;
             PlayerStartY = 0;
             MapData = new MapItem[0,0];
+            TileValue = new int[0, 0];
             Loaded = new bool[0, 0];
             Width = 0;
             Height = 0;
@@ -92,6 +95,7 @@ namespace AstralOutbreak
         {
             MapData = new MapItem[width, height];
             Loaded = new bool[width, height];
+            TileValue = new int[width, height];
             Width = width;
             Height = height;
             Resizable = false;
@@ -103,6 +107,7 @@ namespace AstralOutbreak
                 {
                     MapData[i, j] = MapItem.None;
                     Loaded[i, j] = false;
+                    TileValue[i, j] = 0;
                 }
         }
 
@@ -165,7 +170,10 @@ namespace AstralOutbreak
                     return new Slug(new Vector(x * Scale, y * Scale), Scale, Scale, 20);
                     break;
                 case MapItem.Demon:
-                    return new JackRabbit(new Vector(x * Scale, y * Scale), Scale, Scale, 20);
+                    return new JackRabbit(new Vector(x * Scale, y * Scale), 35, 61, 20);
+                    break;
+                case MapItem.Item:
+                    return new Item(new Vector(x * Scale, y * Scale), Scale, Scale, ItemType.AbilityUnlock, TileValue[x,y]);
                     break;
                 default:
                     break;
@@ -201,12 +209,13 @@ namespace AstralOutbreak
             {
                 for(int j = nY; j < height + nY && j < Height; j++)
                 {
-                    //for each bit check if it should be loaded (This has to do with not loading enemies on the screen, only in the buffer area)
-                    if ((this[i,j] == MapItem.Wall || this[i,j] == MapItem.None) || ((i*Scale < newX) || (i*Scale > newX + width) || (j * Scale < newY) || (j * Scale > newY + height)))
+                    //Get the object
+                    var obj = Get(i, j);
+                    if (obj != null)
                     {
-                        //Get the object
-                        var obj = Get(i, j);
-                        if (obj != null)
+                        //for each bit check if it should be loaded (This has to do with not loading enemies on the screen, only in the buffer area)
+                        if ((this[i,j] == MapItem.Wall || this[i,j] == MapItem.None) || ((obj.Position.X + obj.Width < newX) 
+                            || (obj.Position.X > newX + width) || (obj.Position.Y + obj.Height < newY) || (obj.Position.Y > newY + height)))
                         {
                             //Add it to the list
                             obj.OriginX = i;
@@ -261,6 +270,90 @@ namespace AstralOutbreak
             }
 
             return list;
+        }
+
+        public bool CheckLineOfSight(float x1, float y1, float x2, float y2)
+        {
+            x1 = (int)((x1) / Scale);
+            y1 = (int)((y1) / Scale);
+            x2 = (int)((x2) / Scale);
+            y2 = (int)((y2) / Scale);
+            if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0 || x1 >= MapData.GetLength(0) || y1 >= MapData.GetLength(1) || x2 >= MapData.GetLength(0) || y2 >= MapData.GetLength(1))
+                return false;
+
+            if(y1 == y2)
+            {
+                if(x1 < x2)
+                    for (int xActive = (int)x1; xActive < x2; xActive++)
+                    {
+                        if (MapData[xActive, (int)y1] == MapItem.Wall)
+                            return false;
+                    }
+                else
+                    for (int xActive = (int)x2; xActive < x1; xActive++)
+                    {
+                        if (MapData[xActive, (int)y1] == MapItem.Wall)
+                            return false;
+                    }
+                return true;
+            }
+            float slope = (y2 - y1) / (x2 - x1);
+            float yIntercept = y1 - (x1 * slope);
+            if(x1 < x2)
+                for(int xActive = (int)x1; xActive < x2; xActive++)
+                {
+                    if (slope > 0)
+                    {
+                        for (int i = 0; i < slope; i++)
+                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                return false;
+                    }
+                    else
+                    {
+                        for (int i = 0; i > slope; i--)
+                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                return false;
+                    }
+                }
+            else if (x2 < x1)
+                for (int xActive = (int)x2; xActive < x1; xActive++)
+                {
+                    if (slope > 0)
+                    {
+                        for(int i = 0; i < slope; i++)
+                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                return false;
+                    }
+                    else
+                    {
+                        for (int i = 0; i > slope; i--)
+                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                return false;
+                    }
+                }
+            else
+            {
+                if(y1 > y2)
+                    for (int yActive = (int)y2; yActive < y1; yActive++)
+                    {
+                        if (MapData[(int)x1, yActive] == MapItem.Wall)
+                            return false;
+                    }
+                else
+                    for (int yActive = (int)y1; yActive < y2; yActive++)
+                    {
+                        if (MapData[(int)x1, yActive] == MapItem.Wall)
+                            return false;
+                    }
+            }
+            return true;
+        }
+
+        public void Reload()
+        {
+            for (int i = 0; i < Loaded.GetLength(0); i++)
+                for (int j = 0; j < Loaded.GetLength(1); j++)
+                    Loaded[i, j] = false;
         }
 
     }
