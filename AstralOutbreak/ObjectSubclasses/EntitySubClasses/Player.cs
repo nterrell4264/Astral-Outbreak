@@ -28,6 +28,8 @@ namespace AstralOutbreak
         private float speedLimit = 300;
         private float invulnTime = 0;
         private float previousY;
+        private float jumpTime;
+        private const float JUMPTIME = .25f;
         private const float DASHSPEED = 900;
         private const float ROLLSPEED = 450;
 
@@ -37,6 +39,8 @@ namespace AstralOutbreak
             get { return currentplayerstate; }
             private set
             {
+                if(value == PlayerState.Falling && currentplayerstate != PlayerState.Dashing && Game1.Inputs.JumpButtonState == ButtonStatus.Pressed)
+                    jumpTime = JUMPTIME;
                 currentplayerstate = value;
                 CurrentActionTime = 0;
                 if (currentplayerstate == PlayerState.Dashing || currentplayerstate == PlayerState.Rolling)
@@ -88,8 +92,10 @@ namespace AstralOutbreak
             MyWeapon.Source = this;
             MyWeapon.BulletSize = 5;
             previousY = Velocity.Y;
+            jumpTime = JUMPTIME;
+
         }
-        
+
         /// <summary>
         /// Called once per update
         /// </summary>
@@ -118,7 +124,7 @@ namespace AstralOutbreak
                     break;
                 //In the air
                 case PlayerState.Falling:
-                    if(previousY == Velocity.Y)
+                    if(previousY == Velocity.Y && jumpTime == 0)
                     {
                         if(Velocity.X == 0)
                         {
@@ -129,6 +135,18 @@ namespace AstralOutbreak
                             CurrentPlayerState = PlayerState.Running;
                         }
                         break;
+                    }
+                    //If we are jumping
+                    if(jumpTime > 0 && (Game1.Inputs.JumpButtonState == ButtonStatus.Held || Game1.Inputs.JumpButtonState == ButtonStatus.Pressed || jumpTime > JUMPTIME / 2))
+                    {
+                        jumpTime -= deltaTime;
+                        Velocity.Y = -84 / JUMPTIME;
+                    }
+                    else
+                    {
+                        jumpTime = 0;
+                        if (Velocity.Y < 0)
+                            Velocity.Y /= 2;
                     }
                     if (!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
                     {
@@ -404,7 +422,7 @@ namespace AstralOutbreak
                     break;
             }
             Vector aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
-            if (Game1.Inputs.M1State == ButtonStatus.Held && CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
+            if ((Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed) && CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
             {
                 Shoot(aim);
                 if (aim.X > 0)

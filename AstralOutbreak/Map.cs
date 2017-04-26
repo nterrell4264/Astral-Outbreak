@@ -164,13 +164,22 @@ namespace AstralOutbreak
                     return null;
                     break;
                 case MapItem.Wall:
-                    return new Wall(new Vector(x*Scale, y*Scale), Scale, Scale);
+                    var v = new Wall(new Vector(x * Scale, y * Scale), Scale, Scale);
+                    if ( x >= 1 && MapData[x - 1, y] == MapItem.Wall)
+                        v.Adj = v.Adj | WallAdj.Left;
+                    if (x < Width - 1 && MapData[x + 1, y] == MapItem.Wall)
+                        v.Adj = v.Adj | WallAdj.Right;
+                    if (y >= 1 && MapData[x, y - 1] == MapItem.Wall)
+                        v.Adj = v.Adj | WallAdj.Top;
+                    if (y < Height - 1 && MapData[x, y + 1] == MapItem.Wall)
+                        v.Adj = v.Adj | WallAdj.Bottom;
+                    return v;
                     break;
                 case MapItem.Slug:
                     return new Slug(new Vector(x * Scale, y * Scale), Scale, Scale, 20);
                     break;
                 case MapItem.Demon:
-                    return new JackRabbit(new Vector(x * Scale, y * Scale), 35, 61, 20);
+                    return new JackRabbit(new Vector(x * Scale, y * Scale), 28, 56, 20);
                     break;
                 case MapItem.Item:
                     return new Item(new Vector(x * Scale, y * Scale), Scale, Scale, ItemType.AbilityUnlock, TileValue[x,y]);

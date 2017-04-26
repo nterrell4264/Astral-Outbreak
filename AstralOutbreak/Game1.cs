@@ -23,6 +23,7 @@ namespace AstralOutbreak
         SpriteManager spriteManager;
         MenuManager menuManager;
         public static InputManager Inputs { get; set; }
+        public static Random Rand { get; set; }
 
         //Current game state
         public static GameState CurrentState { get; set; }
@@ -43,6 +44,7 @@ namespace AstralOutbreak
         /// </summary>
         protected override void Initialize()
         {
+            Rand = new Random();
             if (File.Exists("config.txt"))
                 try
                 {
