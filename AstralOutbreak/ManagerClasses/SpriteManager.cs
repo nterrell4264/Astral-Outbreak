@@ -175,9 +175,9 @@ namespace AstralOutbreak
         public void Draw(SpriteBatch sb, JackRabbit enemy, int i)
         {
             Rectangle pos = new Rectangle();
-            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX - 3,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY - 5,
+                  35, 61);
             SpriteEffects flip = SpriteEffects.None;
             if (!enemy.FaceRight)
                 flip = SpriteEffects.FlipHorizontally;
