@@ -33,6 +33,9 @@ namespace AstralOutbreak
         //Keep track of the player
         public Player PlayerOne { get; set; }
 
+        //Is a boss active?
+        public bool BossActive { get; set; }
+
         /// <summary>
         /// A simple room with gravity
         /// </summary>
@@ -208,6 +211,22 @@ namespace AstralOutbreak
         //Returns true if we want both objects to collide with each other in a physical sense
         public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)
         {
+            //Wall
+            if (obj2 is Wall)
+            {
+                Wall w = obj2 as Wall;
+                switch (w.MyType)
+                {
+                    case WallType.Regular:
+                        break;
+                    case WallType.Platform:
+                        return !(obj1 is Projectile) && (obj1.Position.Y + obj1.Height <= obj2.Position.Y && (Game1.Inputs.DownButtonState == ButtonStatus.Unpressed || !(obj1 is Player)));
+                    case WallType.BossDoor:
+                        return BossActive;
+                    default:
+                        break;
+                }
+            }
             if (obj2 is Item)
                 return false;
             if (obj1 is Enemy && obj2 is Enemy)
@@ -226,7 +245,8 @@ namespace AstralOutbreak
             //Bullets damage entities
             if(obj1 is Projectile && obj2 is GameObject)
             {
-                if (obj2 is Player && (obj2 as Player).InvulnTime > 0) { }
+                if ((obj2 is Player && (obj2 as Player).InvulnTime > 0) || (obj2 is Wall && 
+                    ((obj2 as Wall).MyType == WallType.BossDoor && !BossActive || (obj2 as Wall).MyType == WallType.Platform))){ }
                 else
                     (obj1 as Projectile).Strike(obj2 as GameObject);
             }
@@ -237,6 +257,7 @@ namespace AstralOutbreak
                     (obj2 as Projectile).Strike(obj1 as GameObject);
             }
 
+            //Enemies hit player
             if(obj1 is Enemy && obj2 is Player)
             {
                 if((obj2 as Player).InvulnTime == 0)

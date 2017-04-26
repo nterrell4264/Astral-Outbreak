@@ -173,6 +173,7 @@ namespace AstralOutbreak
                         v.Adj = v.Adj | WallAdj.Top;
                     if (y < Height - 1 && MapData[x, y + 1] == MapItem.Wall)
                         v.Adj = v.Adj | WallAdj.Bottom;
+                    v.MyType = (WallType) TileValue[x,y];
                     return v;
                     break;
                 case MapItem.Slug:
