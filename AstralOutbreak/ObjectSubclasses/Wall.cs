@@ -18,7 +18,7 @@ namespace AstralOutbreak
 
     public enum WallType
     {
-        Regular,
+        Regular = 1,
         Platform,
         BossDoor
     }

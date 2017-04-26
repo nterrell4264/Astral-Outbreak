@@ -220,7 +220,7 @@ namespace AstralOutbreak
                     case WallType.Regular:
                         break;
                     case WallType.Platform:
-                        return obj1.Position.Y + obj1.Height > obj2.Position.Y || Game1.Inputs.DownButtonState == ButtonStatus.Held;
+                        return !(obj1 is Projectile) && (obj1.Position.Y + obj1.Height <= obj2.Position.Y && (Game1.Inputs.DownButtonState == ButtonStatus.Unpressed || !(obj1 is Player)));
                     case WallType.BossDoor:
                         return BossActive;
                     default:
@@ -245,7 +245,8 @@ namespace AstralOutbreak
             //Bullets damage entities
             if(obj1 is Projectile && obj2 is GameObject)
             {
-                if (obj2 is Player && (obj2 as Player).InvulnTime > 0) { }
+                if ((obj2 is Player && (obj2 as Player).InvulnTime > 0) || (obj2 is Wall && 
+                    ((obj2 as Wall).MyType == WallType.BossDoor && !BossActive || (obj2 as Wall).MyType == WallType.Platform))){ }
                 else
                     (obj1 as Projectile).Strike(obj2 as GameObject);
             }
