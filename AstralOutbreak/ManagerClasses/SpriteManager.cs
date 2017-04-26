@@ -128,7 +128,10 @@ namespace AstralOutbreak
                     break;
                 case PlayerState.Rolling:
                     pos = new Rectangle(3, 181, 32, 56);
-                    rot = player.CurrentActionTime * 30;
+                    if (player.FaceRight)
+                        rot = player.CurrentActionTime * 30;
+                    else
+                        rot = player.CurrentActionTime * -30;
                     break;
                 case PlayerState.Running: int o = (int)(player.CurrentActionTime * 8) % 6;
                     switch (o)
@@ -150,7 +153,8 @@ namespace AstralOutbreak
             }
                   sb.Draw(masterList["PlayerSprites"],
                   destinationRectangle: dest,
-                  sourceRectangle: pos, rotation: rot, color: Color.White, effects: flip);
+                  sourceRectangle: pos, rotation: rot, //origin: new Vector2(player.Width / 2, player.Height/2),
+                  color: Color.White, effects: flip);
         }
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
