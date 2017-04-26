@@ -29,6 +29,7 @@ namespace AstralOutbreak
         private float invulnTime = 0;
         private float previousY;
         private float jumpTime;
+        private bool canAirDash;
         private const float JUMPTIME = .25f;
         private const float DASHSPEED = 900;
         private const float ROLLSPEED = 450;
@@ -39,8 +40,9 @@ namespace AstralOutbreak
             get { return currentplayerstate; }
             private set
             {
-                if(value == PlayerState.Falling && currentplayerstate != PlayerState.Dashing && Game1.Inputs.JumpButtonState == ButtonStatus.Pressed)
+                if (value == PlayerState.Falling && currentplayerstate != PlayerState.Dashing && Game1.Inputs.JumpButtonState == ButtonStatus.Pressed)
                     jumpTime = JUMPTIME;
+                else jumpTime = 0;
                 currentplayerstate = value;
                 CurrentActionTime = 0;
                 if (currentplayerstate == PlayerState.Dashing || currentplayerstate == PlayerState.Rolling)
@@ -176,6 +178,7 @@ namespace AstralOutbreak
                             CurrentPlayerState = PlayerState.Dashing;
                             Velocity.Y = 0;
                             Gravity = false;
+                            canAirDash = false;
                             break;
                         }
                     }
@@ -196,13 +199,14 @@ namespace AstralOutbreak
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = -MaxVelocity.X;
                             CurrentPlayerState = PlayerState.Dashing;
                             Velocity.Y = 0;
                             Gravity = false;
+                            canAirDash = false;
                             break;
                         }
                     }
@@ -293,6 +297,7 @@ namespace AstralOutbreak
                         Gravity = false;
                         break;
                     }
+                    if(!canAirDash) canAirDash = true;
                     break;
                 //Roll sequence
                 case PlayerState.Rolling:
@@ -415,6 +420,7 @@ namespace AstralOutbreak
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
+                    if (!canAirDash) canAirDash = true;
                     break;
 
                 default:
