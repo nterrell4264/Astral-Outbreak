@@ -89,8 +89,8 @@ namespace AstralOutbreak
         public void Draw(SpriteBatch sb, Player player, int i)
         {
             float rot = 0;
-            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX + (int)player.Width / 2,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY + (int)player.Height / 2,
                   (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
             Rectangle pos = new Rectangle();
             //Mark: Added horizontal flipping
@@ -153,7 +153,7 @@ namespace AstralOutbreak
             }
                   sb.Draw(masterList["PlayerSprites"],
                   destinationRectangle: dest,
-                  sourceRectangle: pos, rotation: rot, //origin: new Vector2(player.Width / 2, player.Height/2),
+                  sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height/2),
                   color: Color.White, effects: flip);
         }
         public void Draw(SpriteBatch sb, Slug enemy, int i)

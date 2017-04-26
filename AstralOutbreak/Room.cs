@@ -95,14 +95,18 @@ namespace AstralOutbreak
         {
             if (target == null)
                 return;
-            float newX = (Game1.Inputs.MouseX + RoomManager.Active.CameraX + target.Position.X * 4) / 5 - (Width / 2);
+            float newX = (Game1.Inputs.MouseX + RoomManager.Active.CameraX + target.Center.X * 4) / 5 - (Width / 2);
             if (newX < 0)
                 newX = 0;
             if (newX > target.Position.X)
                 newX = target.Position.X;
             if (newX + Width < target.Position.X + target.Width)
                 newX = target.Position.X - Width + target.Width;
-            float newY = ((Game1.Inputs.MouseY + RoomManager.Active.CameraY) * 3 + target.Position.Y * 7) / 10 - (Height / 2);
+            float newY = ((Game1.Inputs.MouseY + RoomManager.Active.CameraY) * 3 + target.Center.Y * 7) / 10 - (Height / 2);
+            if (target is Player && (target as Player).CurrentPlayerState == PlayerState.Rolling)
+            {
+                newY = ((Game1.Inputs.MouseY + RoomManager.Active.CameraY) * 3 + target.Position.Y * 7) / 10 - (Height / 2);
+            }
             if (newY < 0)
                 newY = 0;
             if (newY > target.Position.Y)
