@@ -210,6 +210,8 @@ namespace AstralOutbreak
         {
             if (obj2 is Item)
                 return false;
+            if (obj1 is Enemy && obj2 is Enemy)
+                return false;
             if (obj1 is Player && obj2 is Enemy)
                 return false;
             else if (obj1 is Enemy && obj2 is Player)

@@ -27,7 +27,7 @@ namespace AstralOutbreak
 
         public bool CheckLineOfSight(Map map)
         {
-            return (map.CheckLineOfSight(Position.X, Position.Y, RoomManager.Active.PlayerOne.Position.X, RoomManager.Active.PlayerOne.Position.Y));
+            return (map.CheckLineOfSight(Center.X, Center.Y, RoomManager.Active.PlayerOne.Center.X, RoomManager.Active.PlayerOne.Center.Y));
         }
 
         public override void Step(float deltaTime)
