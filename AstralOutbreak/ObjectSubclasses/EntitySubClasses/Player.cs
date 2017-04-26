@@ -404,7 +404,7 @@ namespace AstralOutbreak
                     break;
             }
             Vector aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
-            if (Game1.Inputs.M1State == ButtonStatus.Held && CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
+            if ((Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed) && CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
             {
                 Shoot(aim);
                 if (aim.X > 0)
