@@ -88,6 +88,7 @@ namespace AstralOutbreak
         //Sub methods of Draw made for each type of entity
         public void Draw(SpriteBatch sb, Player player, int i)
         {
+            float rot = 0;
             Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
                   (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                   (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
@@ -127,6 +128,7 @@ namespace AstralOutbreak
                     break;
                 case PlayerState.Rolling:
                     pos = new Rectangle(3, 181, 32, 56);
+                    rot = player.CurrentActionTime * 30;
                     break;
                 case PlayerState.Running: int o = (int)(player.CurrentActionTime * 8) % 6;
                     switch (o)
@@ -148,7 +150,7 @@ namespace AstralOutbreak
             }
                   sb.Draw(masterList["PlayerSprites"],
                   destinationRectangle: dest,
-                  sourceRectangle: pos, color: Color.White, effects: flip);
+                  sourceRectangle: pos, rotation: rot, color: Color.White, effects: flip);
         }
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
