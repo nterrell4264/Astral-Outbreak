@@ -29,12 +29,13 @@ namespace AstralOutbreak
         public SpriteManager()
         {
             masterList = new Dictionary<string, Texture2D>();
+            fontList = new Dictionary<string, SpriteFont>();
         }
 
         //Class
         private Dictionary<string,Texture2D> masterList;
+        private Dictionary<string, SpriteFont> fontList;
         SpriteBatch sb;
-        public SpriteFont font;
 
         //Methods
         public void Update(SpriteBatch sb)//Will call individual Draw Methods for each entity based on what called it
@@ -65,13 +66,13 @@ namespace AstralOutbreak
                         Color.Black);
                     }
                 }
-                sb.DrawString(font, "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
+                sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
             foreach (MenuContent menuPart in MenuManager.items)
             {
-                if (menuPart.IsText)
+                if (menuPart is MenuString)
                 {
-                    sb.DrawString(font, menuPart.TextureName, new Vector2(menuPart.Location.X, menuPart.Location.Y), Color.Black);
+                    sb.DrawString(fontList[(menuPart as MenuString).SpriteFont], (menuPart as MenuString).Text, new Vector2(menuPart.Location.X, menuPart.Location.Y), Color.Black);
                 }
                 else
                 {
@@ -263,6 +264,10 @@ namespace AstralOutbreak
         public void AddTexture(Texture2D texture)
         {
             masterList.Add(texture.Name, texture);
+        }
+        public void AddFont(string fontName, SpriteFont font)
+        {
+            fontList.Add(fontName, font);
         }
     }
 }
