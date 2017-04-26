@@ -21,6 +21,7 @@ namespace AstralOutbreak
         public Keys jumpButton { get; set; }
         public Keys leftButton { get; set; }
         public Keys rightButton { get; set; }
+        public Keys downButton { get; set; }
         public Keys rollButton { get; set; }
         public Keys dashButton { get; set; }
         public Keys pauseButton { get; set; }
@@ -29,6 +30,7 @@ namespace AstralOutbreak
         public ButtonStatus JumpButtonState { get; private set; }
         public ButtonStatus LeftButtonState { get; private set; }
         public ButtonStatus RightButtonState { get; private set; }
+        public ButtonStatus DownButtonState { get; private set; }
         public ButtonStatus RollButtonState { get; private set; }
         public ButtonStatus DashButtonState { get; private set; }
         public ButtonStatus ShootButtonState { get; private set; }
@@ -92,6 +94,7 @@ namespace AstralOutbreak
             rollButton = Keys.LeftShift;
             dashButton = Keys.Space;
             pauseButton = Keys.Escape;
+            downButton = Keys.S;
         }
 
         public void Update() //Updates all buttons
@@ -107,6 +110,7 @@ namespace AstralOutbreak
             RollButtonState = UpdateKey(rollButton);
             DashButtonState = UpdateKey(dashButton);
             PauseButtonState = UpdateKey(pauseButton);
+            DownButtonState = UpdateKey(downButton);
             ShootButtonState = M1State;
         }
 

@@ -16,6 +16,13 @@ namespace AstralOutbreak
         Bottom = 8
     }
 
+    public enum WallType
+    {
+        Regular,
+        Platform,
+        BossDoor
+    }
+
 
     /// <summary>
     /// A simple basic wall
@@ -23,7 +30,7 @@ namespace AstralOutbreak
     public class Wall : GameObject
     {
         public WallAdj Adj { get; set; }
-
+        public WallType MyType { get; set; }
         /// <summary>
         /// Makes an immobile Wall
         /// </summary>
@@ -33,6 +40,8 @@ namespace AstralOutbreak
         public Wall(Vector2 pos, float width, float height, bool mobile = false) : base(pos, width, height, mobile)
         {
             Adj = WallAdj.None;
+            MyType = WallType.Regular;
+
         }
     }
 }
