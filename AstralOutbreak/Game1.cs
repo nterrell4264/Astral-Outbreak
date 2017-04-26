@@ -102,7 +102,8 @@ namespace AstralOutbreak
             spriteBatch = new SpriteBatch(GraphicsDevice);
             menuManager = new MenuManager(this);
             spriteManager = new SpriteManager();
-            spriteManager.font = Content.Load<SpriteFont>("font");
+            spriteManager.AddFont("font", Content.Load<SpriteFont>("font"));
+            spriteManager.AddFont("UIfont", Content.Load<SpriteFont>("UIfont"));
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
@@ -113,6 +114,7 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/QuitButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/SmallMenuBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/LargeMenuBG"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/HudBG"));
 
             // TODO: use this.Content to load your game content here
         }

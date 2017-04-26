@@ -46,13 +46,13 @@ namespace AstralOutbreak
             items.Add(new MenuContent(50, 50, "LargeMenuBG"));
             items.Add(new MenuContent(50, 200, "LargeMenuBG"));
             //Text
-            items.Add(new MenuContent(500, 55, "Left = A", true));
-            items.Add(new MenuContent(500, 105, "Right = D", true));
-            items.Add(new MenuContent(500, 155, "Jump = W", true));
-            items.Add(new MenuContent(500, 205, "Dash = Space", true));
-            items.Add(new MenuContent(500, 255, "Roll = LShift", true));
-            items.Add(new MenuContent(500, 305, "Shoot = M1", true));
-            items.Add(new MenuContent(500, 355, "Pause = Escape", true));
+            items.Add(new MenuString(500, 55, "Left = A", "font"));
+            items.Add(new MenuString(500, 105, "Right = D", "font"));
+            items.Add(new MenuString(500, 155, "Jump = W", "font"));
+            items.Add(new MenuString(500, 205, "Dash = Space", "font"));
+            items.Add(new MenuString(500, 255, "Roll = LShift", "font"));
+            items.Add(new MenuString(500, 305, "Shoot = M1", "font"));
+            items.Add(new MenuString(500, 355, "Pause = Escape", "font"));
             //Other
             items.Add(new MenuButton(50, 350, 150, 75, "ResumeButton", () => { Game1.CurrentState = Game1.prevMenu; }));
         }
@@ -80,7 +80,8 @@ namespace AstralOutbreak
         }
         private void LoadUI() //Loads GUI assets
         {
-
+            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width / 2 - 84, main.GraphicsDevice.Viewport.Height - 50, "HudBG"));
+            items.Add(new MenuString(main.GraphicsDevice.Viewport.Width / 2 - 56, main.GraphicsDevice.Viewport.Height - 45, RoomManager.Active.PlayerOne.Health.ToString(), "UIfont"));
         }
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace AstralOutbreak
                         }
                 }
             }
-            prevState = Game1.CurrentState;
+            prevState = Game1.CurrentState;                                                                                                                                                                                                                                                                                                                             
         }
     }
 }
