@@ -171,7 +171,7 @@ namespace AstralOutbreak
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = MaxVelocity.X;
@@ -223,7 +223,7 @@ namespace AstralOutbreak
                             Velocity.X = -.1f;
                             break;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
+                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
                         {
                             MaxVelocity.X = DASHSPEED;
                             if (FaceRight)
@@ -233,6 +233,7 @@ namespace AstralOutbreak
                             CurrentPlayerState = PlayerState.Dashing;
                             Velocity.Y = 0;
                             Gravity = false;
+                            canAirDash = false;
                             break;
                         }
                     }
