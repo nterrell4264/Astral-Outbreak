@@ -25,7 +25,7 @@ namespace AstralOutbreak
 
         }
 
-        public bool CheckLineOfSight(Map map)
+        public virtual bool CheckLineOfSight(Map map)
         {
             return (map.CheckLineOfSight(Center.X, Center.Y, RoomManager.Active.PlayerOne.Center.X, RoomManager.Active.PlayerOne.Center.Y));
         }

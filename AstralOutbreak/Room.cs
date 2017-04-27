@@ -211,6 +211,10 @@ namespace AstralOutbreak
         //Returns true if we want both objects to collide with each other in a physical sense
         public bool DetermineCollision(PhysicsObject obj1, PhysicsObject obj2)
         {
+            //Swarms
+            if (obj2 is SwarmMob)
+                return false;
+
             //Wall
             if (obj2 is Wall)
             {

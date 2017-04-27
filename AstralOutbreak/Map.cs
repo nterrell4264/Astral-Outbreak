@@ -164,7 +164,18 @@ namespace AstralOutbreak
                     return null;
                     break;
                 case MapItem.Wall:
-                    var v = new Wall(new Vector(x * Scale, y * Scale), Scale, Scale);
+                    Wall v = null;
+                    switch ((WallType)TileValue[x,y])
+                    {
+                        default:
+                        case WallType.Regular:
+                        case WallType.BossDoor:
+                            v = new Wall(new Vector(x * Scale, y * Scale), Scale, Scale);
+                            break;
+                        case WallType.Platform:
+                            v = new Wall(new Vector(x * Scale, y * Scale), Scale, 2);
+                            break;
+                    }
                     if ( x >= 1 && MapData[x - 1, y] == MapItem.Wall)
                         v.Adj = v.Adj | WallAdj.Left;
                     if (x < Width - 1 && MapData[x + 1, y] == MapItem.Wall)
