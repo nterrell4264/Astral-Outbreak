@@ -302,59 +302,9 @@ namespace AstralOutbreak
             if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0 || x1 >= MapData.GetLength(0) || y1 >= MapData.GetLength(1) || x2 >= MapData.GetLength(0) || y2 >= MapData.GetLength(1))
                 return false;
 
-            if(y1 == y2)
+            if(x1 == x2)
             {
-                if(x1 < x2)
-                    for (int xActive = (int)x1; xActive < x2; xActive++)
-                    {
-                        if (MapData[xActive, (int)y1] == MapItem.Wall)
-                            return false;
-                    }
-                else
-                    for (int xActive = (int)x2; xActive < x1; xActive++)
-                    {
-                        if (MapData[xActive, (int)y1] == MapItem.Wall)
-                            return false;
-                    }
-                return true;
-            }
-            float slope = (y2 - y1) / (x2 - x1);
-            float yIntercept = y1 - (x1 * slope);
-            if(x1 < x2)
-                for(int xActive = (int)x1; xActive < x2; xActive++)
-                {
-                    if (slope > 0)
-                    {
-                        for (int i = 0; i < slope; i++)
-                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
-                                return false;
-                    }
-                    else
-                    {
-                        for (int i = 0; i > slope; i--)
-                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
-                                return false;
-                    }
-                }
-            else if (x2 < x1)
-                for (int xActive = (int)x2; xActive < x1; xActive++)
-                {
-                    if (slope > 0)
-                    {
-                        for(int i = 0; i < slope; i++)
-                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
-                                return false;
-                    }
-                    else
-                    {
-                        for (int i = 0; i > slope; i--)
-                            if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
-                                return false;
-                    }
-                }
-            else
-            {
-                if(y1 > y2)
+                if (y1 > y2)
                     for (int yActive = (int)y2; yActive < y1; yActive++)
                     {
                         if (MapData[(int)x1, yActive] == MapItem.Wall)
@@ -364,6 +314,59 @@ namespace AstralOutbreak
                     for (int yActive = (int)y1; yActive < y2; yActive++)
                     {
                         if (MapData[(int)x1, yActive] == MapItem.Wall)
+                            return false;
+                    }
+                return true;
+            }
+            float slope = (y2 - y1) / (x2 - x1);
+            float yIntercept = y1 - (x1 * slope);
+            if (slope != 0)
+            {
+                if (x1 < x2)
+                    for (int xActive = (int)x1; xActive < x2; xActive++)
+                    {
+                        if (slope > 0)
+                        {
+                            for (int i = 0; i < slope; i++)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                    return false;
+                        }
+                        else
+                        {
+                            for (int i = 0; i > slope; i--)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                    return false;
+                        }
+                    }
+                else if (x2 < x1)
+                    for (int xActive = (int)x2; xActive < x1; xActive++)
+                    {
+                        if (slope > 0)
+                        {
+                            for (int i = 0; i < slope; i++)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                    return false;
+                        }
+                        else
+                        {
+                            for (int i = 0; i > slope; i--)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                    return false;
+                        }
+                    }
+            }
+            else
+            {
+                if (x1 < x2)
+                    for (int xActive = (int)x1; xActive < x2; xActive++)
+                    {
+                        if (MapData[xActive, (int)y1] == MapItem.Wall)
+                            return false;
+                    }
+                else
+                    for (int xActive = (int)x2; xActive < x1; xActive++)
+                    {
+                        if (MapData[xActive, (int)y1] == MapItem.Wall)
                             return false;
                     }
             }
