@@ -33,7 +33,7 @@ namespace AstralOutbreak
         //When Projectiles hit things they die and inflict damage.
         public void Strike(GameObject other)
         {
-            if(other != Source && !(other is Projectile))
+            if(other != Source && !(other is Projectile) && !IsDead)
             {
                 Health = 0;
                 if(other is Entity)
