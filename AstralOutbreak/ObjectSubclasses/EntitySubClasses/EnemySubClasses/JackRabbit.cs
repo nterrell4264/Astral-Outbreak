@@ -82,7 +82,7 @@ namespace AstralOutbreak
                                 break;
                             }
 
-                            if (!RoomManager.Active.CheckCollision(this, new Vector(1, -3 * Height / 2)) && RoomManager.Active.CheckCollision(this, new Vector(1, 0)))
+                            if (!RoomManager.Active.CheckCollision(this, new Vector(1, -5 * Height / 2)) && RoomManager.Active.CheckCollision(this, new Vector(1, 0)))
                             {
                                 Velocity.Y -= 310;
                                 CurrentJackRabbitState = JackRabbitState.Falling;
@@ -120,7 +120,7 @@ namespace AstralOutbreak
                                 Shoot(new Vector(-1, 0));
                                 break;
                             }
-                            if (!RoomManager.Active.CheckCollision(this, new Vector(-1, -3 * Height / 2)) && RoomManager.Active.CheckCollision(this, new Vector(-1, 0)))
+                            if (!RoomManager.Active.CheckCollision(this, new Vector(-1, -5 * Height / 2)) && RoomManager.Active.CheckCollision(this, new Vector(-1, 0)))
                             {
                                 Velocity.Y -= 310;
                                 CurrentJackRabbitState = JackRabbitState.Falling;
