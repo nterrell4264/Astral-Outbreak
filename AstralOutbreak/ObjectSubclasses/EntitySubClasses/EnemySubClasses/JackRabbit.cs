@@ -17,6 +17,7 @@ namespace AstralOutbreak
         private float prevY;
         private float prevX;
         private bool awake;
+        private float sleepTimer;
 
         public JackRabbitState CurrentJackRabbitState
         {
@@ -41,6 +42,7 @@ namespace AstralOutbreak
             MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
 
+            sleepTimer = .5f;
             prevY = Velocity.Y;
             prevX = Position.X;
             Gravity = true;
@@ -50,6 +52,8 @@ namespace AstralOutbreak
         {
             if (awake)
             {
+                sleepTimer = .5f;
+
                 switch (CurrentJackRabbitState)
                 {
                     case JackRabbitState.Moving:
@@ -328,7 +332,16 @@ namespace AstralOutbreak
                 }
             }
             else
-                awake = CheckLineOfSight(RoomManager.MapData);
+            {
+                sleepTimer -= deltaTime;
+                if (sleepTimer <= 0)
+                {
+                    currentState = JackRabbitState.Idle;
+                    Shooting = false;
+                    Velocity.X /= 1.1f;
+                }
+            }
+            awake = CheckLineOfSight(RoomManager.MapData);
 
             ////If the player is within the range of JackRabbit's weapon and to the left, it shoots left
             //if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
