@@ -102,7 +102,7 @@ namespace AstralOutbreak
                         for (int j = 0; j < 5; j++)
                         {
                             swarmMobs.Add(new SwarmMob(this));
-                            swarmMobs[5 * i + j].Position += new Vector(2*i, 2*j);
+                            swarmMobs[5 * i + j].Position += new Vector(16*i, 16*j);
                         }
                     }
                     RoomManager.Active.AddEntities(swarmMobs);

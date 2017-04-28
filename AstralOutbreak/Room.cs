@@ -293,7 +293,7 @@ namespace AstralOutbreak
                             if(obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X -= CORRECTIVE;
                             else
-                                obj1.Velocity.X -= CORRECTIVE/10;
+                                obj1.Velocity.X -= CORRECTIVE/5;
 
                         (obj1 as Enemy).Corrective = true;
                     }
@@ -304,7 +304,7 @@ namespace AstralOutbreak
                             if (obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X += CORRECTIVE;
                             else
-                                obj1.Velocity.X += CORRECTIVE / 10;
+                                obj1.Velocity.X += CORRECTIVE / 5;
                         (obj1 as Enemy).Corrective = true;
 
                     }
@@ -314,7 +314,7 @@ namespace AstralOutbreak
                             if (obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X += CORRECTIVE;
                             else
-                                obj1.Velocity.X += CORRECTIVE / 10;
+                                obj1.Velocity.X += CORRECTIVE / 5;
                         (obj1 as Enemy).Corrective = true;
                     }
                     else
@@ -323,7 +323,7 @@ namespace AstralOutbreak
                             if (obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X -= CORRECTIVE;
                             else
-                                obj1.Velocity.X -= CORRECTIVE / 10;
+                                obj1.Velocity.X -= CORRECTIVE / 5;
                         (obj1 as Enemy).Corrective = true;
                     }
                 }
@@ -340,7 +340,21 @@ namespace AstralOutbreak
             }
         }
 
-
+        public bool CheckCollisionEnemy(PhysicsObject obj, Vector displacement)
+        {
+            //This object is moving, which means we need to check for collisions!
+            for (int i = 0; i < PhysicsObjects.Count; i++)
+            {
+                //For each other object check for collisions
+                if (!obj.Equals(PhysicsObjects[i]) && obj.CheckCollision(PhysicsObjects[i], displacement))
+                {
+                    //Doing the transform triggers a collision!
+                    if (PhysicsObjects[i] is Enemy)
+                        return true;
+                }
+            }
+            return false;
+        }
 
         //Adds a bullet
         public void AddBullet(GameObject obj, Vector vel)
