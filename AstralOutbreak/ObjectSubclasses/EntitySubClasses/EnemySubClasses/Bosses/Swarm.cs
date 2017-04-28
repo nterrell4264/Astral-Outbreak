@@ -62,7 +62,7 @@ namespace AstralOutbreak
 
 
 
-                SwarmMob.Target = SwarmMob.Target + v;
+                SwarmMob.Target = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX, Game1.Inputs.MouseY + RoomManager.Active.CameraY);
             }
         }
 
@@ -77,6 +77,12 @@ namespace AstralOutbreak
             if(Mobs.Count != 0)
                 v = v / Mobs.Count;
             return v;
+        }
+
+        public void Clear()
+        {
+            Mobs = new List<SwarmMob>();
+            lastCall = -1;
         }
 
 

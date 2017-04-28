@@ -164,6 +164,9 @@ namespace AstralOutbreak
                     PhysicsObjects.Add(newData[i]);
                 }
             }
+            BossActive = false;
+            SwarmMob.Awake = false;
+            SwarmMob.MySwarm.Clear();
             CameraTrack(PlayerOne);
         }
 
@@ -183,6 +186,9 @@ namespace AstralOutbreak
                     PhysicsObjects.Add(newData[i]);
                 }
             }
+            BossActive = false;
+            SwarmMob.Awake = false;
+            SwarmMob.MySwarm.Clear();
             CameraTrack(PlayerOne);
         }
 
@@ -340,7 +346,18 @@ namespace AstralOutbreak
             obj.Velocity = vel;
         }
 
-
+        //Adds entities to the room
+        public void AddEntities(List<PhysicsObject> objs)
+        {
+            lock (listLock)
+            {
+                for (int i = 0; i < objs.Count; i++)
+                {
+                    if(objs[i] != null)
+                        PhysicsObjects.Add(objs[i]);
+                }
+            }
+        }
 
     }
 }

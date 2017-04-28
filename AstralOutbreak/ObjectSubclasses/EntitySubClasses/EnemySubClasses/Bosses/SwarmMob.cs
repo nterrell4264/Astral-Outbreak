@@ -66,6 +66,13 @@ namespace AstralOutbreak
             MySwarm.Mobs.Add(this);
         }
 
+        public SwarmMob(SwarmMob mob) : base(new Vector(mob.Position), mob.Width, mob.Height, mob.Health, mob.Damage, mob.Mobile)
+        {
+            Gravity = false;
+            MaxVelocity = new Vector(200, 200);
+            MySwarm.Mobs.Add(this);
+        }
+
         public override void Step(float deltaTime)
         {
             base.Step(deltaTime);
@@ -89,6 +96,10 @@ namespace AstralOutbreak
                 {
                     MySwarm.Activate();
                     Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
+                    List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
+                    for(int i = 0; i < 50; i++)
+                        swarmMobs.Add(new SwarmMob(this));
+                    RoomManager.Active.AddEntities(swarmMobs);
                 }
 
             }

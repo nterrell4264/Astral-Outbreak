@@ -24,6 +24,13 @@ namespace AstralOutbreak
             X = x;
             Y = y;
         }
+        //Copy constructor
+        public Vector(Vector v)
+        {
+            X = v.X;
+            Y = v.Y;
+        }
+
 
         /// <summary>
         /// Returns magnitude squared.
