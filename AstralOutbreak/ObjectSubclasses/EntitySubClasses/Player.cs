@@ -77,7 +77,7 @@ namespace AstralOutbreak
             get { return base.Health; }
             set
             {
-                if (value < Health && invulnTime == 0)
+                if (value < Health && invulnTime <= 0)
                 {
                     invulnTime = 0.2f;  
                 }
