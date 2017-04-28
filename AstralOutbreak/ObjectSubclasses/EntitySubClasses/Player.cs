@@ -83,10 +83,6 @@ namespace AstralOutbreak
                 }
                 base.Health = value;
                 IsDead = Health <= 0;
-                if(Health>10)
-                {
-                    Health = 10;
-                }
             }
         }
 

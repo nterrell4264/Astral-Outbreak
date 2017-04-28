@@ -175,8 +175,15 @@ namespace AstralOutbreak
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
                 color: Color.White, effects: flip, layerDepth: .5f);
-            
-            if(player.InvulnTime > 0 && player.CurrentPlayerState!= PlayerState.Rolling)
+
+            sb.Draw(masterList["PlayerSprites"],
+                destinationRectangle: new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Center.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Center.Y - (int)RoomManager.Active.CameraY,
+                  33, 16),
+                sourceRectangle: new Rectangle(5,148,33,16), rotation: rot, origin: new Vector2(5, 10),
+                color: Color.White, effects: flip, layerDepth: .5f);
+
+            if (player.InvulnTime > 0 && player.CurrentPlayerState!= PlayerState.Rolling)
             {
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
