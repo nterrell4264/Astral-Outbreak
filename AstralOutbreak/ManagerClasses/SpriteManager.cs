@@ -61,6 +61,11 @@ namespace AstralOutbreak
                     {
                         Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
                     }
+                    else if (RoomManager.Active.PhysicsObjects[i] is Wall)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
+                        
+                    }
                     else
                     {
                         sb.Draw(masterList["rect"],
@@ -263,6 +268,15 @@ namespace AstralOutbreak
             sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest
                   ,
                   sourceRectangle: pos, color: Color.White, effects: flip);
+        }
+
+        public void Draw(SpriteBatch sb, Wall wall, int i)
+        {
+            sb.Draw(masterList["rect"],
+                        new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX,
+                        (int)wall.Position.Y - (int)RoomManager.Active.CameraY,
+                        (int)wall.Width, (int)wall.Height),
+                        Color.White);
         }
 
         public void AddTexture(Texture2D texture)

@@ -118,6 +118,7 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/UpgradeBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/rollIcon"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/dashIcon"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("TileSheet"));
 
             // TODO: use this.Content to load your game content here
         }
