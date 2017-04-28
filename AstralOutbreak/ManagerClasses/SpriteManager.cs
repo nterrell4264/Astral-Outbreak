@@ -112,6 +112,9 @@ namespace AstralOutbreak
                   (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY + (int)player.Height / 2,
                   (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
             Rectangle pos = new Rectangle();
+            Rectangle destArm = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Center.X - (int)RoomManager.Active.CameraX,
+                  (int)RoomManager.Active.PhysicsObjects[i].Center.Y - (int)RoomManager.Active.CameraY,
+                  33, 16);
             //Mark: Added horizontal flipping
             SpriteEffects flip = SpriteEffects.None;
             if (!player.FaceRight)
@@ -174,21 +177,26 @@ namespace AstralOutbreak
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
-                color: Color.White, effects: flip, layerDepth: .5f);
+                color: Color.White, effects: flip, layerDepth: .6f);
+            float gunRot = RoomManager.Active.PlayerOne.Aim.GetAngle();
+            Vector2 armOrg = new Vector2(player.Width / 2, player.Height / 2);
+            if (!RoomManager.Active.PlayerOne.FaceRight)
+            {
+                gunRot -= (float)Math.PI;
+                armOrg = new Vector2(-player.Width / 2, -player.Height / 2);
+            }
 
             sb.Draw(masterList["PlayerSprites"],
-                destinationRectangle: new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Center.X - (int)RoomManager.Active.CameraX,
-                  (int)RoomManager.Active.PhysicsObjects[i].Center.Y - (int)RoomManager.Active.CameraY,
-                  33, 16),
-                sourceRectangle: new Rectangle(5,148,33,16), rotation: rot, origin: new Vector2(5, 10),
+                destinationRectangle: destArm,
+                sourceRectangle: new Rectangle(5,148,33,16), rotation: gunRot, origin: new Vector2(5, 10),
                 color: Color.White, effects: flip, layerDepth: .5f);
 
             if (player.InvulnTime > 0 && player.CurrentPlayerState!= PlayerState.Rolling)
             {
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
-                sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
-                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .5f);
+                sourceRectangle: pos, rotation: rot, origin: armOrg,
+                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .6f);
             }
         }
 
