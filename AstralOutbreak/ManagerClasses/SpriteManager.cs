@@ -161,19 +161,18 @@ namespace AstralOutbreak
                     }
                     break;
             }
-            if (player.InvulnTime <= 0)
-            {
+           
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
                 color: Color.White, effects: flip);
-            }
-            else
+            
+            if(player.InvulnTime > 0 && player.CurrentPlayerState!= PlayerState.Rolling)
             {
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
-                color: new Color(player.InvulnTime*4,0,0,0), effects: flip);
+                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip);
             }
         }
 
