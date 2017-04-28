@@ -81,12 +81,12 @@ namespace AstralOutbreak
             {
                 if (menuPart is MenuString)
                 {
-                    sb.DrawString(fontList[(menuPart as MenuString).SpriteFont], (menuPart as MenuString).text, new Vector2(menuPart.Location.X, menuPart.Location.Y), Color.Black);
+                    sb.DrawString(spriteFont: fontList[(menuPart as MenuString).SpriteFont], text: (menuPart as MenuString).text, position: new Vector2(menuPart.Location.X, menuPart.Location.Y), color: Color.Black,rotation: 0, origin: new Vector2(0,0), scale: 1, effects: SpriteEffects.None, layerDepth: .1f);
                 }
                 else
                 {
                     Texture2D texture = masterList["Menus/" + menuPart.textureName];
-                    sb.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
+                    sb.Draw(texture: texture, destinationRectangle:new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), color: Color.White, layerDepth: .2f);
                 }
             }
         }
@@ -165,14 +165,14 @@ namespace AstralOutbreak
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
-                color: Color.White, effects: flip);
+                color: Color.White, effects: flip, layerDepth: .5f);
             
             if(player.InvulnTime > 0 && player.CurrentPlayerState!= PlayerState.Rolling)
             {
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
-                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip);
+                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .5f);
             }
         }
 
@@ -235,7 +235,7 @@ namespace AstralOutbreak
                     break;
             }
             sb.Draw(masterList["SlugSprites"], destinationRectangle: dest,
-                   sourceRectangle: pos, color: Color.White, effects: flip);
+                   sourceRectangle: pos, color: Color.White, effects: flip, layerDepth: .4f);
         }
 
 
@@ -326,7 +326,7 @@ namespace AstralOutbreak
 
             }
             sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
-            sourceRectangle: pos, color: Color.White, effects: flip);
+            sourceRectangle: pos, color: Color.White, effects: flip, layerDepth: .4f);
         }
 
         public void Draw(SpriteBatch sb, Wall wall, int i)
