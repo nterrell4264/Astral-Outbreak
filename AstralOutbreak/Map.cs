@@ -8,7 +8,7 @@ namespace AstralOutbreak
 {
 
     //Represents an object on the map
-    public enum MapItem { None, Wall, Slug, Demon, Item}
+    public enum MapItem { None, Wall, Slug, Demon, Item, Boss}
 
     /// <summary>
     /// A grid of objects that are in the game.
