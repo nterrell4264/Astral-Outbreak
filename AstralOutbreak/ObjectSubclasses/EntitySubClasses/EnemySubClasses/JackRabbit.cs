@@ -65,7 +65,8 @@ namespace AstralOutbreak
                         {
 
                             //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
-                            if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                            if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && 
+                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                             {
                                 Velocity.X = 0;
                                 CurrentJackRabbitState = JackRabbitState.Shooting;
@@ -110,7 +111,8 @@ namespace AstralOutbreak
                         else
                         {
                             //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
-                            if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                            if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && 
+                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                             {
                                 Velocity.X = 0;
                                 CurrentJackRabbitState = JackRabbitState.Shooting;
@@ -168,7 +170,7 @@ namespace AstralOutbreak
                         }
                         //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
                         else if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && 
-                            (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) )
+                            (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                         {
                             Velocity.X = 0;
                             CurrentJackRabbitState = JackRabbitState.Shooting;
@@ -178,7 +180,7 @@ namespace AstralOutbreak
                         }
                         //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
                         else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && 
-                            (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) )
+                            (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                         {
                             Velocity.X = 0;
                             CurrentJackRabbitState = JackRabbitState.Shooting;
@@ -213,7 +215,7 @@ namespace AstralOutbreak
                             }
                             //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
                             else if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && 
-                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) )
+                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                             {
                                 Velocity.X = 0;
                                 CurrentJackRabbitState = JackRabbitState.Shooting;
@@ -223,7 +225,7 @@ namespace AstralOutbreak
                             }
                             //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
                             else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && 
-                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) )
+                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                             {
                                 Velocity.X = 0;
                                 CurrentJackRabbitState = JackRabbitState.Shooting;
@@ -254,7 +256,8 @@ namespace AstralOutbreak
                             break;
                         }
                         //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
-                        else if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                        else if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && 
+                            (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                         {
                             Velocity.X = 0;
                             FaceRight = false;
@@ -262,7 +265,8 @@ namespace AstralOutbreak
                             break;
                         }
                         //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
-                        else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                        else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && 
+                            (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                         {
                             Velocity.X = 0;
                             FaceRight = true;
@@ -276,7 +280,7 @@ namespace AstralOutbreak
                         {
                             //If the player is within the range of JackRabbit's weapon and to the left, it shoots left
                             if (RoomManager.Active.PlayerOne.Position.X > Position.X - MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X < Position.X && 
-                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30))
+                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                             {
                                 Velocity.X = 0;
                                 FaceRight = false;
@@ -285,7 +289,7 @@ namespace AstralOutbreak
                             }
                             //If the player is within the range of JackRabbit's weapon and to the right, it shoots right
                             else if (RoomManager.Active.PlayerOne.Position.X < Position.X + MyWeapon.Range && RoomManager.Active.PlayerOne.Position.X > Position.X && 
-                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) )
+                                (RoomManager.Active.PlayerOne.Position.Y < Position.Y + 30 && RoomManager.Active.PlayerOne.Position.Y > Position.Y - 30) && CheckLineOfSight(RoomManager.MapData))
                             {
                                 Velocity.X = 0;
                                 FaceRight = true;
