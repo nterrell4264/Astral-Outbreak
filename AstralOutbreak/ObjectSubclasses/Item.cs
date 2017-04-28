@@ -29,8 +29,9 @@ namespace AstralOutbreak
             }
         }
 
-        public Item(Vector2 pos, float width, float height, ItemType type, int val, bool mobile = false) : base(pos, width, height, mobile)
+        public Item(Vector2 pos, float width, float height, ItemType type, int val, bool mobile = true) : base(pos, width, height, mobile)
         {
+            Gravity = true;
             MyType = type;
             Value = val;
             Consumed = false;
