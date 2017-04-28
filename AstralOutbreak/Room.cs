@@ -29,6 +29,8 @@ namespace AstralOutbreak
 
         //Buffer width around the screen
         private const float BUFFER = 1400;
+        private const float CORRECTIVE = 200;
+
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
@@ -280,23 +282,36 @@ namespace AstralOutbreak
                 {
                     if (obj1.Position.X < obj2.Position.X)
                     {
-                        obj1.Velocity.X -= 10;
+                        if(obj1.MaxVelocity.X == 0)
+                            obj1.Velocity.X -= CORRECTIVE;
+                        else
+                            obj1.Velocity.X -= CORRECTIVE/10;
+
                         (obj1 as Enemy).Corrective = true;
                     }
                     else if (obj1.Position.X > obj2.Position.X)
                     {
-                        obj1.Velocity.X += 10;
+                        if (obj1.MaxVelocity.X == 0)
+                            obj1.Velocity.X += CORRECTIVE;
+                        else
+                            obj1.Velocity.X += CORRECTIVE / 10;
                         (obj1 as Enemy).Corrective = true;
 
                     }
                     else if ((obj2 as Enemy).Corrective)
                     {
-                        obj1.Velocity.X += 10;
+                        if (obj1.MaxVelocity.X == 0)
+                            obj1.Velocity.X += CORRECTIVE;
+                        else
+                            obj1.Velocity.X += CORRECTIVE / 10;
                         (obj1 as Enemy).Corrective = true;
                     }
                     else
                     {
-                        obj1.Velocity.X -= 10;
+                        if (obj1.MaxVelocity.X == 0)
+                            obj1.Velocity.X -= CORRECTIVE;
+                        else
+                            obj1.Velocity.X -= CORRECTIVE / 10;
                         (obj1 as Enemy).Corrective = true;
                     }
                 }
