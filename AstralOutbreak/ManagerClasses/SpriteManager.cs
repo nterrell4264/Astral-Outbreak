@@ -160,15 +160,15 @@ namespace AstralOutbreak
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
 
-            switch (enemy.CurrentState)
+            switch (enemy.CurrentSlugState)
             {
                 default:
                     break;
                 case SlugState.Falling:
                     break;
-                case SlugState.MovingLeft:
+                case SlugState.Moving:
                     break;
-                case SlugState.MovingRight:
+                case SlugState.Idle:
                     break;
 
             }
