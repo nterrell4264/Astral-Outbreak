@@ -79,7 +79,7 @@ namespace AstralOutbreak
             {
                 if (value < Health && invulnTime <= 0)
                 {
-                    invulnTime = 0.2f;  
+                    invulnTime = 1f;  
                 }
                 base.Health = value;
                 IsDead = Health <= 0;
