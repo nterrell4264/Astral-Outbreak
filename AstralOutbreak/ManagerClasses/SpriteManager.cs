@@ -174,25 +174,26 @@ namespace AstralOutbreak
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
             Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                 (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY ,
+                 (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                  64, 34);
             Rectangle pos = new Rectangle();
 
             SpriteEffects flip = SpriteEffects.None;
-            if (!enemy.FaceRight)
+            if (enemy.FaceRight)
                 flip = SpriteEffects.FlipHorizontally;
             switch (enemy.CurrentSlugState)
             {
                 default:
                     break;
                 case SlugState.Falling:
+                    pos = new Rectangle(97, 5, 65, 34);
                     break;
                 case SlugState.Moving:
                     int o = (int)(enemy.CurrentActionTime * 8) % 4;
                     switch (o)
                     {
                         default:
-                            pos = new Rectangle(96, 5, 65, 34);
+                            pos = new Rectangle(97, 5, 65, 34);
                             break;
                         case 1:
                             pos = new Rectangle(187, 6, 64, 34);
@@ -206,9 +207,25 @@ namespace AstralOutbreak
                     }
                     break;
                 case SlugState.Idle:
+                    int y = (int)(enemy.CurrentActionTime * 8) % 4;
+                    switch (y)
+                    {
+                        default:
+                            pos = new Rectangle(97, 5, 65, 34);
+                            break;
+                        case 1:
+                            pos = new Rectangle(187, 6, 64, 34);
+                            break;
+                        case 2:
+                            pos = new Rectangle(269, 6, 64, 34);
+                            break;
+                        case 3:
+                            pos = new Rectangle(359, 7, 64, 34);
+                            break;
+                    }
                     break;
             }
-            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+            sb.Draw(masterList["SlugSprites"], destinationRectangle: dest,
                    sourceRectangle: pos, color: Color.White, effects: flip);
         }
 
@@ -306,10 +323,8 @@ namespace AstralOutbreak
         public void Draw(SpriteBatch sb, Wall wall, int i)
         {
             sb.Draw(masterList["rect"],
-                        new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX,
-                        (int)wall.Position.Y - (int)RoomManager.Active.CameraY,
-                        (int)wall.Width, (int)wall.Height),
-                        Color.White);
+                new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX, (int)wall.Position.Y - (int)RoomManager.Active.CameraY, (int)wall.Width, (int)wall.Height),
+                Color.White);
         }
 
         public void AddTexture(Texture2D texture)
