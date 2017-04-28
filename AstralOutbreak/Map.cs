@@ -197,7 +197,7 @@ namespace AstralOutbreak
                     return new Item(new Vector(x * Scale, y * Scale), Scale, Scale, ItemType.AbilityUnlock, TileValue[x,y]);
                     break;
                 case MapItem.Boss:
-                    return new SwarmMob(new Vector(x * Scale, y * Scale), 8, 8, 5, 10);
+                    return new SwarmMob(new Vector(x * Scale, y * Scale), 12, 12, 5, 10);
                     break;
                 default:
                     break;
