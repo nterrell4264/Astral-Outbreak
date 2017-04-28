@@ -115,7 +115,7 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/SmallMenuBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/LargeMenuBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/HudBG"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("Wall"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("TileSheet"));
 
             // TODO: use this.Content to load your game content here
         }
