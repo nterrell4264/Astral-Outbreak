@@ -29,7 +29,7 @@ namespace AstralOutbreak
 
         //Buffer width around the screen
         private const float BUFFER = 800;
-        private const float CORRECTIVE = 200;
+        private const float CORRECTIVE = 300;
 
 
         //Keep track of the player
@@ -378,6 +378,14 @@ namespace AstralOutbreak
                 }
             }
         }
-
+        //Adds entities to the room
+        public void AddEntity(PhysicsObject objs)
+        {
+            lock (listLock)
+            {
+                if (objs != null)
+                    PhysicsObjects.Add(objs);
+            }
+        }
     }
 }

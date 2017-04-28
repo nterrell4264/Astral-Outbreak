@@ -62,14 +62,14 @@ namespace AstralOutbreak
         public SwarmMob(Vector2 pos, float width, float height, float health, float damage, bool mobile = true) : base(pos, width, height, health, 1, mobile)
         {
             Gravity = false;
-            MaxVelocity = new Vector(200, 200);
+            MaxVelocity = new Vector(400, 400);
             MySwarm.Mobs.Add(this);
         }
 
         public SwarmMob(SwarmMob mob) : base(new Vector(mob.Position), mob.Width, mob.Height, mob.Health, mob.Damage, mob.Mobile)
         {
             Gravity = false;
-            MaxVelocity = new Vector(200, 200);
+            MaxVelocity = new Vector(400, 400);
             MySwarm.Mobs.Add(this);
         }
 
