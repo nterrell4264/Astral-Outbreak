@@ -322,9 +322,9 @@ namespace AstralOutbreak
 
         public void Draw(SpriteBatch sb, Wall wall, int i)
         {
-            sb.Draw(masterList["rect"],
-                new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX, (int)wall.Position.Y - (int)RoomManager.Active.CameraY, (int)wall.Width, (int)wall.Height),
-                Color.White);
+            sb.Draw(masterList["rect"], position: null,
+                destinationRectangle: new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX, (int)wall.Position.Y - (int)RoomManager.Active.CameraY, (int)wall.Width, (int)wall.Height), 
+                sourceRectangle: null, color: Color.White, rotation: 0, origin: null, effects:SpriteEffects.None, layerDepth: 1);
         }
 
         public void AddTexture(Texture2D texture)
