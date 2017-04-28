@@ -12,8 +12,6 @@ namespace AstralOutbreak
     {
         //Variables
         private Rectangle hitbox;
-
-        //Properties
         public Rectangle Hitbox
         {
             get { return hitbox; }
@@ -23,23 +21,25 @@ namespace AstralOutbreak
             get { return hitbox.Location; }
             private set { hitbox.Location = value; }
         }
-        public MenuDelegate ClickEvent { get; private set; }
 
         //Constructors
-        public MenuButton(int x, int y, int width, int height, string texture, MenuDelegate clickAction) : base(x, y, texture, false, clickAction)
+        public MenuButton(int x, int y, int width, int height, string texture, MenuDelegate clickAction) : base(x, y, texture, false)
         {
             hitbox = new Rectangle(base.Location, new Point(width, height));
+            SetSpecialCode(clickAction);
         }
-        public MenuButton(Point location, Point size, string texture, MenuDelegate clickAction) : base(location, texture, false, clickAction)
+        public MenuButton(Point location, Point size, string texture, MenuDelegate clickAction) : base(location, texture, false)
         {
             hitbox = new Rectangle(base.Location, size);
+            SetSpecialCode(clickAction);
         }
-        public MenuButton(Rectangle casting, string texture, MenuDelegate clickAction) : base(casting.X, casting.Y, texture, false, clickAction)
+        public MenuButton(Rectangle casting, string texture, MenuDelegate clickAction) : base(casting.X, casting.Y, texture, false)
         {
             hitbox = casting;
+            SetSpecialCode(clickAction);
         }
 
-        public void CheckClicked() //Checks if it has been pressed and takes appropriate action
+        public void CheckClicked()
         {
             //Makes the click check (mouse is down and over button)
             if (Game1.Inputs.M1State == ButtonStatus.Pressed && 
