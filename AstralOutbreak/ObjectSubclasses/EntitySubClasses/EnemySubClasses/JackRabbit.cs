@@ -33,7 +33,7 @@ namespace AstralOutbreak
         public JackRabbit(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
             //Creates a weapon for the JackRabbit, set at default values currently, we'll have to agree on better values later
-            MyWeapon = new Weapon(.4f, 1, 350, 300);
+            MyWeapon = new Weapon(.4f, 1, 550, 300);
             MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
 
@@ -88,7 +88,7 @@ namespace AstralOutbreak
                             if (RoomManager.Active.PlayerOne.Position.X < Position.X)
                             {
                                 FaceRight = false;
-                                Velocity.X = -50;
+                                Velocity.X = -225;
                                 //if (Velocity.X < 0 && prevX == Position.X)
                                 //{
                                 //    currentState = JackRabbitState.Idle;
@@ -96,7 +96,7 @@ namespace AstralOutbreak
                                 //}
                                 break;
                             }
-                            Velocity.X = 50;
+                            Velocity.X = 225;
                             //if (Velocity.X > 0 && prevX == Position.X)
                             //{
                             //    currentState = JackRabbitState.Idle;
@@ -126,7 +126,7 @@ namespace AstralOutbreak
                             {
                                 CurrentJackRabbitState = JackRabbitState.Moving;
                                 FaceRight = true;
-                                Velocity.X = 50;
+                                Velocity.X = 225;
                                 //if (Velocity.X > 0 && prevX == Position.X)
                                 //{
                                 //    currentState = JackRabbitState.Idle;
@@ -134,7 +134,7 @@ namespace AstralOutbreak
                                 //}
                                 break;
                             }
-                            Velocity.X = -50;
+                            Velocity.X = -225;
                             //if (Velocity.X < 0 && prevX == Position.X)
                             //{
                             //    currentState = JackRabbitState.Idle;
@@ -239,14 +239,14 @@ namespace AstralOutbreak
                         if (RoomManager.Active.PlayerOne.Position.X < Position.X)
                         {
                             FaceRight = false;
-                            Velocity.X = -50;
+                            Velocity.X = -225;
                             break;
                         }
                         //Checks if the player is to the right of the JackRabbit, and will move towards the player
                         else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
                         {
                             FaceRight = true;
-                            Velocity.X = 50;
+                            Velocity.X = 225;
                             break;
                         }
                         //If the player is within the range of JackRabbit's weapon and to the left, it shoots left

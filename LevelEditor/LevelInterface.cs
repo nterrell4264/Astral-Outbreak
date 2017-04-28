@@ -14,7 +14,7 @@ namespace LevelEditor
     
     public enum CursorMode
     {
-        Erase, Player, Wall, Slug, Demon, Item
+        Erase, Player, Wall, Slug, Demon, Item, Boss
     }
 
     public class LevelInterface
@@ -165,6 +165,9 @@ namespace LevelEditor
                             case CursorMode.Item:
                                 MapData[MapX + x + i, MapY + y + j] = MapItem.Item;
                                 break;
+                            case CursorMode.Boss:
+                                MapData[MapX + x + i, MapY + y + j] = MapItem.Boss;
+                                break;
                             default:
                                 break;
                         }
@@ -193,22 +196,40 @@ namespace LevelEditor
             {
                 for(int j = MapY; j < MapData.Height && j < MapY + height; j++)
                 {
+                    Rectangle square = new Rectangle(Scale + (Scale * (i - MapX)), Scale + (Scale * (j - MapY)), Scale, Scale);
+
                     //Switch to  get tile details
                     switch (MapData[i,j])
                     {
                         case MapItem.None:
+                            if (j > 0 && MapData[i, j - 1] == MapItem.Demon)
+                                col = Color.TransparentBlack;
+                            else
+                                col = Color.LightSlateGray;
                             text = WallTexture;
-                            col = Color.LightSlateGray;
                             break;
                         case MapItem.Wall:
                             text = WallTexture;
-                            col = Color.Black;
+                            switch (MapData.TileValue[i, j])
+                            {
+                                case 0:
+                                case 1:
+                                    col = Color.Black;
+                                    break;
+                                case 2:
+                                    col = Color.Sienna;
+                                    break;
+                                case 3:
+                                    col = Color.SandyBrown;
+                                    break;
+                            }
                             break;
                         case MapItem.Slug:
                             text = SlugTexture;
                             col = Color.Blue;
                             break;
                         case MapItem.Demon:
+                            square = new Rectangle(Scale + (Scale * (i - MapX)), Scale + (Scale * (j - MapY)), Scale, Scale * 2);
                             text = DemonTexture;
                             col = Color.Red;
                             break;
@@ -216,18 +237,21 @@ namespace LevelEditor
                             text = WallTexture;
                             col = Color.Goldenrod;
                             break;
+                        case MapItem.Boss:
+                            col = Color.BlanchedAlmond;
+                            break; 
                         default:
                             break;
 
                     }
                     //Line that draws the tiles
-                    sb.Draw(text, new Rectangle(Scale + (Scale * (i - MapX)), Scale + (Scale * (j - MapY)), Scale, Scale), col);
+                    sb.Draw(text, square, col);
 
                 }
             }
             //Player Start
             if(MapX <= MapData.PlayerStartX && MapX + width > MapData.PlayerStartX && MapY <= MapData.PlayerStartY && MapY + height > MapData.PlayerStartY)
-                sb.Draw(PlayerStartTexture, new Rectangle(Scale + (Scale * (MapData.PlayerStartX - MapX)), Scale + (Scale * (MapData.PlayerStartY - MapY)), Scale, Scale), new Color(Color.Green, .125f));
+                sb.Draw(PlayerStartTexture, new Rectangle(Scale + (Scale * (MapData.PlayerStartX - MapX)), Scale + (Scale * (MapData.PlayerStartY - MapY)), Scale, Scale * 2), new Color(Color.Green, .125f));
 
             //Gridlines
             if(Gridlines)

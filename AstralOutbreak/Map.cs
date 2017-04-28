@@ -8,7 +8,7 @@ namespace AstralOutbreak
 {
 
     //Represents an object on the map
-    public enum MapItem { None, Wall, Slug, Demon, Item}
+    public enum MapItem { None, Wall, Slug, Demon, Item, Boss}
 
     /// <summary>
     /// A grid of objects that are in the game.
@@ -191,7 +191,7 @@ namespace AstralOutbreak
                     return new Slug(new Vector(x * Scale, y * Scale), Scale, Scale, 20);
                     break;
                 case MapItem.Demon:
-                    return new JackRabbit(new Vector(x * Scale, y * Scale), 28, 56, 20);
+                    return new JackRabbit(new Vector(x * Scale, y * Scale), 28, 56, 10);
                     break;
                 case MapItem.Item:
                     return new Item(new Vector(x * Scale, y * Scale), Scale, Scale, ItemType.AbilityUnlock, TileValue[x,y]);
