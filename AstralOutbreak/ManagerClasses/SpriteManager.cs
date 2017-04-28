@@ -97,7 +97,7 @@ namespace AstralOutbreak
              //           Color.Blue);
         //Sub methods of Draw made for each type of entity
         public void Draw(SpriteBatch sb, Player player, int i)
-        {
+        { 
             float rot = 0;
             Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX + (int)player.Width / 2,
                   (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY + (int)player.Height / 2,
@@ -161,10 +161,20 @@ namespace AstralOutbreak
                     }
                     break;
             }
-                  sb.Draw(masterList["PlayerSprites"],
-                  destinationRectangle: dest,
-                  sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height/2),
-                  color: Color.White, effects: flip);
+            if (player.InvulnTime <= 0)
+            {
+                sb.Draw(masterList["PlayerSprites"],
+                destinationRectangle: dest,
+                sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
+                color: Color.White, effects: flip);
+            }
+            else
+            {
+                sb.Draw(masterList["PlayerSprites"],
+                destinationRectangle: dest,
+                sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
+                color: new Color(player.InvulnTime*4,0,0,0), effects: flip);
+            }
         }
 
 
