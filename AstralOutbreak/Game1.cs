@@ -172,7 +172,7 @@ namespace AstralOutbreak
         {
             GraphicsDevice.Clear(Color.Gray);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.BackToFront);
             spriteManager.Draw(spriteBatch);
             spriteBatch.End();
 
