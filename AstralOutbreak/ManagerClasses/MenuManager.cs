@@ -15,6 +15,9 @@ namespace AstralOutbreak
         private GameState prevState; //Holds last frame's GameState for automatic updating
         private Game1 main; //Used for Exit command
 
+        private MenuContent updateMenu; //Used for defining a MenuContent with update code.
+        private MenuString updateString; //Used for defining a MenuString with update code.
+
         public MenuManager(Game1 game) //Automatically loads the main menu on instantiating.
         {
             items = new List<MenuContent>();
@@ -80,8 +83,21 @@ namespace AstralOutbreak
         }
         private void LoadUI() //Loads GUI assets
         {
+            //Health
             items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width / 2 - 84, main.GraphicsDevice.Viewport.Height - 50, "HudBG"));
-            items.Add(new MenuString(main.GraphicsDevice.Viewport.Width / 2 - 68, main.GraphicsDevice.Viewport.Height - 45, RoomManager.Active.PlayerOne.Health.ToString() + "/10 HP", "UIfont"));
+            updateString = new MenuString(main.GraphicsDevice.Viewport.Width / 2 - 68, main.GraphicsDevice.Viewport.Height - 45, RoomManager.Active.PlayerOne.Health.ToString() + "/10 HP",
+                "UIfont", true);
+            updateString.SetSpecialCode(() => {
+                updateString.text = RoomManager.Active.PlayerOne.Health.ToString() + "/10 HP";
+                updateString.Location.X = (main.GraphicsDevice.Viewport.Width - 17 * updateString.text.Length) / 2;
+            });
+            items.Add(updateString);
+            //Upgrades
+            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 49, "rollIcon"));
+            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon"));
+
         }
 
         public void Update()

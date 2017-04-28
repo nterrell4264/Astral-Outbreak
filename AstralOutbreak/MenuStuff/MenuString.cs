@@ -22,9 +22,5 @@ namespace AstralOutbreak
             this.text = text;
             SpriteFont = spriteFont;
         }
-        public void UpdateText(string newText)
-        {
-            text = newText;
-        }
     }
 }

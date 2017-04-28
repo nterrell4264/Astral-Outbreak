@@ -28,7 +28,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 1400;
+        private const float BUFFER = 800;
         private const float CORRECTIVE = 200;
 
 
@@ -156,6 +156,7 @@ namespace AstralOutbreak
             float scale = mapdata.Scale;
             PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), 32, 55, 10);
             PhysicsObjects.Add(PlayerOne);
+            CameraTrack(PlayerOne);
             List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
             lock (listLock)
             {
@@ -167,17 +168,20 @@ namespace AstralOutbreak
             BossActive = false;
             SwarmMob.Awake = false;
             SwarmMob.MySwarm.Clear();
-            CameraTrack(PlayerOne);
         }
 
         //Re-sets up the room from the current map
         public void ReloadRoom()
         {
+            BossActive = false;
+            SwarmMob.Awake = false;
+            SwarmMob.MySwarm.Clear();
             MapData.Reload();
             PhysicsObjects = new List<PhysicsObject>();
             float scale = MapData.Scale;
             PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 32, 55, 10);
             PhysicsObjects.Add(PlayerOne);
+            CameraTrack(PlayerOne);
             List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
             lock (listLock)
             {
@@ -186,10 +190,6 @@ namespace AstralOutbreak
                     PhysicsObjects.Add(newData[i]);
                 }
             }
-            BossActive = false;
-            SwarmMob.Awake = false;
-            SwarmMob.MySwarm.Clear();
-            CameraTrack(PlayerOne);
         }
 
         public void CheckUnload()
@@ -232,7 +232,8 @@ namespace AstralOutbreak
                     case WallType.Regular:
                         break;
                     case WallType.Platform:
-                        return !(obj1 is Projectile) && (obj1.Position.Y + obj1.Height <= obj2.Position.Y && (Game1.Inputs.DownButtonState == ButtonStatus.Unpressed || !(obj1 is Player)));
+                        return !(obj1 is Projectile) && (obj1.Position.Y + obj1.Height <= obj2.Position.Y && (Game1.Inputs.DownButtonState == ButtonStatus.Unpressed || !(obj1 is Player)) 
+                            && !(obj1 is SwarmMob));
                     case WallType.BossDoor:
                         return BossActive;
                     default:
@@ -272,12 +273,12 @@ namespace AstralOutbreak
             //Enemies hit player
             if(obj1 is Enemy && obj2 is Player)
             {
-                if((obj2 as Player).InvulnTime == 0)
+                if((obj2 as Player).InvulnTime <= 0)
                     (obj1 as Enemy).Strike(obj2 as GameObject);
             }
             if (obj2 is Enemy && obj1 is Player)
             {
-                if ((obj1 as Player).InvulnTime == 0)
+                if ((obj1 as Player).InvulnTime <= 0)
                     (obj2 as Enemy).Strike(obj1 as GameObject);
             }
 
@@ -288,36 +289,41 @@ namespace AstralOutbreak
                 {
                     if (obj1.Position.X < obj2.Position.X)
                     {
-                        if(obj1.MaxVelocity.X == 0)
-                            obj1.Velocity.X -= CORRECTIVE;
-                        else
-                            obj1.Velocity.X -= CORRECTIVE/10;
+                        if(CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE, 0)))
+                            if(obj1.MaxVelocity.X == 0)
+                                obj1.Velocity.X -= CORRECTIVE;
+                            else
+                                obj1.Velocity.X -= CORRECTIVE/10;
 
                         (obj1 as Enemy).Corrective = true;
                     }
                     else if (obj1.Position.X > obj2.Position.X)
                     {
-                        if (obj1.MaxVelocity.X == 0)
-                            obj1.Velocity.X += CORRECTIVE;
-                        else
-                            obj1.Velocity.X += CORRECTIVE / 10;
+                        if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE, 0)))
+
+                            if (obj1.MaxVelocity.X == 0)
+                                obj1.Velocity.X += CORRECTIVE;
+                            else
+                                obj1.Velocity.X += CORRECTIVE / 10;
                         (obj1 as Enemy).Corrective = true;
 
                     }
                     else if ((obj2 as Enemy).Corrective)
                     {
-                        if (obj1.MaxVelocity.X == 0)
-                            obj1.Velocity.X += CORRECTIVE;
-                        else
-                            obj1.Velocity.X += CORRECTIVE / 10;
+                        if (CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE, 0)))
+                            if (obj1.MaxVelocity.X == 0)
+                                obj1.Velocity.X += CORRECTIVE;
+                            else
+                                obj1.Velocity.X += CORRECTIVE / 10;
                         (obj1 as Enemy).Corrective = true;
                     }
                     else
                     {
-                        if (obj1.MaxVelocity.X == 0)
-                            obj1.Velocity.X -= CORRECTIVE;
-                        else
-                            obj1.Velocity.X -= CORRECTIVE / 10;
+                        if (CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE, 0)))
+                            if (obj1.MaxVelocity.X == 0)
+                                obj1.Velocity.X -= CORRECTIVE;
+                            else
+                                obj1.Velocity.X -= CORRECTIVE / 10;
                         (obj1 as Enemy).Corrective = true;
                     }
                 }

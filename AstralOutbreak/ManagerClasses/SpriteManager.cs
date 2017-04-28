@@ -305,7 +305,7 @@ namespace AstralOutbreak
 
         public void Draw(SpriteBatch sb, Wall wall, int i)
         {
-            sb.Draw(masterList["Wall"],
+            sb.Draw(masterList["rect"],
                         new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX,
                         (int)wall.Position.Y - (int)RoomManager.Active.CameraY,
                         (int)wall.Width, (int)wall.Height),
