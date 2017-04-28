@@ -61,7 +61,7 @@ namespace AstralOutbreak
                                 FaceRight = false;
                                 break;
                             }
-                            Velocity.X = 50;
+                            Velocity.X = 100;
                         }
                         else
                         {
@@ -76,7 +76,7 @@ namespace AstralOutbreak
                                 FaceRight = true;
                                 break;
                             }
-                            Velocity.X = -50;
+                            Velocity.X = -100;
                         }
 
                         break;
@@ -154,14 +154,14 @@ namespace AstralOutbreak
             //{
             //    currentState = SlugState.MovingLeft;
             //    FaceRight = false;
-            //    Velocity.X = -50;
+            //    Velocity.X = -100;
             //}
             ////Checks if the player is to the right of the Slug, and will move towards the player
             //else if (RoomManager.Active.PlayerOne.Position.X > Position.X)
             //{
             //    currentState = SlugState.MovingRight;
             //    FaceRight = true;
-            //    Velocity.X = 50;
+            //    Velocity.X = 100;
             //}
             ////If the the previous y position is larger than the current, sets the Slug to falling, move this to the top of the if statements to give this state priority
             //else if (prevY > Position.Y)

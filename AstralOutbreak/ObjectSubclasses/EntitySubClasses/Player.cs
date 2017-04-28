@@ -148,7 +148,7 @@ namespace AstralOutbreak
                     {
                         jumpTime = 0;
                         if (Velocity.Y < 0)
-                            Velocity.Y /= 2;
+                            Velocity.Y /= 1.1f;
                     }
                     if (!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
                     {
