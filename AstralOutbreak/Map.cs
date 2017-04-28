@@ -196,6 +196,8 @@ namespace AstralOutbreak
                 case MapItem.Item:
                     return new Item(new Vector(x * Scale, y * Scale), Scale, Scale, ItemType.AbilityUnlock, TileValue[x,y]);
                     break;
+                case MapItem.Boss:
+                    break;
                 default:
                     break;
             }
