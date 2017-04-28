@@ -28,7 +28,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 14000;
+        private const float BUFFER = 1400;
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
@@ -276,18 +276,30 @@ namespace AstralOutbreak
             //Enemies Correct
             if (obj1 is Enemy && obj2 is Enemy)
             {
-                if(!(obj1 as Enemy).Corrective)
-                if(obj1.Position.X < obj2.Position.X)
+                if (!(obj1 as Enemy).Corrective)
                 {
-                    obj1.Velocity.X -= 5;
-                    (obj1 as Enemy).Corrective = true;
-                }
-                else
-                {
-                    obj2.Velocity.X -= 5;
-                    (obj1 as Enemy).Corrective = true;
+                    if (obj1.Position.X < obj2.Position.X)
+                    {
+                        obj1.Velocity.X -= 10;
+                        (obj1 as Enemy).Corrective = true;
+                    }
+                    else if (obj1.Position.X > obj2.Position.X)
+                    {
+                        obj1.Velocity.X += 10;
+                        (obj1 as Enemy).Corrective = true;
 
                     }
+                    else if ((obj2 as Enemy).Corrective)
+                    {
+                        obj1.Velocity.X += 10;
+                        (obj1 as Enemy).Corrective = true;
+                    }
+                    else
+                    {
+                        obj1.Velocity.X -= 10;
+                        (obj1 as Enemy).Corrective = true;
+                    }
+                }
             }
 
             //Items
