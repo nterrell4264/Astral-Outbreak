@@ -168,7 +168,7 @@ namespace AstralOutbreak
             GraphicsDevice.Clear(Color.Gray);
 
             spriteBatch.Begin();
-            spriteManager.Update(spriteBatch);
+            spriteManager.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

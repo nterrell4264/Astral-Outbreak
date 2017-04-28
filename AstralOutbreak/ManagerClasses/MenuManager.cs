@@ -81,20 +81,20 @@ namespace AstralOutbreak
         private void LoadUI() //Loads GUI assets
         {
             items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width / 2 - 84, main.GraphicsDevice.Viewport.Height - 50, "HudBG"));
-            items.Add(new MenuString(main.GraphicsDevice.Viewport.Width / 2 - 56, main.GraphicsDevice.Viewport.Height - 45, RoomManager.Active.PlayerOne.Health.ToString(), "UIfont"));
+            items.Add(new MenuString(main.GraphicsDevice.Viewport.Width / 2 - 68, main.GraphicsDevice.Viewport.Height - 45, RoomManager.Active.PlayerOne.Health.ToString() + "/10 HP", "UIfont",
+                true));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Update()
         {
-            if(prevState == Game1.CurrentState) //Won't check buttons if something else has changed the GameState already.
-                foreach (MenuContent button in items)
+            if (prevState == Game1.CurrentState) {
+                foreach (MenuContent content in items)
                 {
-                    if (button is MenuButton) (button as MenuButton).CheckClicked();
+                    if (content is MenuButton) (content as MenuButton).CheckClicked();
+                    if (content.Updatable) content.SpecialCode();
                 }
-            if (!(prevState == Game1.CurrentState)) //Menu only updates on state change.
+            }
+            else //Menu only updates on state change.
             {
                 items.Clear();
                 switch (Game1.CurrentState)

@@ -9,18 +9,22 @@ namespace AstralOutbreak
 {
     class MenuString : MenuContent
     {
-        public string Text { get; private set; }
+        public string text;
         public string SpriteFont { get; private set; }
 
-        public MenuString(int x, int y, string text, string spriteFont) : base(x, y, null)
+        public MenuString(int x, int y, string text, string spriteFont, bool canUpdate = false) : base(x, y, null, canUpdate)
         {
-            Text = text;
+            this.text = text;
             SpriteFont = spriteFont;   
         }
-        public MenuString(Point location, string text, string spriteFont) : base(location, null)
+        public MenuString(Point location, string text, string spriteFont, bool canUpdate = false) : base(location, null, canUpdate)
         {
-            Text = text;
+            this.text = text;
             SpriteFont = spriteFont;
+        }
+        public void UpdateText(string newText)
+        {
+            text = newText;
         }
     }
 }
