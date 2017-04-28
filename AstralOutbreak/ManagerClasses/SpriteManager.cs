@@ -322,9 +322,82 @@ namespace AstralOutbreak
 
         public void Draw(SpriteBatch sb, Wall wall, int i)
         {
-            sb.Draw(masterList["rect"], position: null,
-                destinationRectangle: new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX, (int)wall.Position.Y - (int)RoomManager.Active.CameraY, (int)wall.Width, (int)wall.Height), 
-                sourceRectangle: null, color: Color.White, rotation: 0, origin: null, effects:SpriteEffects.None, layerDepth: 1);
+            Rectangle pos = new Rectangle();
+            Rectangle dest = new Rectangle((int)wall.Position.X - (int)RoomManager.Active.CameraX,
+                  (int)wall.Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)wall.Width, (int)wall.Height);
+            SpriteEffects flip = SpriteEffects.None;
+            Texture2D sheet = masterList["rect"];
+            Color col = Color.White;
+            switch (wall.MyType)
+            {
+                default:
+                case WallType.Regular:
+                    sheet = masterList["TileSheet"];
+                    switch (wall.Adj)
+                    {
+                        case WallAdj.None:
+                            pos = new Rectangle(0, 0, 28, 28);
+                            break;
+                        case WallAdj.Top:
+                            pos = new Rectangle(28, 0, 28, 28);
+                            break;
+                        case WallAdj.Left:
+                            pos = new Rectangle(56, 0, 28, 28);
+                            break;
+                        case WallAdj.Right:
+                            pos = new Rectangle(84, 0, 28, 28);
+                            break;
+                        case WallAdj.Bottom:
+                            pos = new Rectangle(0, 28, 28, 28);
+                            break;
+                        case WallAdj.Top | WallAdj.Left:
+                            pos = new Rectangle(28, 28, 28, 28);
+                            break;
+                        case WallAdj.Top | WallAdj.Right:
+                            pos = new Rectangle(56, 28, 28, 28);
+                            break;
+                        case WallAdj.Top | WallAdj.Bottom:
+                            pos = new Rectangle(84, 28, 28, 28);
+                            break;
+                        case WallAdj.Left | WallAdj.Right:
+                            pos = new Rectangle(0, 56, 28, 28);
+                            break;
+                        case WallAdj.Left | WallAdj.Bottom:
+                            pos = new Rectangle(28, 56, 28, 28);
+                            break;
+                        case WallAdj.Bottom | WallAdj.Right:
+                            pos = new Rectangle(56, 56, 28, 28);
+                            break;
+                        case WallAdj.Right | WallAdj.Top | WallAdj.Left:
+                            pos = new Rectangle(84, 56, 28, 28);
+                            break;
+                        case WallAdj.Left | WallAdj.Top | WallAdj.Bottom:
+                            pos = new Rectangle(0, 84, 28, 28);
+                            break;
+                        case WallAdj.Right | WallAdj.Top | WallAdj.Bottom:
+                            pos = new Rectangle(28, 84, 28, 28);
+                            break;
+                        case WallAdj.Left | WallAdj.Right | WallAdj.Bottom:
+                            pos = new Rectangle(56, 84, 28, 28);
+                            break;
+                        case WallAdj.Right | WallAdj.Left | WallAdj.Top | WallAdj.Bottom:
+                            pos = new Rectangle(84, 84, 28, 28);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case WallType.Platform:
+                    col = Color.Black;
+                    break;
+                case WallType.BossDoor:
+                    col = Color.DimGray;
+                    break;
+                
+            }
+            sb.Draw(sheet, destinationRectangle: dest,
+            sourceRectangle: pos, color: col, effects: flip, layerDepth: 1);
         }
 
         public void AddTexture(Texture2D texture)

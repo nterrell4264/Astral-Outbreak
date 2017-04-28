@@ -309,7 +309,7 @@ namespace AstralOutbreak
                         Velocity.X /= 2;
                         Position.Y -= Height;
                         Height *= 2;
-
+                        invulnTime = 0;
                     }
                     else
                     {
@@ -324,6 +324,7 @@ namespace AstralOutbreak
                             FaceRight = true;
                         }
                     }
+                    invulnTime = .0001f;
                     break;
                 //Moving on the ground
                 case PlayerState.Running:
