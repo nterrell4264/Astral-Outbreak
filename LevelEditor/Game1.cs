@@ -171,6 +171,8 @@ namespace LevelEditor
                 level.CursorItem = CursorMode.Player;
             if (kb.IsKeyDown(Keys.D6))
                 level.CursorItem = CursorMode.Item;
+            if (kb.IsKeyDown(Keys.D7))
+                level.CursorItem = CursorMode.Boss;
 
             if (kb.IsKeyDown(Keys.Enter) && kbLast.IsKeyUp(Keys.Enter))
                 level.Save("LevelMap.dat");
