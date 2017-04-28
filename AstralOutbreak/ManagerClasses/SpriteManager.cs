@@ -166,9 +166,21 @@ namespace AstralOutbreak
                   sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height/2),
                   color: Color.White, effects: flip);
         }
+
+
+
+
+
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                 (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY ,
+                 64, 34);
+            Rectangle pos = new Rectangle();
 
+            SpriteEffects flip = SpriteEffects.None;
+            if (!enemy.FaceRight)
+                flip = SpriteEffects.FlipHorizontally;
             switch (enemy.CurrentSlugState)
             {
                 default:
@@ -176,12 +188,34 @@ namespace AstralOutbreak
                 case SlugState.Falling:
                     break;
                 case SlugState.Moving:
+                    int o = (int)(enemy.CurrentActionTime * 8) % 4;
+                    switch (o)
+                    {
+                        default:
+                            pos = new Rectangle(96, 5, 65, 34);
+                            break;
+                        case 1:
+                            pos = new Rectangle(187, 6, 64, 34);
+                            break;
+                        case 2:
+                            pos = new Rectangle(269, 6, 64, 34);
+                            break;
+                        case 3:
+                            pos = new Rectangle(359, 7, 64, 34);
+                            break;
+                    }
                     break;
                 case SlugState.Idle:
                     break;
-
             }
+            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+                   sourceRectangle: pos, color: Color.White, effects: flip);
         }
+
+
+
+
+
         public void Draw(SpriteBatch sb, JackRabbit enemy, int i)
         {
             Rectangle pos = new Rectangle();
@@ -265,9 +299,8 @@ namespace AstralOutbreak
                     break;
 
             }
-            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest
-                  ,
-                  sourceRectangle: pos, color: Color.White, effects: flip);
+            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+            sourceRectangle: pos, color: Color.White, effects: flip);
         }
 
         public void Draw(SpriteBatch sb, Wall wall, int i)

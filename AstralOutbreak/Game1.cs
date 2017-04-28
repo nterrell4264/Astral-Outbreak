@@ -107,6 +107,7 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("SlugSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/StartButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/OptionsButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/ResumeButton"));
