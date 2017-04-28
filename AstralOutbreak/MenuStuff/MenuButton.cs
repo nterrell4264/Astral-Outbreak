@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    delegate void ButtonPressDelegate();
     class MenuButton : MenuContent
     {
         //Variables
@@ -24,23 +23,20 @@ namespace AstralOutbreak
             get { return hitbox.Location; }
             private set { hitbox.Location = value; }
         }
-        public ButtonPressDelegate ClickEvent { get; private set; }
+        public MenuDelegate ClickEvent { get; private set; }
 
         //Constructors
-        public MenuButton(int x, int y, int width, int height, string texture, ButtonPressDelegate clickAction) : base(x, y, texture)
+        public MenuButton(int x, int y, int width, int height, string texture, MenuDelegate clickAction) : base(x, y, texture, false, clickAction)
         {
             hitbox = new Rectangle(base.Location, new Point(width, height));
-            ClickEvent = clickAction;
         }
-        public MenuButton(Point location, Point size, string texture, ButtonPressDelegate clickAction) : base(location, texture)
+        public MenuButton(Point location, Point size, string texture, MenuDelegate clickAction) : base(location, texture, false, clickAction)
         {
             hitbox = new Rectangle(base.Location, size);
-            ClickEvent = clickAction;
         }
-        public MenuButton(Rectangle casting, string texture, ButtonPressDelegate clickAction) : base(casting.X, casting.Y, texture)
+        public MenuButton(Rectangle casting, string texture, MenuDelegate clickAction) : base(casting.X, casting.Y, texture, false, clickAction)
         {
             hitbox = casting;
-            ClickEvent = clickAction;
         }
 
         public void CheckClicked() //Checks if it has been pressed and takes appropriate action
@@ -49,7 +45,7 @@ namespace AstralOutbreak
             if (Game1.Inputs.M1State == ButtonStatus.Pressed && 
                 Game1.Inputs.MouseX >= hitbox.X && Game1.Inputs.MouseX < (hitbox.X + hitbox.Width) && Game1.Inputs.MouseY >= hitbox.Y && Game1.Inputs.MouseY < (hitbox.Y + hitbox.Height))
             {
-                ClickEvent();
+                SpecialCode();
             }
         }
     }

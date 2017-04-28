@@ -35,10 +35,14 @@ namespace AstralOutbreak
         //Class
         private Dictionary<string,Texture2D> masterList;
         private Dictionary<string, SpriteFont> fontList;
-        SpriteBatch sb;
 
         //Methods
-        public void Update(SpriteBatch sb)//Will call individual Draw Methods for each entity based on what called it
+        public void Update()
+        {
+            //Hard-coded UI updates because I don't know 
+        }
+
+        public void Draw(SpriteBatch sb)//Will call individual Draw Methods for each entity based on what called it
         {
             if (Game1.CurrentState == GameState.Playing)
             {
