@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    public enum JackRabbitState {  Idle, Moving, Falling, Shooting }
+    public enum JackRabbitState { Idle, Moving, Falling, Shooting }
 
     public class JackRabbit : Enemy
     {
@@ -25,6 +25,10 @@ namespace AstralOutbreak
             {
                 currentState = value;
                 CurrentActionTime = 0;
+                if (currentState == JackRabbitState.Idle || currentState == JackRabbitState.Shooting)
+                    MaxVelocity = new Vector(0, 600);
+                else
+                    MaxVelocity = new Vector(225, 600);
                 if (currentState != JackRabbitState.Shooting)
                     Shooting = false;
             }
@@ -50,7 +54,7 @@ namespace AstralOutbreak
                 {
                     case JackRabbitState.Moving:
 
-                        if (Position.X >= RoomManager.Active.PlayerOne.Position.X - 10 && Position.X <= RoomManager.Active.PlayerOne.Position.X + 10 && Position.Y != RoomManager.Active.PlayerOne.Position.Y)
+                        if (Position.X >= RoomManager.Active.PlayerOne.Position.X - 20 && Position.X <= RoomManager.Active.PlayerOne.Position.X + 20 && Position.Y != RoomManager.Active.PlayerOne.Position.Y)
                         {
                             CurrentJackRabbitState = JackRabbitState.Idle;
                             Velocity.X = 0;
@@ -149,14 +153,14 @@ namespace AstralOutbreak
                     case JackRabbitState.Idle:
 
                         //Checks if the player is to the left of the JackRabbit, and will move towards the player
-                        if (RoomManager.Active.PlayerOne.Position.X + 10 < Position.X)
+                        if (RoomManager.Active.PlayerOne.Position.X + 20 < Position.X)
                         {
                             CurrentJackRabbitState = JackRabbitState.Moving;
                             FaceRight = false;
                             break;
                         }
                         //Checks if the player is to the right of the JackRabbit, and will move towards the player
-                        else if (RoomManager.Active.PlayerOne.Position.X - 10 > Position.X)
+                        else if (RoomManager.Active.PlayerOne.Position.X - 20 > Position.X)
                         {
                             CurrentJackRabbitState = JackRabbitState.Moving;
                             FaceRight = true;

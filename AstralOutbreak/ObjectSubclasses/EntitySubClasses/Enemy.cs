@@ -10,11 +10,13 @@ namespace AstralOutbreak
     public class Enemy : Entity
     {
         private float damage;
+        public bool Corrective { get; set; }
 
         public Enemy(Vector2 pos, float width, float height, float health, float damage, bool mobile = true) : base(pos, width, height, health, mobile)
         {
             this.damage = damage;
         }
+
 
         public void Strike(GameObject other)
         {
@@ -33,7 +35,7 @@ namespace AstralOutbreak
         public override void Step(float deltaTime)
         {
             base.Step(deltaTime);
-
+            Corrective = false;
         }
     }
 }

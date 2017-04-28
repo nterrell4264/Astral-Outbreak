@@ -276,16 +276,18 @@ namespace AstralOutbreak
             //Enemies Correct
             if (obj1 is Enemy && obj2 is Enemy)
             {
+                if(!(obj1 as Enemy).Corrective)
                 if(obj1.Position.X < obj2.Position.X)
                 {
-                    obj1.Velocity.X -= 10;
-                    obj2.Velocity.Y += 10;
+                    obj1.Velocity.X -= 5;
+                    (obj1 as Enemy).Corrective = true;
                 }
                 else
                 {
-                    obj2.Velocity.X -= 10;
-                    obj1.Velocity.Y += 10;
-                }
+                    obj2.Velocity.X -= 5;
+                    (obj1 as Enemy).Corrective = true;
+
+                    }
             }
 
             //Items
