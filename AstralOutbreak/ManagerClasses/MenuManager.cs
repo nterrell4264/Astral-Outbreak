@@ -94,9 +94,12 @@ namespace AstralOutbreak
             items.Add(updateString);
             //Upgrades
             items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
-            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
             items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 49, "rollIcon"));
-            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon"));
+            if (RoomManager.Active.PlayerOne.MyUpgrades.HasFlag(Upgrades.Dash))
+            {
+                items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon"));
+            }
 
         }
 
