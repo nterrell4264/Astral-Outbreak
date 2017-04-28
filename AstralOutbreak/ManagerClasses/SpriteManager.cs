@@ -76,11 +76,11 @@ namespace AstralOutbreak
             {
                 if (menuPart is MenuString)
                 {
-                    sb.DrawString(fontList[(menuPart as MenuString).SpriteFont], (menuPart as MenuString).Text, new Vector2(menuPart.Location.X, menuPart.Location.Y), Color.Black);
+                    sb.DrawString(fontList[(menuPart as MenuString).SpriteFont], (menuPart as MenuString).text, new Vector2(menuPart.Location.X, menuPart.Location.Y), Color.Black);
                 }
                 else
                 {
-                    Texture2D texture = masterList["Menus/" + menuPart.TextureName];
+                    Texture2D texture = masterList["Menus/" + menuPart.textureName];
                     sb.Draw(texture, new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), Color.White);
                 }
             }

@@ -23,12 +23,14 @@ namespace AstralOutbreak
             Location = new Point(x, y);
             textureName = texture;
             Updatable = canUpdate;
+            SpecialCode = updateCode;
         }
         public MenuContent(Point location, string texture, bool canUpdate = false, MenuDelegate updateCode = null)
         {
             Location = location;
             textureName = texture;
             Updatable = canUpdate;
+            SpecialCode = updateCode;
         }
         public void UpdateTexture(string newTextureName)
         {
