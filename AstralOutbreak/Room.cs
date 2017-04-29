@@ -226,7 +226,7 @@ namespace AstralOutbreak
         {
             
             //Swarms
-            if (obj2 is SwarmMob)
+            if (obj2 is SwarmMob || obj1 is SwarmMob)
                 return false;
             if (obj2 is BatShield)
                 return false;
