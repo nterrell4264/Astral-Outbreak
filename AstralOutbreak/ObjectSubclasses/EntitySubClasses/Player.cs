@@ -495,6 +495,10 @@ namespace AstralOutbreak
                 case ItemType.AbilityUnlock:
                     switch (other.Value)
                     {
+                        case 0:
+                            if (MaxHealth < 100)
+                                MaxHealth += 10;
+                            break;
                         case 1:
                             MyUpgrades = MyUpgrades | Upgrades.Dash;
                             break;
