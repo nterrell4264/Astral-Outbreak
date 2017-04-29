@@ -33,18 +33,19 @@ namespace AstralOutbreak
             }
         }
 
+        //Bosses don't unload
         public override bool Unload
         {
             get
             {
-                return base.Unload;
+                return false;
             }
 
             set
             {
-                base.Unload = value;
-                if (Unload)
-                    MySwarm.Kill(this);
+                //base.Unload = value;
+                //if (Unload)
+                //    MySwarm.Kill(this);
             }
         }
 

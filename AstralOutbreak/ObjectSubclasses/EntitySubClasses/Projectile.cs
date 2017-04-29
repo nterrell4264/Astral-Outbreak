@@ -35,7 +35,7 @@ namespace AstralOutbreak
         {
             if (Source is Player)
             {
-                if (other is Enemy || other is Wall && !(other is Projectile) && !IsDead)
+                if ((other is Enemy || other is Wall) && !(other is Projectile) && !IsDead)
                 {
                     Health = 0;
                     if (other is Entity)
