@@ -64,7 +64,7 @@
     <Compile Include="ManagerClasses\SpriteManager.cs" />
     <Compile Include="ObjectSubclasses\Wall.cs" />
     <Compile Include="Physics\World.cs" />
-    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\Swarm.cs" />
+    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\SwarmAI.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\SwarmMob.cs" />
     <Compile Include="Weapon.cs" />
   </ItemGroup>

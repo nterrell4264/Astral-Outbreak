@@ -59,6 +59,8 @@ namespace AstralOutbreak
             }
         }
 
+        public bool MultiShot { get; set; }
+
         //Default constructor
         public Weapon()
         {
@@ -68,6 +70,7 @@ namespace AstralOutbreak
             bulletSpeed = 100;
             Range = 50;
             BulletSize = 8;
+            MultiShot = false;
         }
 
         //Fancy Constructor
@@ -81,6 +84,7 @@ namespace AstralOutbreak
                 bulletSpeed = 1;
             Range = range;
             BulletSize = 1;
+            MultiShot = false;
         }
 
         /// <summary>
@@ -92,7 +96,15 @@ namespace AstralOutbreak
         public void Shoot(Vector direction)
         {
             if (Source != null)
-                RoomManager.Active.AddBullet(new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), direction * BulletSpeed/direction.Magnitude());
+            {
+                Vector shotVel = direction * BulletSpeed / direction.Magnitude();
+                RoomManager.Active.AddBullet(new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), shotVel);
+                if (MultiShot)
+                {
+                    RoomManager.Active.AddBullet(new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), shotVel.Rotate(Math.PI / 45));
+                    RoomManager.Active.AddBullet(new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), shotVel.Rotate(-Math.PI / 45));
+                }
+            }
         }
 
 

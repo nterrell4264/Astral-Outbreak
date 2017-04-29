@@ -14,7 +14,10 @@ namespace AstralOutbreak
     [Flags] public enum Upgrades
     {
         None = 0,
-        Dash = 1
+        Dash = 1,
+        BatShield = 2,
+        MultiShot = 4,
+
 
     }
 
@@ -443,9 +446,11 @@ namespace AstralOutbreak
                     break;
             }
             Aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
-            if ((Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed) && CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
+            if (//(Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed) && 
+                CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
             {
-                Shoot(Aim);
+                if((Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed))
+                    Shoot(Aim);
                 if (Aim.X > 0)
                     FaceRight = true;
                 else if (Aim.X < 0)
@@ -485,6 +490,13 @@ namespace AstralOutbreak
                     {
                         case 1:
                             MyUpgrades = MyUpgrades | Upgrades.Dash;
+                            break;
+                        case 2:
+                            MyUpgrades = MyUpgrades | Upgrades.BatShield;
+                            break;
+                        case 3:
+                            MyUpgrades = MyUpgrades | Upgrades.MultiShot;
+                            MyWeapon.MultiShot = true;
                             break;
                         default:
                             break;

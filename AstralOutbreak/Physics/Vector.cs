@@ -66,6 +66,11 @@ namespace AstralOutbreak
 
         }
 
+        public Vector Rotate(double angle)
+        {
+            return new Vector(X * (float)Math.Cos(angle) - Y * (float)Math.Sin(angle), Y * (float)Math.Cos(angle) + X * (float)Math.Sin(angle));
+        }
+
         /// <summary>
         /// Adds two vectors.
         /// </summary>

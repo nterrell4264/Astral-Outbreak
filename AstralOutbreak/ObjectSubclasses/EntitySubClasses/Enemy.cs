@@ -24,7 +24,7 @@ namespace AstralOutbreak
                 base.Health = value;
                 if(base.Health <= 0)
                 {
-                    if(Game1.Rand.Next(100) < 25)
+                    if(Game1.Rand.Next(100) < 25 && !(this is SwarmMob))
                     {
                         List<PhysicsObject> pickups = new List<PhysicsObject>();
                         pickups.Add(new Item(Position, 8, 8, ItemType.HealthPickup, 2));

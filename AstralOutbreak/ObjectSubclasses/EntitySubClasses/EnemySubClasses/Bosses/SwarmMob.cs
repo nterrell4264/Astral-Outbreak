@@ -23,6 +23,8 @@ namespace AstralOutbreak
 
             set
             {
+                if (Health < value)
+                    Awaken();
                 base.Health = value;
                 if (IsDead)
                 {
@@ -47,17 +49,20 @@ namespace AstralOutbreak
         }
 
         //Swarm
-        private static Swarm mySwarm;
-        public static Swarm MySwarm
+        private static SwarmAI mySwarm;
+        public static SwarmAI MySwarm
         {
             get
             {
                 if (mySwarm == null)
-                    mySwarm = new Swarm();
+                    mySwarm = new SwarmAI();
                 return mySwarm;
             }
         }
-
+        static SwarmMob()
+        {
+            SwarmMob.Target = new Vector(0, 0);
+        }
 
         public SwarmMob(Vector2 pos, float width, float height, float health, float damage, bool mobile = true) : base(pos, width, height, health, 1, mobile)
         {
@@ -70,7 +75,7 @@ namespace AstralOutbreak
         {
             CurrentActionTime += (float) Game1.Rand.NextDouble();
             Gravity = false;
-            MaxVelocity = new Vector(350 + Game1.Rand.Next(100), 350 + Game1.Rand.Next(100));
+            MaxVelocity = new Vector(350 + Game1.Rand.Next(200), 350 + Game1.Rand.Next(200));
             MySwarm.Mobs.Add(this);
         }
 
@@ -80,7 +85,7 @@ namespace AstralOutbreak
             //If it is awake
             if (Awake)
             {
-                MySwarm.Step(deltaTime, CurrentActionTime);
+                MySwarm.Step(deltaTime, this);
                 if(Math.Abs(Position.X - Target.X) > Math.Abs(Position.Y - Target.Y))
                 {
                     Acceleration.X = Target.X - Center.X;
@@ -95,22 +100,27 @@ namespace AstralOutbreak
                 Awake = CheckLineOfSight(RoomManager.Active.MapData);
                 if (Awake)
                 {
-                    MySwarm.Activate();
-                    Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
-                    List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        for (int j = 0; j < 5; j++)
-                        {
-                            swarmMobs.Add(new SwarmMob(this));
-                            swarmMobs[5 * i + j].Position += new Vector(16*i, 16*j);
-                        }
-                    }
-                    RoomManager.Active.AddEntities(swarmMobs);
+                    Awaken();
                 }
 
             }
 
+        }
+        public void Awaken()
+        {
+            Awake = true;
+            MySwarm.Activate();
+            Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
+            List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    swarmMobs.Add(new SwarmMob(this));
+                    swarmMobs[5 * i + j].Position += new Vector(0, 0);
+                }
+            }
+            RoomManager.Active.AddEntities(swarmMobs);
         }
     }
 
