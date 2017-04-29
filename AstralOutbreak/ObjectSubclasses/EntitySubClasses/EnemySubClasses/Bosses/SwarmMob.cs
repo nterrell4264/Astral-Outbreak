@@ -23,7 +23,7 @@ namespace AstralOutbreak
 
             set
             {
-                if (Health < value)
+                if (Health > value && !Awake)
                     Awaken();
                 base.Health = value;
                 if (IsDead)
@@ -97,12 +97,8 @@ namespace AstralOutbreak
             }
             else
             {
-                Awake = CheckLineOfSight(RoomManager.Active.MapData);
-                if (Awake)
-                {
+                if(CheckLineOfSight(RoomManager.Active.MapData))
                     Awaken();
-                }
-
             }
 
         }
