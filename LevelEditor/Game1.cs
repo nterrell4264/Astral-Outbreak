@@ -33,8 +33,12 @@ namespace LevelEditor
         /// </summary>
         protected override void Initialize()
         {
+            graphics.ToggleFullScreen();
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            graphics.ApplyChanges();
             // TODO: Add your initialization logic here
-            if(File.Exists("LevelMap.dat"))
+            if (File.Exists("LevelMap.dat"))
                 level = new LevelInterface("LevelMap.dat");
             else
                 level = new LevelInterface("MapData.dat");

@@ -202,7 +202,7 @@ namespace LevelEditor
                     switch (MapData[i,j])
                     {
                         case MapItem.None:
-                            if (j > 0 && MapData[i, j - 1] == MapItem.Demon)
+                            if ((j > 0 && MapData[i, j - 1] == MapItem.Demon) || (i < 0 && MapData[i - 1, j] == MapItem.Slug))
                                 col = Color.TransparentBlack;
                             else
                                 col = Color.LightSlateGray;
@@ -306,7 +306,7 @@ namespace LevelEditor
 
             //sb.Draw(RoundTexture, new Rectangle(mouseX - 2, mouseY - 2, 5, 5), new Color(Color.Brown, 1));
             //sb.Draw(text, new Rectangle(mouseX - 1, mouseY - 1, 3, 3), col);
-            sb.Draw(RoundTexture, new Rectangle(mouseX - mouseX % (Scale), mouseY - mouseY % (Scale), CursorSize * Scale, CursorSize * Scale), new Color(col, .25f));
+            sb.Draw(RoundTexture, new Rectangle(mouseX - mouseX % (Scale), mouseY - mouseY % (Scale), CursorSize * Scale, CursorSize * Scale), new Color(col, .5f));
 
             sb.DrawString(Font, ""+ CursorValue, new Vector2(0, 0), Color.Red);
 
