@@ -11,7 +11,7 @@ namespace AstralOutbreak
     //Handler class for the swarm boss
     public class SwarmAI
     {
-        private const float VELOCITY = 400;
+        private const float VELOCITY = 300;
 
         //List of all swarm mobs
         public List<SwarmMob> Mobs{ get; set; }
@@ -36,7 +36,6 @@ namespace AstralOutbreak
                         ChargeDist = 1.5f * ( RoomManager.Active.PlayerOne.Position.X - SwarmMob.Target.X);
                         break;
                     case SwarmState.Aligning:
-                        ChargeDist = 1f;
                         SwarmMob.Target = new Vector(SwarmMob.Target.X, RoomManager.Active.PlayerOne.Position.Y);
                         break;
                     default:
@@ -109,14 +108,10 @@ namespace AstralOutbreak
                         
                         break;
                     case SwarmState.Aligning:
-                        ChargeDist -= deltaTime;
-                        if(ChargeDist <= 0)
-                        {
-                            if (RoomManager.Active.PlayerOne.Position.X > SwarmMob.Target.X)
-                                CurrentState = SwarmState.ChargingRight;
-                            else
-                                CurrentState = SwarmState.ChargingLeft;
-                        }
+                        if (RoomManager.Active.PlayerOne.Position.X > SwarmMob.Target.X)
+                            CurrentState = SwarmState.ChargingRight;
+                        else
+                            CurrentState = SwarmState.ChargingLeft;
                         break;
                     default:
                         break;

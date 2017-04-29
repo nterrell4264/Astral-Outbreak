@@ -20,13 +20,17 @@ namespace AstralOutbreak
         public Vector Aim { get; set; }
 
         //Float that signifies the entities current health
+        public float MaxHealth { get; set; }
         private float health;
         public virtual float Health
         {
             get { return health; }
             set
             {
-                health = value;
+                if (value < MaxHealth)
+                    health = value;
+                else
+                    health = MaxHealth;
                 IsDead = health <= 0;
             }
         }
@@ -46,6 +50,7 @@ namespace AstralOutbreak
         {
             CurrentActionTime = 0;
             IsDead = false;
+            MaxHealth = health;
             Health = health;
             MyWeapon = null;
             ShotTimer = 0;
