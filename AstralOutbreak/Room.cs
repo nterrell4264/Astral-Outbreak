@@ -21,6 +21,10 @@ namespace AstralOutbreak
         //Changing the list lock
         private Object listLock = new Object();
 
+        //Last deltatime
+        private float delta;
+
+
         //Bounds of the camera
         public float CameraX { get; set; }
         public float CameraY { get; set; }
@@ -57,6 +61,7 @@ namespace AstralOutbreak
         /// <param name="deltaTime"></param>
         public void Step(float deltaTime)
         {
+            this.delta = deltaTime;
             for(int i = 0; i < PhysicsObjects.Count; i++)
             {
                 //For each entity
@@ -295,41 +300,41 @@ namespace AstralOutbreak
                 {
                     if (obj1.Position.X < obj2.Position.X)
                     {
-                        if(CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE, 0)))
+                        if(CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE * delta, 0)))
                             if(obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X -= CORRECTIVE;
                             else
-                                obj1.Velocity.X -= CORRECTIVE/5;
+                                obj1.Velocity.X -= CORRECTIVE / 3;
 
                         (obj1 as Enemy).Corrective = true;
                     }
                     else if (obj1.Position.X > obj2.Position.X)
                     {
-                        if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE, 0)))
+                        if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE * delta, 0)))
 
                             if (obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X += CORRECTIVE;
                             else
-                                obj1.Velocity.X += CORRECTIVE / 5;
+                                obj1.Velocity.X += CORRECTIVE / 3;
                         (obj1 as Enemy).Corrective = true;
 
                     }
                     else if ((obj2 as Enemy).Corrective)
                     {
-                        if (CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE, 0)))
+                        if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE * delta, 0)))
                             if (obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X += CORRECTIVE;
                             else
-                                obj1.Velocity.X += CORRECTIVE / 5;
+                                obj1.Velocity.X += CORRECTIVE / 3;
                         (obj1 as Enemy).Corrective = true;
                     }
                     else
                     {
-                        if (CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE, 0)))
+                        if (CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE * delta, 0)))
                             if (obj1.MaxVelocity.X == 0)
                                 obj1.Velocity.X -= CORRECTIVE;
                             else
-                                obj1.Velocity.X -= CORRECTIVE / 5;
+                                obj1.Velocity.X -= CORRECTIVE / 3;
                         (obj1 as Enemy).Corrective = true;
                     }
                 }
