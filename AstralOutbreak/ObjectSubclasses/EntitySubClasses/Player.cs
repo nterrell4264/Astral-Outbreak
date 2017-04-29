@@ -534,8 +534,8 @@ namespace AstralOutbreak
                     {
                         shield[i].Health = shield[i].MaxHealth;
                         RoomManager.Active.AddEntity(shield[i]);
-                        shield[i].Center = new Vector(Center.X + (56 * (float)Math.Cos(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())),
-                                                    Center.Y + (56 * (float)Math.Sin(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())));
+                        shield[i].Center = new Vector(Center.X + (42 * (float)Math.Cos(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())),
+                                                    Center.Y + (42 * (float)Math.Sin(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())));
                     }
                 }
             }
