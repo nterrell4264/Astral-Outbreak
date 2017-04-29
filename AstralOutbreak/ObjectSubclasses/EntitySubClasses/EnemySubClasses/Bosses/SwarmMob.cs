@@ -98,7 +98,7 @@ namespace AstralOutbreak
             }
             else
             {
-                if(CheckLineOfSight(RoomManager.Active.MapData))
+                if (CheckLineOfSight(RoomManager.Active.MapData) && RoomManager.Active.AllowBossActivation())
                     Awaken();
             }
 

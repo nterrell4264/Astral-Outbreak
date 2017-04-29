@@ -236,6 +236,7 @@ namespace AstralOutbreak
                 Wall w = obj2 as Wall;
                 switch (w.MyType)
                 {
+                    case WallType.Fire:
                     case WallType.Regular:
                         break;
                     case WallType.Platform:
@@ -243,6 +244,8 @@ namespace AstralOutbreak
                             && !(obj1 is SwarmMob));
                     case WallType.BossDoor:
                         return BossActive;
+                    case WallType.SecretTunnel:
+                        return false;
                     default:
                         break;
                 }
@@ -294,6 +297,11 @@ namespace AstralOutbreak
             if (obj1 is Enemy && obj2 is BatShield)
             {
                 (obj1 as Enemy).Strike(obj2 as GameObject);
+            }
+            if (obj1 is Player && obj2 is Wall)
+            {
+                if ((obj1 as Player).InvulnTime <= 0 && (obj2 as Wall).MyType == WallType.Fire)
+                    PlayerOne.Health--;
             }
 
             //Enemies Correct
@@ -368,6 +376,21 @@ namespace AstralOutbreak
                 }
             }
             return false;
+        }
+
+        //Checks if the player is in a boss door
+        public bool AllowBossActivation()
+        {
+            //Check if the player is in a door
+            for (int i = 0; i < PhysicsObjects.Count; i++)
+            {
+                //For each other object check for collisions
+                if (PhysicsObjects[i] is Wall && (PhysicsObjects[i] as Wall).MyType == WallType.BossDoor && PlayerOne.CheckCollision(PhysicsObjects[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         //Adds a bullet

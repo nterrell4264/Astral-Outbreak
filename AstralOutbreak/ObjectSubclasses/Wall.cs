@@ -20,7 +20,9 @@ namespace AstralOutbreak
     {
         Regular = 1,
         Platform,
-        BossDoor
+        BossDoor,
+        Fire,
+        SecretTunnel
     }
 
 
