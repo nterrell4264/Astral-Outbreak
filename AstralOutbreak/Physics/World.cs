@@ -109,7 +109,7 @@ namespace AstralOutbreak
                                     }
                                 }
 
-                                if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityY * time))
+                                else if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityY * time))
                                 {
                                     //We now know that movement on the Y axis causes a collision
                                     if (obj.Position.Y < PhysicsObjects[j].Position.Y)
