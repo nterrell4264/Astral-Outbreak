@@ -45,6 +45,10 @@ namespace AstralOutbreak
             if (other is Entity && !(other is Projectile))
             {
                 (other as Entity).Health -= Damage;
+                if(other is BatShield)
+                {
+                    this.Health -= (other as BatShield).Damage;
+                }
             }
 
         }

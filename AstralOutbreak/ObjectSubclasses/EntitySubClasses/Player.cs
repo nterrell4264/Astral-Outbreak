@@ -37,6 +37,8 @@ namespace AstralOutbreak
         private const float DASHSPEED = 900;
         private const float ROLLSPEED = 450;
 
+        //Batshields
+        private BatShield[] shield;
 
         public PlayerState CurrentPlayerState
         {
@@ -98,6 +100,11 @@ namespace AstralOutbreak
             MyWeapon.BulletSize = 5;
             previousY = Velocity.Y;
             jumpTime = JUMPTIME;
+            shield = new BatShield[5];
+            for(int i = 0; i < shield.Count(); i++)
+            {
+                shield[i] = new BatShield(new Vector(0, 0), 16, 16, 1, 5);
+            }
 
         }
 
@@ -464,8 +471,8 @@ namespace AstralOutbreak
                     FaceRight = false;
             }
             previousY = Velocity.Y;
-
-           
+            if (MyUpgrades.HasFlag(Upgrades.BatShield))
+                UpdateBatShield(deltaTime);
             
             
         }
@@ -509,6 +516,30 @@ namespace AstralOutbreak
             other.Unload = true;
         }
 
+        //Updates the shield of bats
+        public void UpdateBatShield(float deltaTime)
+        {
+            BatShield.ShieldTimer += deltaTime;
+            for(int i = 0; i < shield.Count(); i++)
+            {
+                if (shield[i].RespawnTimer <= 0)
+                {
+                    shield[i].Center = new Vector (Center.X + (42 * (float)Math.Cos(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())),  
+                                                    Center.Y + (42 * (float)Math.Sin(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())));
+                }
+                else
+                {
+                    shield[i].RespawnTimer -= deltaTime;
+                    if(shield[i].RespawnTimer <= 0)
+                    {
+                        shield[i].Health = shield[i].MaxHealth;
+                        RoomManager.Active.AddEntity(shield[i]);
+                        shield[i].Center = new Vector(Center.X + (42 * (float)Math.Cos(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())),
+                                                    Center.Y + (42 * (float)Math.Sin(3 * BatShield.ShieldTimer * Math.PI / 2 + i * 2 * Math.PI / shield.Count())));
+                    }
+                }
+            }
+        }
 
 
 

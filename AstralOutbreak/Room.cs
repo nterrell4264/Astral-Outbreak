@@ -222,7 +222,8 @@ namespace AstralOutbreak
             //Swarms
             if (obj2 is SwarmMob)
                 return false;
-
+            if (obj2 is BatShield)
+                return false;
             //Wall
             if (obj2 is Wall)
             {
@@ -280,6 +281,11 @@ namespace AstralOutbreak
             {
                 if ((obj1 as Player).InvulnTime <= 0)
                     (obj2 as Enemy).Strike(obj1 as GameObject);
+            }
+            //Enemies hit Shield
+            if (obj1 is Enemy && obj2 is BatShield)
+            {
+                (obj1 as Enemy).Strike(obj2 as GameObject);
             }
 
             //Enemies Correct

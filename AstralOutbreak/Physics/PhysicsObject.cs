@@ -45,6 +45,11 @@ namespace AstralOutbreak
             {
                 return new Vector(Position.X + Width/2, Position.Y + Height/2);
             }
+            set
+            {
+                Position.X = value.X - Width / 2;
+                Position.Y = value.Y - Height / 2;
+            }
         }
 
 

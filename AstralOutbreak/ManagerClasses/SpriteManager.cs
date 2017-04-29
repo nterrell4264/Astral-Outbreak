@@ -65,6 +65,10 @@ namespace AstralOutbreak
                     {
                         Draw(sb, RoomManager.Active.PhysicsObjects[i] as SwarmMob, i);
                     }
+                    else if (RoomManager.Active.PhysicsObjects[i] is BatShield)
+                    {
+                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as BatShield, i);
+                    }
                     else if (RoomManager.Active.PhysicsObjects[i] is Wall)
                     {
                         Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
@@ -471,6 +475,41 @@ namespace AstralOutbreak
                     break;
             }
             sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1,1,1,.9f), effects: SpriteEffects.None, layerDepth: .4f);
+        }
+        public void Draw(SpriteBatch sb, BatShield bat, int i)
+        {
+            Rectangle dest;
+
+            Rectangle pos = new Rectangle();
+            int s = (int)(bat.CurrentActionTime * 8) % 4;
+            switch (s)
+            {
+                default:
+                    pos = new Rectangle(71, 14, 54, 15);
+                    dest = new Rectangle((int)bat.Center.X - (int)RoomManager.Active.CameraX - 27,
+                  (int)bat.Center.Y - (int)RoomManager.Active.CameraY - 7,
+                  54, 15);
+                    break;
+                case 1:
+                    pos = new Rectangle(132, 15, 56, 17);
+                    dest = new Rectangle((int)bat.Center.X - (int)RoomManager.Active.CameraX - 28,
+                  (int)bat.Center.Y - (int)RoomManager.Active.CameraY - 8,
+                  56, 17);
+                    break;
+                case 2:
+                    pos = new Rectangle(198, 14, 36, 23);
+                    dest = new Rectangle((int)bat.Center.X - (int)RoomManager.Active.CameraX - 18,
+                  (int)bat.Center.Y - (int)RoomManager.Active.CameraY - 11,
+                  36, 23);
+                    break;
+                case 3:
+                    pos = new Rectangle(132, 15, 56, 17);
+                    dest = new Rectangle((int)bat.Center.X - (int)RoomManager.Active.CameraX - 28,
+                  (int)bat.Center.Y - (int)RoomManager.Active.CameraY - 8,
+                  56, 17);
+                    break;
+            }
+            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, 1, .9f), effects: SpriteEffects.None, layerDepth: .4f);
         }
 
         public void AddTexture(Texture2D texture)

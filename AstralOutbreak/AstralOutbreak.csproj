@@ -43,6 +43,7 @@
     <Compile Include="MenuStuff\MenuContent.cs" />
     <Compile Include="MenuStuff\MenuButton.cs" />
     <Compile Include="MenuStuff\MenuString.cs" />
+    <Compile Include="ObjectSubclasses\EntitySubClasses\BatShield.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Enemy.cs" />
     <Compile Include="ObjectSubclasses\Entity.cs" />
     <Compile Include="ManagerClasses\FileManager.cs" />
