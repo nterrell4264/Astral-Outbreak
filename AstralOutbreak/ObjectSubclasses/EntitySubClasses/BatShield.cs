@@ -40,11 +40,13 @@ namespace AstralOutbreak
             }
         }
 
+        //Sets the static variable
         static BatShield()
         {
             ShieldTimer = 0;
         }
 
+        //Na na na na na na na na na na, Bat Shield.
         public BatShield(Vector2 pos, float width, float height, float health, float damage, bool mobile = false) : base(pos, width, height, health, mobile)
         {
             Gravity = false;
