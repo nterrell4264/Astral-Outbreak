@@ -179,24 +179,28 @@ namespace AstralOutbreak
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
                 color: Color.White, effects: flip, layerDepth: .6f);
             float gunRot = RoomManager.Active.PlayerOne.Aim.GetAngle();
-            Vector2 armOrg = new Vector2(player.Width / 2, player.Height / 2);
+            Vector2 armOrg = new Vector2(5, 10);
             if (!RoomManager.Active.PlayerOne.FaceRight)
             {
                 gunRot -= (float)Math.PI;
-                armOrg = new Vector2(-player.Width / 2, -player.Height / 2);
+                armOrg = new Vector2(28, 10);
             }
 
             sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: destArm,
-                sourceRectangle: new Rectangle(5,148,33,16), rotation: gunRot, origin: new Vector2(5, 10),
+                sourceRectangle: new Rectangle(5,148,33,16), rotation: gunRot + rot, origin: armOrg,
                 color: Color.White, effects: flip, layerDepth: .5f);
 
             if (player.InvulnTime > 0 && player.CurrentPlayerState!= PlayerState.Rolling)
             {
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
-                sourceRectangle: pos, rotation: rot, origin: armOrg,
+                sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
                 color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .6f);
+                sb.Draw(masterList["PlayerSprites"],
+                destinationRectangle: destArm,
+                sourceRectangle: new Rectangle(5, 148, 33, 16), rotation: gunRot + rot, origin: armOrg,
+                color: new Color(1, 0, 0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .5f);
             }
         }
 
