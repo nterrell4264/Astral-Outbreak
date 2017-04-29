@@ -210,7 +210,7 @@ namespace AstralOutbreak
 
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
-            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Center.X - (int)RoomManager.Active.CameraX - 32,
                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
                  64, 34);
             Rectangle pos = new Rectangle();
