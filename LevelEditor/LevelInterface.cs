@@ -281,8 +281,25 @@ namespace LevelEditor
                     col = Color.LightSlateGray;
                     break;
                 case CursorMode.Wall:
-                    text = WallTexture;
-                    col = Color.Black;
+                    switch (CursorValue)
+                    {
+                        case 0:
+                        case 1:
+                            col = Color.Black;
+                            break;
+                        case 2:
+                            col = Color.Sienna;
+                            break;
+                        case 3:
+                            col = Color.SandyBrown;
+                            break;
+                        case 4:
+                            col = Color.HotPink;
+                            break;
+                        case 5:
+                            col = Color.Plum;
+                            break;
+                    }
                     break;
                 case CursorMode.Slug:
                     text = SlugTexture;

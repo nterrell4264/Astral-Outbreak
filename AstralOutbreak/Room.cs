@@ -32,7 +32,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 800;
+        private const float BUFFER = 100;
         private const float CORRECTIVE = 300;
 
 
