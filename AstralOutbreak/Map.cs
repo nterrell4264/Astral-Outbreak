@@ -310,13 +310,13 @@ namespace AstralOutbreak
                 if (y1 > y2)
                     for (int yActive = (int)y2; yActive < y1; yActive++)
                     {
-                        if (MapData[(int)x1, yActive] == MapItem.Wall)
+                        if (MapData[(int)x1, yActive] == MapItem.Wall && TileValue[(int)x1, yActive] != 2)
                             return false;
                     }
                 else
                     for (int yActive = (int)y1; yActive < y2; yActive++)
                     {
-                        if (MapData[(int)x1, yActive] == MapItem.Wall)
+                        if (MapData[(int)x1, yActive] == MapItem.Wall && TileValue[(int)x1, yActive] != 2)
                             return false;
                     }
                 return true;
@@ -331,13 +331,13 @@ namespace AstralOutbreak
                         if (slope > 0)
                         {
                             for (int i = 0; i < slope; i++)
-                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall && TileValue[xActive, (int)(yIntercept + (xActive * slope) + i)] != 2)
                                     return false;
                         }
                         else
                         {
                             for (int i = 0; i > slope; i--)
-                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall && TileValue[xActive, (int)(yIntercept + (xActive * slope) + i)] != 2)
                                     return false;
                         }
                     }
@@ -347,13 +347,13 @@ namespace AstralOutbreak
                         if (slope > 0)
                         {
                             for (int i = 0; i < slope; i++)
-                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall && TileValue[xActive, (int)(yIntercept + (xActive * slope) + i)] != 2)
                                     return false;
                         }
                         else
                         {
                             for (int i = 0; i > slope; i--)
-                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall)
+                                if (MapData[xActive, (int)(yIntercept + (xActive * slope) + i)] == MapItem.Wall && TileValue[xActive, (int)(yIntercept + (xActive * slope) + i)] != 2)
                                     return false;
                         }
                     }
@@ -363,13 +363,13 @@ namespace AstralOutbreak
                 if (x1 < x2)
                     for (int xActive = (int)x1; xActive < x2; xActive++)
                     {
-                        if (MapData[xActive, (int)y1] == MapItem.Wall)
+                        if (MapData[xActive, (int)y1] == MapItem.Wall && TileValue[xActive, (int)y1] != 2)
                             return false;
                     }
                 else
                     for (int xActive = (int)x2; xActive < x1; xActive++)
                     {
-                        if (MapData[xActive, (int)y1] == MapItem.Wall)
+                        if (MapData[xActive, (int)y1] == MapItem.Wall && TileValue[xActive, (int)y1] != 2)
                             return false;
                     }
             }
