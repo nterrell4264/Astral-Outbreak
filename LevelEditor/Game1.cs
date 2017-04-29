@@ -122,21 +122,34 @@ namespace LevelEditor
             {
                 if(level.MapX < level.MapData.Width)
                     level.MapX++;
+                if(kb.IsKeyDown(Keys.LeftControl))
+                    if (level.MapX < level.MapData.Width - 2)
+                        level.MapX += 3;
+
             }
             if (kb.IsKeyDown(Keys.A) && (kbLast.IsKeyUp(Keys.A) || kb.IsKeyDown(Keys.LeftShift)))
             {
                 if (level.MapX > 0)
                     level.MapX--;
+                if (kb.IsKeyDown(Keys.LeftControl))
+                    if (level.MapX > 2)
+                        level.MapX -= 3;
             }
             if (kb.IsKeyDown(Keys.S) && (kbLast.IsKeyUp(Keys.S) || kb.IsKeyDown(Keys.LeftShift)))
             {
                 if (level.MapY < level.MapData.Height)
                     level.MapY++;
+                if (kb.IsKeyDown(Keys.LeftControl))
+                    if (level.MapY < level.MapData.Height - 2)
+                        level.MapY += 3;
             }
             if (kb.IsKeyDown(Keys.W) && (kbLast.IsKeyUp(Keys.W) || kb.IsKeyDown(Keys.LeftShift)))
             {
                 if (level.MapY > 0)
                     level.MapY--;
+                if (kb.IsKeyDown(Keys.LeftControl))
+                    if (level.MapY > 2)
+                        level.MapY -= 3;
             }
             if (kb.IsKeyDown(Keys.Up) && (kbLast.IsKeyUp(Keys.Up)))
             {

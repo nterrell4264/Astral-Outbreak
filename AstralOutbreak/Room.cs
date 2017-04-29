@@ -298,6 +298,7 @@ namespace AstralOutbreak
             {
                 (obj1 as Enemy).Strike(obj2 as GameObject);
             }
+            //Player burns from heat wall
             if (obj1 is Player && obj2 is Wall)
             {
                 if ((obj1 as Player).InvulnTime <= 0 && (obj2 as Wall).MyType == WallType.Fire)

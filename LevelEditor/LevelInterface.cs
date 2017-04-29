@@ -80,10 +80,10 @@ namespace LevelEditor
                 }
                 catch
                 {
-                    MapData = new Map(100, 100);
+                    MapData = new Map(1024, 1024);
                 }
             else
-                MapData = new Map(300, 100);
+                MapData = new Map(1024, 1024);
             MapData.Scale = 28;
             CursorItem = CursorMode.Erase;
             CursorSize = 1;
@@ -222,9 +222,16 @@ namespace LevelEditor
                                 case 3:
                                     col = Color.SandyBrown;
                                     break;
+                                case 4:
+                                    col = Color.HotPink;
+                                    break;
+                                case 5:
+                                    col = Color.Plum;
+                                    break;
                             }
                             break;
                         case MapItem.Slug:
+                            square = new Rectangle(Scale + (Scale * (i - MapX)), Scale + (Scale * (j - MapY)), Scale * 2, Scale);
                             text = SlugTexture;
                             col = Color.Blue;
                             break;
@@ -234,8 +241,10 @@ namespace LevelEditor
                             col = Color.Red;
                             break;
                         case MapItem.Item:
-                            text = WallTexture;
+                            text = RoundTexture;
                             col = Color.Goldenrod;
+                            if(MapData.TileValue[i,j] == 0)
+                                col = Color.MintCream;
                             break;
                         case MapItem.Boss:
                             col = Color.BlanchedAlmond;
