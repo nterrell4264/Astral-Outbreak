@@ -435,8 +435,14 @@ namespace AstralOutbreak
                 case WallType.BossDoor:
                     col = Color.DimGray;
                     break;
+                case WallType.SecretTunnel:
+                    sheet = masterList["TileSheet"];
+                    pos = new Rectangle(84, 84, 28, 28);
+                    break;
                 
             }
+            if (wall.MyType == WallType.Fire)
+                col = Color.Red;
             sb.Draw(sheet, destinationRectangle: dest,
             sourceRectangle: pos, color: col, effects: flip, layerDepth: 1);
         }
