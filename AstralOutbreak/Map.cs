@@ -239,20 +239,24 @@ namespace AstralOutbreak
             //Fill the list
             for (int i = nX; i < w + nX && i < Width; i++)
             {
-                for(int j = nY; j < height + nY && j < Height; j++)
+                for(int j = nY; j < h + nY && j < Height; j++)
                 {
                     //Get the object
                     var obj = Get(i, j);
                     if (obj != null)
                     {
                         //for each bit check if it should be loaded (This has to do with not loading enemies on the screen, only in the buffer area)
-                        if ((this[i,j] == MapItem.Wall || this[i,j] == MapItem.None) || ((obj.Position.X + obj.Width < newX) 
-                            || (obj.Position.X > newX + width) || (obj.Position.Y + obj.Height < newY) || (obj.Position.Y > newY + height)))
+                        if (this[i,j] == MapItem.Wall || (((obj.Position.X + obj.Width < newX) 
+                            || (obj.Position.X > newX + width) || (obj.Position.Y + obj.Height < newY) || (obj.Position.Y > newY + height)) && j < nY + h - 10))
                         {
                             //Add it to the list
                             obj.OriginX = i;
                             obj.OriginY = j;
                             list.Add(obj);
+                        }
+                        else
+                        {
+                            Loaded[i, j] = false;
                         }
                     }
                 }

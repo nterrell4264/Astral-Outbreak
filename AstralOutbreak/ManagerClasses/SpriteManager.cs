@@ -458,10 +458,10 @@ namespace AstralOutbreak
             {
                 dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
                 sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
-                sourceRectangle: pos, color: new Color(col, .5f), effects: flip, layerDepth: .39f);
+                sourceRectangle: pos, color: new Color(col, .5f), effects: flip, layerDepth: .41f);
                 dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
                 sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
-                sourceRectangle: pos, color: new Color(col, .25f), effects: flip, layerDepth: .38f);
+                sourceRectangle: pos, color: new Color(col, .25f), effects: flip, layerDepth: .42f);
             }
         }
 
