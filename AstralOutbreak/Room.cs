@@ -159,7 +159,7 @@ namespace AstralOutbreak
         {
             MapData = mapdata;
             float scale = mapdata.Scale;
-            PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), 32, 55, 10);
+            PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), 28, 55, 10);
             PhysicsObjects.Add(PlayerOne);
             CameraTrack(PlayerOne);
             List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
@@ -184,7 +184,7 @@ namespace AstralOutbreak
             MapData.Reload();
             PhysicsObjects = new List<PhysicsObject>();
             float scale = MapData.Scale;
-            PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 32, 55, 10);
+            PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 28, 55, 10);
             PhysicsObjects.Add(PlayerOne);
             CameraTrack(PlayerOne);
             List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);

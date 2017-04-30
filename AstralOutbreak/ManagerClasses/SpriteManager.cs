@@ -112,9 +112,9 @@ namespace AstralOutbreak
         public void Draw(SpriteBatch sb, Player player, int i)
         { 
             float rot = 0;
-            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX + (int)player.Width / 2,
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX + (int)player.Width / 2 - 2,
                   (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY + (int)player.Height / 2,
-                  (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height);
+                  (int)RoomManager.Active.PhysicsObjects[i].Width + 4, (int)RoomManager.Active.PhysicsObjects[i].Height);
             Rectangle pos = new Rectangle();
             Rectangle destArm = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Center.X - (int)RoomManager.Active.CameraX,
                   (int)RoomManager.Active.PhysicsObjects[i].Center.Y - (int)RoomManager.Active.CameraY,

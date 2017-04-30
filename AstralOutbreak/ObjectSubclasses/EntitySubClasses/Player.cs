@@ -323,12 +323,12 @@ namespace AstralOutbreak
                     }
                     else
                     {
-                        if (Velocity.X != ROLLSPEED && FaceRight && RoomManager.Active.CheckCollision(this, new Vector(0, -Height)))
+                        if (Velocity.X != ROLLSPEED && FaceRight && RoomManager.Active.CheckCollision(this, new Vector(0, -Height)) && !RoomManager.Active.CheckCollision(this, new Vector(0, Height)))
                         {
                             Velocity.X = -ROLLSPEED;
                             FaceRight = false;
                         }
-                        if (Velocity.X != -ROLLSPEED && !FaceRight && RoomManager.Active.CheckCollision(this, new Vector(0, -Height)))
+                        if (Velocity.X != -ROLLSPEED && !FaceRight && RoomManager.Active.CheckCollision(this, new Vector(0, -Height)) && RoomManager.Active.CheckCollision(this, new Vector(0, Height)))
                         {
                             Velocity.X = ROLLSPEED;
                             FaceRight = true;
