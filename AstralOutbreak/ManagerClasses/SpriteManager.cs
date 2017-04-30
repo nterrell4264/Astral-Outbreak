@@ -453,12 +453,15 @@ namespace AstralOutbreak
             }
             sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
             sourceRectangle: pos, color: Color.Crimson, effects: flip, layerDepth: .4f);
-            dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y/120, dest.Width, dest.Height);
-            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
-            sourceRectangle: pos, color: new Color(Color.Crimson, .5f), effects: flip, layerDepth: .4f);
-            dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
-            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
-            sourceRectangle: pos, color: new Color(Color.Crimson, .25f), effects: flip, layerDepth: .4f);
+            if (enemy.CurrentJackRabbitState == JackRabbitState.Falling)
+            {
+                dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
+                sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+                sourceRectangle: pos, color: new Color(Color.Crimson, .5f), effects: flip, layerDepth: .39f);
+                dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
+                sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+                sourceRectangle: pos, color: new Color(Color.Crimson, .25f), effects: flip, layerDepth: .38f);
+            }
         }
 
         public void Draw(SpriteBatch sb, Wall wall, int i)

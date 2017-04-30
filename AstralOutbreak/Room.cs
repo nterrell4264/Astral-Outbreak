@@ -61,6 +61,7 @@ namespace AstralOutbreak
         /// <param name="deltaTime"></param>
         public void Step(float deltaTime)
         {
+            List<PhysicsObject> loaded = new List<PhysicsObject>(PhysicsObjects.Count);
             this.delta = deltaTime;
             for(int i = 0; i < PhysicsObjects.Count; i++)
             {
@@ -71,25 +72,18 @@ namespace AstralOutbreak
                     //Call its step
                     obj.Step(deltaTime);
                     //And make sure it isn't dead
-                    if (obj.IsDead)
-                    {
-                        lock (listLock)
-                        {
-                            PhysicsObjects.RemoveAt(i);
-                            i--;
-                        }
-                    }
                 }
-                lock (listLock)
-                {
-                    if(!BossActive && i >= 0 && PhysicsObjects[i] is GameObject && (PhysicsObjects[i] as GameObject).Unload)
+                if(i < PhysicsObjects.Count)
+                    if(!(i >= 0 && PhysicsObjects[i] is GameObject && (PhysicsObjects[i] as GameObject).Unload) && !(PhysicsObjects[i] is Entity && (PhysicsObjects[i] as Entity).IsDead))
                     {
-                        PhysicsObjects.RemoveAt(i);
-                        i--;
+                        loaded.Add(PhysicsObjects[i]);
                     }
-                }
-                
             }
+            lock (listLock)
+            {
+                PhysicsObjects = loaded;
+            }
+
             //Update Physics
             Update(deltaTime);
             CameraTrack(PlayerOne);
