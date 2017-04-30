@@ -77,7 +77,7 @@ namespace AstralOutbreak
         {
             CurrentActionTime += (float)Game1.Rand.NextDouble();
             Gravity = false;
-            MaxVelocity = new Vector(350 + Game1.Rand.Next(300), 350 + Game1.Rand.Next(300));
+            MaxVelocity = new Vector(350 + Game1.Rand.Next(300), 350 + Game1.Rand.Next(200));
             MySwarm.Mobs.Add(this);
             Collides = false;
         }
@@ -113,12 +113,12 @@ namespace AstralOutbreak
                 MySwarm.Activate();
                 Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
                 List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
-                for (int i = 0; i < 12; i++)
+                for (int i = 0; i < 15; i++)
                 {
-                    for (int j = 0; j < 12; j++)
+                    for (int j = 0; j < 15; j++)
                     {
                         swarmMobs.Add(new SwarmMob(this));
-                        swarmMobs[5 * i + j].Position += new Vector(0, 0);
+                        swarmMobs[5 * i + j].Velocity += new Vector(i - 7, j - 7);
                     }
                 }
                 RoomManager.Active.AddEntities(swarmMobs);

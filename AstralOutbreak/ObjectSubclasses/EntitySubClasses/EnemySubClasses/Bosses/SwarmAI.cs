@@ -30,10 +30,10 @@ namespace AstralOutbreak
                 switch (CurrentState)
                 {
                     case SwarmState.ChargingLeft:
-                        ChargeDist = 1.5f * (SwarmMob.Target.X - RoomManager.Active.PlayerOne.Position.X);
+                        ChargeDist = 1f * (SwarmMob.Target.X - RoomManager.Active.PlayerOne.Position.X);
                         break;
                     case SwarmState.ChargingRight:
-                        ChargeDist = 1.5f * ( RoomManager.Active.PlayerOne.Position.X - SwarmMob.Target.X);
+                        ChargeDist = 1f * ( RoomManager.Active.PlayerOne.Position.X - SwarmMob.Target.X);
                         break;
                     case SwarmState.Aligning:
                         SwarmMob.Target = new Vector(SwarmMob.Target.X, RoomManager.Active.PlayerOne.Position.Y);

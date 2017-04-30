@@ -203,7 +203,7 @@ namespace AstralOutbreak
                         case 1:
                             return new JackRabbitBoss(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
                         case 2:
-                            return new SwarmMob(new Vector(x * Scale, y * Scale), 12, 12, 5, 1);
+                            return new SwarmMob(new Vector(x * Scale, y * Scale), 12, 12, 1, 1);
                             break;
                     }
                     break;
