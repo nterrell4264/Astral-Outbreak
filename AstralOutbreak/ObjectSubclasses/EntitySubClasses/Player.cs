@@ -496,8 +496,9 @@ namespace AstralOutbreak
                     switch (other.Value)
                     {
                         case 0:
-                            if (MaxHealth < 100)
-                                MaxHealth += 10;
+                            if (MaxHealth <= 95 && !other.Consumed)
+                                MaxHealth += 5;
+                            Health = MaxHealth;
                             break;
                         case 1:
                             MyUpgrades = MyUpgrades | Upgrades.Dash;
