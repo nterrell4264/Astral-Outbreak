@@ -77,7 +77,7 @@ namespace AstralOutbreak
         {
             CurrentActionTime += (float)Game1.Rand.NextDouble();
             Gravity = false;
-            MaxVelocity = new Vector(350 + Game1.Rand.Next(200), 350 + Game1.Rand.Next(200));
+            MaxVelocity = new Vector(350 + Game1.Rand.Next(300), 350 + Game1.Rand.Next(300));
             MySwarm.Mobs.Add(this);
             Collides = false;
         }
