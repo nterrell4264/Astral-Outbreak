@@ -49,6 +49,7 @@
     <Compile Include="ManagerClasses\FileManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="ManagerClasses\InputManager.cs" />
+    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\JackRabbitBoss.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\JackRabbit.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Slug.cs" />
     <Compile Include="ObjectSubclasses\Item.cs" />

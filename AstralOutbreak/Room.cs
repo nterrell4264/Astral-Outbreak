@@ -82,7 +82,7 @@ namespace AstralOutbreak
                 }
                 lock (listLock)
                 {
-                    if(i >= 0 && PhysicsObjects[i] is GameObject && (PhysicsObjects[i] as GameObject).Unload)
+                    if(!BossActive && i >= 0 && PhysicsObjects[i] is GameObject && (PhysicsObjects[i] as GameObject).Unload)
                     {
                         PhysicsObjects.RemoveAt(i);
                         i--;

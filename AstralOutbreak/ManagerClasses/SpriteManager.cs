@@ -51,9 +51,10 @@ namespace AstralOutbreak
                 {
                     if (RoomManager.Active.IsOnScreen(RoomManager.Active.PhysicsObjects[i]))
                     {
-                        if (RoomManager.Active.PhysicsObjects[i] is Player)
+                        if (RoomManager.Active.PhysicsObjects[i] is Wall)
                         {
-                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
+
                         }
                         else if (RoomManager.Active.PhysicsObjects[i] is Slug)
                         {
@@ -63,6 +64,10 @@ namespace AstralOutbreak
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
                         }
+                        else if (RoomManager.Active.PhysicsObjects[i] is JackRabbitBoss)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbitBoss, i);
+                        }
                         else if (RoomManager.Active.PhysicsObjects[i] is SwarmMob)
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as SwarmMob, i);
@@ -71,10 +76,9 @@ namespace AstralOutbreak
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as BatShield, i);
                         }
-                        else if (RoomManager.Active.PhysicsObjects[i] is Wall)
+                        else if (RoomManager.Active.PhysicsObjects[i] is Player)
                         {
-                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
-
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
                         }
                         else
                         {
@@ -362,6 +366,99 @@ namespace AstralOutbreak
             }
             sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
             sourceRectangle: pos, color: Color.White, effects: flip, layerDepth: .4f);
+        }
+
+        public void Draw(SpriteBatch sb, JackRabbitBoss enemy, int i)
+        {
+            Rectangle pos = new Rectangle();
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX - 3,
+                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY - 5,
+                  35, 61);
+            SpriteEffects flip = SpriteEffects.None;
+            if (!enemy.FaceRight)
+                flip = SpriteEffects.FlipHorizontally;
+            switch (enemy.CurrentJackRabbitState)
+            {
+                default:
+                    break;
+                case JackRabbitState.Falling:
+                    pos = new Rectangle(5, 160, 31, 61);
+                    break;
+                case JackRabbitState.Idle:
+                    pos = new Rectangle(4, 227, 35, 59);
+                    break;
+                case JackRabbitState.Moving:
+
+                    int t = (int)(enemy.CurrentActionTime * 8) % 6;
+                    switch (t)
+                    {
+                        default:
+                            pos = new Rectangle(5, 99, 46, 55);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 1:
+                            pos = new Rectangle(68, 99, 47, 54);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 2:
+                            pos = new Rectangle(138, 105, 33, 60);
+                            break;
+                        case 3:
+                            pos = new Rectangle(206, 104, 30, 61);
+                            break;
+                        case 4:
+                            pos = new Rectangle(258, 99, 44, 54);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 5:
+                            pos = new Rectangle(323, 101, 46, 54);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                    }
+                    break;
+                case JackRabbitState.Shooting:
+
+                    int s = (int)(enemy.CurrentActionTime * 8) % 6;
+                    switch (s)
+                    {
+                        default:
+                            pos = new Rectangle(6, 28, 32, 63);
+                            break;
+                        case 1:
+                            pos = new Rectangle(68, 28, 37, 63);
+                            break;
+                        case 2:
+                            pos = new Rectangle(131, 28, 41, 63);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 3:
+                            pos = new Rectangle(205, 28, 34, 63);
+                            break;
+                        case 4:
+                            pos = new Rectangle(270, 28, 41, 63);
+                            dest.X -= 6;
+                            dest.Width += 12;
+                            break;
+                        case 5:
+                            pos = new Rectangle(329, 28, 30, 63);
+                            break;
+                    }
+                    break;
+
+            }
+            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+            sourceRectangle: pos, color: Color.Crimson, effects: flip, layerDepth: .4f);
+            dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y/120, dest.Width, dest.Height);
+            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+            sourceRectangle: pos, color: new Color(Color.Crimson, .5f), effects: flip, layerDepth: .4f);
+            dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
+            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+            sourceRectangle: pos, color: new Color(Color.Crimson, .25f), effects: flip, layerDepth: .4f);
         }
 
         public void Draw(SpriteBatch sb, Wall wall, int i)
