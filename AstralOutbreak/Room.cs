@@ -204,9 +204,7 @@ namespace AstralOutbreak
 
                     obj = PhysicsObjects[i] as GameObject;
                 }
-                if (obj.Position.X < CameraX - BUFFER || obj.Position.X > CameraX + BUFFER + Width 
-                    || obj.Position.Y < CameraY - BUFFER || obj.Position.Y > CameraY + BUFFER + Height)
-                    obj.Unload = true;
+                obj.Unload = obj.Position.X < CameraX - BUFFER || obj.Position.X > CameraX + BUFFER + Width || obj.Position.Y < CameraY - BUFFER || obj.Position.Y > CameraY + BUFFER + Height;
                 i++;
             }
         }

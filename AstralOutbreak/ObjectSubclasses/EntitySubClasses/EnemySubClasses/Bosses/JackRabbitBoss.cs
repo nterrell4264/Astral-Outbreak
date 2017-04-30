@@ -25,7 +25,7 @@ namespace AstralOutbreak
                 if (currentState == JackRabbitState.Idle || currentState == JackRabbitState.Shooting)
                     MaxVelocity = new Vector(0, 600);
                 else if (currentState == JackRabbitState.Falling)
-                    MaxVelocity = new Vector(900, 900);
+                    MaxVelocity = new Vector(1000, 900);
                 else
                     MaxVelocity = new Vector(225, 600);
                 if (currentState != JackRabbitState.Shooting)
@@ -62,9 +62,31 @@ namespace AstralOutbreak
 
             set
             {
-                //base.Unload = value;
-                //if (Unload)
-                //    MySwarm.Kill(this);
+                if (value)
+                {
+                    Collides = false;
+                    if (this.Position.Y > RoomManager.Active.PlayerOne.Position.Y - 1)
+                    {
+                        this.Position.Y = RoomManager.Active.PlayerOne.Position.Y - 1;
+                        float diff = Position.X - RoomManager.Active.PlayerOne.Position.X;
+                        if (diff < 0)
+                        {
+                            FaceRight = true;
+                            Velocity = new Vector(900, -200);
+                            currentState = JackRabbitState.Falling;
+                        }
+                        else
+                        {
+                            FaceRight = false;
+                            Velocity = new Vector(-900, -200);
+                            currentState = JackRabbitState.Falling;
+                        }
+                    }
+                }
+                else
+                {
+                    Collides = true;
+                }
             }
         }
 
@@ -94,17 +116,18 @@ namespace AstralOutbreak
                     case JackRabbitState.Idle:
                         if(CurrentActionTime > 1f)
                         {
+                            float v = 500 + 500 * (1 - (Health / MaxHealth));
                             float diff = Position.X - RoomManager.Active.PlayerOne.Position.X;
                             if(diff < 0)
                             {
                                 FaceRight = true;
-                                Velocity = new Vector(900, -200);
+                                Velocity = new Vector(v, -200);
                                 currentState = JackRabbitState.Falling;
                             }
                             else
                             {
                                 FaceRight = false;
-                                Velocity = new Vector(-900, -200);
+                                Velocity = new Vector(-v, -200);
                                 currentState = JackRabbitState.Falling;
                             }
                         }

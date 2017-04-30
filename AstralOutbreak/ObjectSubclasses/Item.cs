@@ -23,9 +23,16 @@ namespace AstralOutbreak
             }
             set
             {
-                base.Unload = value;
-                if (Consumed && (OriginX >= 0 && OriginY >= 0))
-                    RoomManager.MapData.Loaded[OriginX, OriginY] = true;
+                if (Consumed)
+                {
+                    base.Unload = true;
+                    if ((OriginX >= 0 && OriginY >= 0))
+                        RoomManager.MapData.Loaded[OriginX, OriginY] = true;
+                }
+                else
+                {
+                    base.Unload = value;
+                }
             }
         }
 
