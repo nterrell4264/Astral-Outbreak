@@ -49,38 +49,41 @@ namespace AstralOutbreak
                 //Roommanager.active.physicsobjects is the list of objects
                 for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
                 {
-                    if (RoomManager.Active.PhysicsObjects[i] is Player)
+                    if (RoomManager.Active.IsOnScreen(RoomManager.Active.PhysicsObjects[i]))
                     {
-                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
-                    }
-                    else if (RoomManager.Active.PhysicsObjects[i] is Slug)
-                    {
-                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
-                    }
-                    else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
-                    {
-                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
-                    }
-                    else if(RoomManager.Active.PhysicsObjects[i] is SwarmMob)
-                    {
-                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as SwarmMob, i);
-                    }
-                    else if (RoomManager.Active.PhysicsObjects[i] is BatShield)
-                    {
-                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as BatShield, i);
-                    }
-                    else if (RoomManager.Active.PhysicsObjects[i] is Wall)
-                    {
-                        Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
-                        
-                    }
-                    else
-                    {
-                        sb.Draw(masterList["rect"],
-                        new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
-                        (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
-                        (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
-                        Color.Black);
+                        if (RoomManager.Active.PhysicsObjects[i] is Player)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
+                        }
+                        else if (RoomManager.Active.PhysicsObjects[i] is Slug)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
+                        }
+                        else if (RoomManager.Active.PhysicsObjects[i] is JackRabbit)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as JackRabbit, i);
+                        }
+                        else if (RoomManager.Active.PhysicsObjects[i] is SwarmMob)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as SwarmMob, i);
+                        }
+                        else if (RoomManager.Active.PhysicsObjects[i] is BatShield)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as BatShield, i);
+                        }
+                        else if (RoomManager.Active.PhysicsObjects[i] is Wall)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
+
+                        }
+                        else
+                        {
+                            sb.Draw(masterList["rect"],
+                            new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX,
+                            (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                            (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
+                            Color.Black);
+                        }
                     }
                 }
                 sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);

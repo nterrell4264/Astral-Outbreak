@@ -69,6 +69,7 @@ namespace AstralOutbreak
         public void Die()
         {
             RoomManager.Active.BossActive = false;
+            SwarmMob.Awake = false;
         }
 
         //Removes a mob from the swarm (presumably due to death)

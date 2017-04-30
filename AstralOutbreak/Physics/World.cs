@@ -26,6 +26,7 @@ namespace AstralOutbreak
         /// </summary>
         public CollisionLogic PhysicalLogic { get; set; }
 
+
         /// <summary>
         /// A simple empty world.
         /// </summary>
@@ -83,7 +84,7 @@ namespace AstralOutbreak
                 }
 
                 //Check for collisions
-                if (obj.Velocity.X != 0 || obj.Velocity.Y != 0)
+                if ((obj.Velocity.X != 0 || obj.Velocity.Y != 0) && obj.Collides)
                     //This object is moving, which means we need to check for collisions!
                     for (int j = 0; j < PhysicsObjects.Count; j++)
                     {

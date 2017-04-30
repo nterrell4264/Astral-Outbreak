@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace AstralOutbreak
 {
     //An enemy that swarms the player as a swarm boss.
-    public class SwarmMob: Enemy
+    public class SwarmMob : Enemy
     {
         //Is the mob active. Static because swarms activate as one.
         public static bool Awake { get; set; }
@@ -70,14 +70,16 @@ namespace AstralOutbreak
             Gravity = false;
             MaxVelocity = new Vector(400, 400);
             MySwarm.Mobs.Add(this);
+            Collides = false;
         }
 
         public SwarmMob(SwarmMob mob) : base(new Vector(mob.Position), mob.Width, mob.Height, mob.Health, mob.Damage, mob.Mobile)
         {
-            CurrentActionTime += (float) Game1.Rand.NextDouble();
+            CurrentActionTime += (float)Game1.Rand.NextDouble();
             Gravity = false;
             MaxVelocity = new Vector(350 + Game1.Rand.Next(200), 350 + Game1.Rand.Next(200));
             MySwarm.Mobs.Add(this);
+            Collides = false;
         }
 
         public override void Step(float deltaTime)
@@ -87,7 +89,7 @@ namespace AstralOutbreak
             if (Awake)
             {
                 MySwarm.Step(deltaTime, this);
-                if(Math.Abs(Position.X - Target.X) > Math.Abs(Position.Y - Target.Y))
+                if (Math.Abs(Position.X - Target.X) > Math.Abs(Position.Y - Target.Y))
                 {
                     Acceleration.X = Target.X - Center.X;
                 }
@@ -105,19 +107,22 @@ namespace AstralOutbreak
         }
         public void Awaken()
         {
-            Awake = true;
-            MySwarm.Activate();
-            Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
-            List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
-            for (int i = 0; i < 6; i++)
+            if (MySwarm.Mobs.Count > 0)
             {
-                for (int j = 0; j < 6; j++)
+                Awake = true;
+                MySwarm.Activate();
+                Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
+                List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
+                for (int i = 0; i < 6; i++)
                 {
-                    swarmMobs.Add(new SwarmMob(this));
-                    swarmMobs[5 * i + j].Position += new Vector(0, 0);
+                    for (int j = 0; j < 6; j++)
+                    {
+                        swarmMobs.Add(new SwarmMob(this));
+                        swarmMobs[5 * i + j].Position += new Vector(0, 0);
+                    }
                 }
+                RoomManager.Active.AddEntities(swarmMobs);
             }
-            RoomManager.Active.AddEntities(swarmMobs);
         }
     }
 

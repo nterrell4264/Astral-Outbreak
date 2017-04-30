@@ -35,6 +35,7 @@ namespace AstralOutbreak
             }
         }
         public Vector Acceleration { get; set; }
+        public bool Collides { get; set; }
 
         //Rectangle parameters
         public float Width { get; set; }
@@ -70,6 +71,7 @@ namespace AstralOutbreak
             Velocity = new Vector(0, 0);
             Acceleration = new Vector(0, 0);
             MaxVelocity = new Vector(-1, -1);
+            Collides = true;
         }
 
         /// <summary>

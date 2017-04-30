@@ -32,7 +32,7 @@ namespace AstralOutbreak
         public float Height { get; set; }
 
         //Buffer width around the screen
-        private const float BUFFER = 100;
+        private const float BUFFER = 700;
         private const float CORRECTIVE = 300;
 
 
@@ -391,6 +391,20 @@ namespace AstralOutbreak
                     return false;
                 }
             }
+            return true;
+        }
+
+        public bool IsOnScreen(PhysicsObject obj)
+        {
+            if (obj.Position.X < CameraX - obj.Width)
+                return false;
+            if (obj.Position.X > CameraX + Width)
+                return false;
+            if (obj.Position.Y < CameraY - obj.Height)
+                return false;
+            if (obj.Position.Y > CameraY + Height)
+                return false;
+
             return true;
         }
 
