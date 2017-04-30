@@ -46,13 +46,12 @@
     <Compile Include="ObjectSubclasses\EntitySubClasses\BatShield.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Enemy.cs" />
     <Compile Include="ObjectSubclasses\Entity.cs" />
-    <Compile Include="ManagerClasses\FileManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="ManagerClasses\InputManager.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\JackRabbitBoss.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\JackRabbit.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Slug.cs" />
-    <Compile Include="ObjectSubclasses\Item.cs" />
+    <Compile Include="Physics\Item.cs" />
     <Compile Include="ManagerClasses\MenuManager.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Player.cs" />
     <Compile Include="Physics\PhysicsObject.cs" />

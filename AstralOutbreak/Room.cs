@@ -431,5 +431,12 @@ namespace AstralOutbreak
                     PhysicsObjects.Add(objs);
             }
         }
+
+        //Yet to be implemented
+        public Map SaveGame()
+        {
+            return MapData;
+        }
+
     }
 }

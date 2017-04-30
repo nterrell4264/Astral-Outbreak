@@ -18,7 +18,6 @@ namespace AstralOutbreak
         //Managers
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        FileManager fileManager;
         SoundManager soundManager;
         SpriteManager spriteManager;
         MenuManager menuManager;
