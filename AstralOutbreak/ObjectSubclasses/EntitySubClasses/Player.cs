@@ -95,7 +95,7 @@ namespace AstralOutbreak
         {
             Gravity = true;
             MaxVelocity.X = speedLimit;
-            MyWeapon = new Weapon(.2f, 3, 500, 5000);
+            MyWeapon = new Weapon(.2f, 3, 500, 900);
             MyWeapon.Source = this;
             MyWeapon.BulletSize = 5;
             previousY = Velocity.Y;
