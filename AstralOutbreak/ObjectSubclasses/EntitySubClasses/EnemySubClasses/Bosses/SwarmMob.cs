@@ -113,9 +113,9 @@ namespace AstralOutbreak
                 MySwarm.Activate();
                 Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
                 List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 12; i++)
                 {
-                    for (int j = 0; j < 6; j++)
+                    for (int j = 0; j < 12; j++)
                     {
                         swarmMobs.Add(new SwarmMob(this));
                         swarmMobs[5 * i + j].Position += new Vector(0, 0);
