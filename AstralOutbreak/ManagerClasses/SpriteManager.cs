@@ -542,6 +542,7 @@ namespace AstralOutbreak
                 case WallType.SecretTunnel:
                     sheet = masterList["TileSheet"];
                     pos = new Rectangle(84, 84, 28, 28);
+                    pos = new Rectangle(0, 0, 28, 28);
                     break;
                 
             }

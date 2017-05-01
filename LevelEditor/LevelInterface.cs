@@ -330,6 +330,21 @@ namespace LevelEditor
 
         }
 
+        //A function I used once to shrink the map
+        public void Quater()
+        {
+            Map quad = new Map(MapData.Width, MapData.Height / 3);
+            for(int i = 0; i < quad.Width; i++)
+            {
+                for(int j = 0; j < quad.Height; j++)
+                {
+                    quad[i, j] = MapData[i, j + MapData.Height * 2 / 3];
+                    quad.TileValue[i, j] = MapData.TileValue[i, j + MapData.Height * 2 / 3];
+                }
+            }
+            MapData = quad;
+        }
+
 
     }
 }
