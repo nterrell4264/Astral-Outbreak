@@ -150,21 +150,7 @@ namespace AstralOutbreak
         public void LoadRoom(Map mapdata)
         {
             MapData = mapdata;
-            float scale = mapdata.Scale;
-            PlayerOne = new Player(new Vector2(mapdata.PlayerStartX * scale, mapdata.PlayerStartY * scale), 28, 55, 10);
-            PhysicsObjects.Add(PlayerOne);
-            CameraTrack(PlayerOne);
-            List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
-            lock (listLock)
-            {
-                for (int i = 0; i < newData.Count; i++)
-                {
-                    PhysicsObjects.Add(newData[i]);
-                }
-            }
-            BossActive = false;
-            SwarmMob.Awake = false;
-            SwarmMob.MySwarm.Clear();
+            ReloadRoom();
         }
 
         //Re-sets up the room from the current map
@@ -177,6 +163,9 @@ namespace AstralOutbreak
             PhysicsObjects = new List<PhysicsObject>();
             float scale = MapData.Scale;
             PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 28, 55, 10);
+            PlayerOne.MyUpgrades = MapData.PlayerUpgrades;
+            if (PlayerOne.MyUpgrades.HasFlag(Upgrades.MultiShot))
+                PlayerOne.MyWeapon.MultiShot = true;
             PhysicsObjects.Add(PlayerOne);
             CameraTrack(PlayerOne);
             List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);

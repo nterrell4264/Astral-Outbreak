@@ -70,7 +70,6 @@ namespace AstralOutbreak
                         if (loaded != null)
                         {
                             Active.LoadRoom(loaded);
-                            Active.ReloadRoom();
                             return true;
                         }
                         else
@@ -84,5 +83,6 @@ namespace AstralOutbreak
             else
                 return false;
         }
+
     }
 }

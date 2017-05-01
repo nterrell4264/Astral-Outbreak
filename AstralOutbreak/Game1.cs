@@ -63,31 +63,9 @@ namespace AstralOutbreak
             Graphics = graphics;
             //graphics.ToggleFullScreen();
             CurrentState = GameState.MainMenu;
-
-            RoomManager.Active = new Room(2000, 2000, new Vector2(0, 9f));
-            if (File.Exists("MapData.dat"))
-            {
-                StreamReader input = null;
-                try
-                {
-                    input = new StreamReader(File.OpenRead("MapData.dat"));
-                    RoomManager.Active.LoadRoom((JsonConvert.DeserializeObject<Map>(input.ReadToEnd())));
-                }
-                catch(Exception e)
-                {
-                    RoomManager.Active.PhysicsObjects.Add(new Wall(new Vector2(0, 100), 1000, 5));
-                    RoomManager.Active.PlayerOne = new Player(new Vector2(0, 0), 20, 20, 20);
-                    RoomManager.Active.PhysicsObjects.Add(RoomManager.Active.PlayerOne);
-                }
-                finally
-                {
-                    if (input != null)
-                        input.Close();
-                    RoomManager.Active.Width = GraphicsDevice.Viewport.Width;
-                    RoomManager.Active.Height = GraphicsDevice.Viewport.Height;
-
-                }
-            }
+            ResetGame();
+            RoomManager.Active.Width = GraphicsDevice.Viewport.Width;
+            RoomManager.Active.Height = GraphicsDevice.Viewport.Height;
             base.Initialize();
         }
 
@@ -180,6 +158,34 @@ namespace AstralOutbreak
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public static void ResetGame()
+        {
+            if(RoomManager.Active != null)
+                RoomManager.Active = new Room(RoomManager.Active.Width, RoomManager.Active.Height, RoomManager.Active.Gravity);
+            else
+                RoomManager.Active = new Room(1000, 1000, new Vector2(0, 9f));
+            if (File.Exists("MapData.dat"))
+            {
+                StreamReader input = null;
+                try
+                {
+                    input = new StreamReader(File.OpenRead("MapData.dat"));
+                    RoomManager.Active.LoadRoom((JsonConvert.DeserializeObject<Map>(input.ReadToEnd())));
+                }
+                catch (Exception e)
+                {
+                    RoomManager.Active.PhysicsObjects.Add(new Wall(new Vector2(0, 100), 1000, 5));
+                    RoomManager.Active.PlayerOne = new Player(new Vector2(0, 0), 20, 20, 20);
+                    RoomManager.Active.PhysicsObjects.Add(RoomManager.Active.PlayerOne);
+                }
+                finally
+                {
+                    if (input != null)
+                        input.Close();
+                }
+            }
         }
     }
 }

@@ -66,7 +66,7 @@ namespace AstralOutbreak
                 Game1.CurrentState = GameState.OptionsMenu;
                 Game1.prevMenu = GameState.PauseMenu;
             }));
-            items.Add(new MenuButton(300, 350, 150, 75, "QuitButton", () => { Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(300, 350, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadScreen() //Loads loading screen assets
         {
@@ -79,7 +79,7 @@ namespace AstralOutbreak
         private void LoadGameOver() //Loads game over menu assets
         {
             items.Add(new MenuButton(32, 182, 150, 75, "RetryButton", () => { RoomManager.Active.ReloadRoom();  Game1.CurrentState = GameState.Playing; })); 
-            items.Add(new MenuButton(32, 282, 150, 75, "QuitButton", () => { Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(32, 282, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadUI() //Loads GUI assets
         {
