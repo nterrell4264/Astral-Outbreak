@@ -47,8 +47,9 @@ namespace AstralOutbreak
 
         public void Update(float time)
         {
+            Vector displacement;
             //Loop through all the objects
-            for(int i = 0; i < PhysicsObjects.Count; i++)
+            for (int i = 0; i < PhysicsObjects.Count; i++)
             {
                 //Prepare the object
                 PhysicsObject obj = PhysicsObjects[i];
@@ -82,17 +83,18 @@ namespace AstralOutbreak
                         obj.Velocity.Y = -obj.MaxVelocity.Y;
                     }
                 }
-
+                displacement = obj.Velocity * time;
                 //Check for collisions
                 if ((obj.Velocity.X != 0 || obj.Velocity.Y != 0) && obj.Collides)
+                {
                     //This object is moving, which means we need to check for collisions!
                     for (int j = 0; j < PhysicsObjects.Count; j++)
                     {
                         //For each other object check for collisions
-                        if (i != j && obj.CheckCollision(PhysicsObjects[j], obj.Velocity * time))
+                        if (i != j && obj.CheckCollision(PhysicsObjects[j], displacement))
                         {
                             //Doing the full move triggers a collision!
-                            if(PhysicalLogic == null || PhysicalLogic(obj, PhysicsObjects[j]))
+                            if (PhysicalLogic == null || PhysicalLogic(obj, PhysicsObjects[j]))
                             {
                                 //We got the go ahead from the delegate
                                 if (obj.CheckCollision(PhysicsObjects[j], obj.VelocityX * time))
@@ -101,12 +103,12 @@ namespace AstralOutbreak
                                     if (obj.Position.X < PhysicsObjects[j].Position.X)
                                     {
                                         //Im to the left, reduce my movement
-                                        obj.Velocity.X = (PhysicsObjects[j].Position.X - obj.Position.X - obj.Width)/time;
+                                        obj.Velocity.X = (PhysicsObjects[j].Position.X - obj.Position.X - obj.Width) / time;
                                     }
                                     else
                                     {
                                         //Im to the right, reduce my movement
-                                        obj.Velocity.X = (PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width)/time;
+                                        obj.Velocity.X = (PhysicsObjects[j].Position.X - obj.Position.X + PhysicsObjects[j].Width) / time;
                                     }
                                 }
 
@@ -116,22 +118,24 @@ namespace AstralOutbreak
                                     if (obj.Position.Y < PhysicsObjects[j].Position.Y)
                                     {
                                         //Im above, reduce my movement
-                                        obj.Velocity.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y - obj.Height)/time;
+                                        obj.Velocity.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y - obj.Height) / time;
                                     }
                                     else
                                     {
                                         //Im below, reduce my movement
-                                        obj.Velocity.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y + PhysicsObjects[j].Height)/time;
+                                        obj.Velocity.Y = (PhysicsObjects[j].Position.Y - obj.Position.Y + PhysicsObjects[j].Height) / time;
                                     }
                                 }
-                            }          
+                            }
                             //If anyone cares, let them know about the collision
                             if (Collide != null)
                                 Collide(obj, PhysicsObjects[j]);
                         }
                     }
+                }
+                displacement = obj.Velocity * time;
                 //Change my position
-                obj.Position += obj.Velocity * time;
+                obj.Position += displacement;
             }
         }//End of method
 
