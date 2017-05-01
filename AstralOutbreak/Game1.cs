@@ -160,7 +160,10 @@ namespace AstralOutbreak
             }
             menuManager.Update();
             // TODO: Add your update logic here
-
+            if (Keyboard.GetState().IsKeyDown(Keys.D1))
+                RoomManager.SaveGame("SaveData.dat");
+            if (Keyboard.GetState().IsKeyDown(Keys.D2))
+                RoomManager.LoadGame("SaveData.dat");
             base.Update(gameTime);
         }
 

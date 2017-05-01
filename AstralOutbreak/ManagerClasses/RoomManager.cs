@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace AstralOutbreak
 {
@@ -37,6 +39,50 @@ namespace AstralOutbreak
         private RoomManager()
         {
             Active = null;
+        }
+
+        //Yet to be implemented
+        public static bool SaveGame(String fileName)
+        {
+            try
+            {
+
+                using (StreamWriter output = new StreamWriter(File.OpenWrite(fileName)))
+                {
+                    output.WriteLine(JsonConvert.SerializeObject(MapData.Save()));
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool LoadGame(String fileName)
+        {
+            if (File.Exists(fileName))
+                try
+                {
+                    using (StreamReader input = new StreamReader(File.OpenRead(fileName)))
+                    {
+                        Map loaded = (JsonConvert.DeserializeObject<Map>(input.ReadToEnd()));
+                        if (loaded != null)
+                        {
+                            Active.LoadRoom(loaded);
+                            Active.ReloadRoom();
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            else
+                return false;
         }
     }
 }

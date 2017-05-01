@@ -12,9 +12,6 @@ namespace AstralOutbreak
     /// </summary>
     public class Room: World
     {
-        //Id for this room
-        public int RoomNumber { get; set; }
-
         //Map information
         public Map MapData { get; set; }
 
@@ -63,7 +60,9 @@ namespace AstralOutbreak
         {
             List<PhysicsObject> loaded = new List<PhysicsObject>(PhysicsObjects.Count);
             this.delta = deltaTime;
-            for(int i = 0; i < PhysicsObjects.Count; i++)
+            CheckUnload();
+            LoadFromMap();
+            for (int i = 0; i < PhysicsObjects.Count; i++)
             {
                 //For each entity
                 if(PhysicsObjects[i] is Entity)
@@ -87,8 +86,7 @@ namespace AstralOutbreak
             //Update Physics
             Update(deltaTime);
             CameraTrack(PlayerOne);
-            CheckUnload();
-            LoadFromMap();
+            
         }
 
         /// <summary>
@@ -432,11 +430,7 @@ namespace AstralOutbreak
             }
         }
 
-        //Yet to be implemented
-        public Map SaveGame()
-        {
-            return MapData;
-        }
+        
 
     }
 }

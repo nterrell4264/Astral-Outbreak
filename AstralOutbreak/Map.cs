@@ -28,6 +28,7 @@ namespace AstralOutbreak
         public int PlayerStartX { get; set; }
         public int PlayerStartY { get; set; }
 
+        public Upgrades PlayerUpgrades { get; set; }
 
         /// <summary>
         /// This array lets the map know what assets are currently loaded so that it doesn't give the same entity twice
@@ -109,6 +110,47 @@ namespace AstralOutbreak
                     Loaded[i, j] = false;
                     TileValue[i, j] = 0;
                 }
+        }
+
+        /// <summary>
+        /// Makes an empty world with given dimensions
+        /// </summary>
+        /// <param name="width">Width of map</param>
+        /// <param name="height">Height of map</param>
+        public Map(Map map)
+        {
+            
+            Width = map.Width;
+            Height = map.Height;
+            Resizable = false;
+            Scale = map.Scale;
+            MapData = new MapItem[Width, Height];
+            TileValue = new int[Width, Height];
+            Loaded = new bool[Width, Height];
+            PlayerUpgrades = RoomManager.Active.PlayerOne.MyUpgrades;
+            PlayerStartX = (int)(RoomManager.Active.PlayerOne.Position.X / Scale);
+            PlayerStartY = (int)(RoomManager.Active.PlayerOne.Position.Y / Scale);
+            List<PhysicsObject> lis = RoomManager.Active.PhysicsObjects;
+            for (int i = 0; i < lis.Count; i++)
+            {
+                if (lis[i] is GameObject)
+                {
+                    GameObject obj = lis[i] as GameObject;
+                    if ((obj.OriginX >= 0 && obj.OriginY >= 0))
+                        Loaded[obj.OriginX, obj.OriginY] = true;
+                }
+            }
+            for (int i = 0; i < Width; i++)
+                for (int j = 0; j < Height; j++)
+                {
+                    if (Loaded[i, j] || !map.Loaded[i,j])
+                    {
+                        MapData[i, j] = map.MapData[i, j];
+                        TileValue[i, j] = map.TileValue[i, j];
+                        Loaded[i, j] = false;
+                    }
+                }
+
         }
 
         /// <summary>
@@ -386,6 +428,13 @@ namespace AstralOutbreak
                     }
             }
             return true;
+        }
+
+        public Map Save()
+        {
+            Map sav = new Map(this);
+            
+            return sav;
         }
 
         public void Reload()
