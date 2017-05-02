@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\MultiRabbit.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MenuStuff\MenuContent.cs" />
@@ -48,7 +49,7 @@
     <Compile Include="ObjectSubclasses\Entity.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="ManagerClasses\InputManager.cs" />
-    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\JackRabbitBoss.cs" />
+    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\DashRabbit.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\JackRabbit.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Slug.cs" />
     <Compile Include="Physics\Item.cs" />

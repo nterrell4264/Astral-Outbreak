@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    public class JackRabbitBoss : Enemy
+    public class DashRabbit : Enemy
     {
         private JackRabbitState currentState;
 
@@ -90,15 +90,12 @@ namespace AstralOutbreak
             }
         }
 
-        public JackRabbitBoss(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
+        public DashRabbit(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
             //Creates a weapon for the JackRabbitBoss,
             MyWeapon = new Weapon(.4f, 3, 900, 700);
             MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
-            if(awake)
-
-
             prevY = Velocity.Y;
             prevX = Position.X;
             Gravity = true;

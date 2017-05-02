@@ -12,6 +12,9 @@ namespace AstralOutbreak
         //Source of the bullet
         public GameObject Source { get; set; }
 
+        //Does the bullet obey gravity? Default to No
+        public Boolean Gravity { get; set; }
+
         //minimum Delay between shots in seconds
         public float ShotDelay { get; set; }
 
@@ -72,6 +75,7 @@ namespace AstralOutbreak
             Range = 50;
             BulletSize = 8;
             MultiShot = false;
+            Gravity = false;
         }
 
         //Fancy Constructor
@@ -99,11 +103,17 @@ namespace AstralOutbreak
             if (Source != null)
             {
                 Vector shotVel = direction * BulletSpeed / direction.Magnitude();
-                RoomManager.Active.AddBullet(new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), shotVel);
+                var p = new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
+                p.Gravity = this.Gravity;
+                RoomManager.Active.AddBullet(p, shotVel);
                 if (MultiShot)
                 {
-                    RoomManager.Active.AddBullet(new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), shotVel.Rotate(Math.PI / 45));
-                    RoomManager.Active.AddBullet(new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source), shotVel.Rotate(-Math.PI / 45));
+                    p = new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
+                    p.Gravity = this.Gravity;
+                    RoomManager.Active.AddBullet(p, shotVel.Rotate(Math.PI / 45));
+                    p = new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
+                    p.Gravity = this.Gravity;
+                    RoomManager.Active.AddBullet(p, shotVel.Rotate(-Math.PI / 45));
                 }
             }
         }
