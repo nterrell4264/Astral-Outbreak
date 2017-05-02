@@ -95,6 +95,7 @@ namespace LevelEditor
             CursorValue = 1;
             if (MapData.TileValue.GetLength(0) != MapData.Width || MapData.TileValue.GetLength(1) != MapData.Height)
                 MapData.TileValue = new int[MapData.Width, MapData.Height];
+            //Half();
         }
 
         public void Save(String fileName)
@@ -330,16 +331,16 @@ namespace LevelEditor
 
         }
 
-        //A function I used once to shrink the map
-        public void Quater()
+        //A function I used Twice to shrink the map
+        public void Half()
         {
-            Map quad = new Map(MapData.Width, MapData.Height / 3);
+            Map quad = new Map(MapData.Width, MapData.Height / 2);
             for(int i = 0; i < quad.Width; i++)
             {
                 for(int j = 0; j < quad.Height; j++)
                 {
-                    quad[i, j] = MapData[i, j + MapData.Height * 2 / 3];
-                    quad.TileValue[i, j] = MapData.TileValue[i, j + MapData.Height * 2 / 3];
+                    quad[i, j] = MapData[i, j + MapData.Height /2];
+                    quad.TileValue[i, j] = MapData.TileValue[i, j + MapData.Height /2];
                 }
             }
             MapData = quad;
