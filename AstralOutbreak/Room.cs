@@ -220,7 +220,7 @@ namespace AstralOutbreak
                         break;
                     case WallType.Platform:
                         return !(obj1 is Projectile) && (obj1.Position.Y + obj1.Height <= obj2.Position.Y && (Game1.Inputs.DownButtonState == ButtonStatus.Unpressed || !(obj1 is Player)) 
-                            && !(obj1 is SwarmMob));
+                            && !(obj1 is GameObject && (obj1 as GameObject).PlatformDown));
                     case WallType.BossDoor:
                         return BossActive;
                     case WallType.SecretTunnel:

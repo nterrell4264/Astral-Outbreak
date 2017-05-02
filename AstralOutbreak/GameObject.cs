@@ -17,6 +17,9 @@ namespace AstralOutbreak
         // These are used to prevent enemies from spawning repeatidly if they move from their original position.
         public int OriginX { get; set; }
         public int OriginY { get; set; }
+        
+        //Is this entity trying to go down a platform
+        public bool PlatformDown { get; set; }
 
         /// <summary>
         /// Making this true tells the engine to unload the object.
@@ -45,6 +48,7 @@ namespace AstralOutbreak
         public GameObject(Vector2 pos, float width, float height, bool mobile = false) : base(new Vector(pos.X, pos.Y), width, height, mobile)
         {
             Unload = false;
+            PlatformDown = false;
             OriginX = -1;
             OriginY = -1;
         }
