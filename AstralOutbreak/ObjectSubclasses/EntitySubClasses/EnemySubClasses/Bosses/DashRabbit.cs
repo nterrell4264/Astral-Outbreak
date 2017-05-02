@@ -57,11 +57,16 @@ namespace AstralOutbreak
         {
             get
             {
-                return false;
+                return base.Unload && !RoomManager.Active.BossActive;
             }
 
             set
             {
+                if (!RoomManager.Active.BossActive)
+                {
+                    base.Unload = value;
+                    return;
+                }
                 if (value)
                 {
                     Collides = false;
@@ -72,13 +77,13 @@ namespace AstralOutbreak
                         if (diff < 0)
                         {
                             FaceRight = true;
-                            Velocity = new Vector(900, -200);
+                            Velocity = new Vector(900, -900);
                             currentState = JackRabbitState.Falling;
                         }
                         else
                         {
                             FaceRight = false;
-                            Velocity = new Vector(-900, -200);
+                            Velocity = new Vector(-900, -900);
                             currentState = JackRabbitState.Falling;
                         }
                     }

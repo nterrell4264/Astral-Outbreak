@@ -38,14 +38,16 @@ namespace AstralOutbreak
         {
             get
             {
-                return false;
+                return base.Unload && !RoomManager.Active.BossActive;
             }
 
             set
             {
-                //base.Unload = value;
-                //if (Unload)
-                //    MySwarm.Kill(this);
+                if (!RoomManager.Active.BossActive)
+                {
+                    base.Unload = value;
+                    return;
+                }
             }
         }
 

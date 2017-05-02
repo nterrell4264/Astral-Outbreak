@@ -62,12 +62,17 @@ namespace AstralOutbreak
         {
             get
             {
-                return false;
+                return base.Unload && !RoomManager.Active.BossActive;
             }
 
             set
             {
-                if (value && RoomManager.Active.BossActive)
+                if (!RoomManager.Active.BossActive)
+                {
+                    base.Unload = value;
+                    return;
+                }
+                if (value)
                 {
                     Collides = false;
                     if (this.Position.Y > RoomManager.Active.PlayerOne.Position.Y - 1)
