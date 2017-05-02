@@ -42,6 +42,10 @@ namespace AstralOutbreak
                         Velocity.X = 300;
                         Velocity.Y = 300;
                         break;
+                    case BatState.Up:
+                        Velocity.X = 0;
+                        Velocity.Y = -300;
+                        break;
                     default:
                         break;
                 }
