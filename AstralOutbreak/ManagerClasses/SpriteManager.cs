@@ -739,7 +739,7 @@ namespace AstralOutbreak
                   56, 17);
                     break;
             }
-            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, 1, .9f), effects: SpriteEffects.None, layerDepth: .61f);
+            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, .5f, .9f), effects: SpriteEffects.None, layerDepth: .61f);
         }
 
         public void AddTexture(Texture2D texture)

@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bat.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\MultiRabbit.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Map.cs" />

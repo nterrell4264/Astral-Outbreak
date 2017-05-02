@@ -230,6 +230,7 @@ namespace AstralOutbreak
                     return v;
                     break;
                 case MapItem.Slug:
+                    //return new Bat(new Vector(x * Scale, y * Scale), 12, 12, 1, 1);
                     return new Slug(new Vector(x * Scale, y * Scale), 56, 28, 20);
                     break;
                 case MapItem.Demon:
@@ -247,7 +248,8 @@ namespace AstralOutbreak
                         case 2:
                             return new SwarmMob(new Vector(x * Scale, y * Scale), 12, 12, 1, 1);
                         case 3:
-                            return new MultiRabbit(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
+                            //return new MultiRabbit(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
+                            break;
                     }
                     break;
                 default:

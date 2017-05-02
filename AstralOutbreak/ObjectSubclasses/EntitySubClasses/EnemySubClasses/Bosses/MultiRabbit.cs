@@ -157,9 +157,11 @@ namespace AstralOutbreak
                                 MyWeapon.BulletSpeed = 600;
                                 Shoot(new Vector((float)Game1.Rand.NextDouble() - .5f, -(float)Game1.Rand.NextDouble()));
                                 MyWeapon.Gravity = true;
+                                MyWeapon.Range = 500;
                             }
                             else
                             {
+                                MyWeapon.Range = 700;
                                 MyWeapon.Gravity = false;
                                 MyWeapon.BulletSpeed = 400;
                                 MyWeapon.MultiShot = true;
