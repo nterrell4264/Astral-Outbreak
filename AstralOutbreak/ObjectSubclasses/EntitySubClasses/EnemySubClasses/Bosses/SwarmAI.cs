@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    public enum SwarmState { ChargingLeft, ChargingRight, Aligning, XCharge }
+    public enum SwarmState { ChargingLeft, ChargingRight, Aligning, Charge }
 
     //Handler class for the swarm boss
     public class SwarmAI
@@ -29,7 +29,7 @@ namespace AstralOutbreak
             get { return myState; }
             set
             {
-                if (myState == SwarmState.XCharge)
+                if (myState == SwarmState.Charge)
                     currentActionTime = 0;
                 myState = value;
                 switch (CurrentState)
@@ -43,7 +43,7 @@ namespace AstralOutbreak
                     case SwarmState.Aligning:
                         SwarmMob.Target = new Vector(SwarmMob.Target.X, RoomManager.Active.PlayerOne.Position.Y);
                         break;
-                    case SwarmState.XCharge:
+                    case SwarmState.Charge:
                         currentActionTime = 0;
                         break;
                     default:
@@ -93,6 +93,7 @@ namespace AstralOutbreak
         {
             if (Mobs.Count != 0 && mob.Equals(Mobs[0]))
             {
+                currentActionTime += deltaTime;
                 //Velocity of the focal point
                 switch (CurrentState)
                 {
@@ -119,7 +120,7 @@ namespace AstralOutbreak
                     case SwarmState.Aligning:
                         if(currentActionTime > Mobs.Count / 10)
                         {
-                            CurrentState = SwarmState.XCharge;
+                            CurrentState = SwarmState.Charge;
                             break;
                         }
                         if (RoomManager.Active.PlayerOne.Position.X > SwarmMob.Target.X)
@@ -127,25 +128,10 @@ namespace AstralOutbreak
                         else
                             CurrentState = SwarmState.ChargingLeft;
                         break;
-                    case SwarmState.XCharge:
-                        if(currentActionTime < 2)
-                        {
-                            SwarmMob.Target = RoomManager.Active.PlayerOne.Center + new Vector(300, - 100);
-                        }
-                        else if (currentActionTime < 4)
-                        {
-                            SwarmMob.Target = RoomManager.Active.PlayerOne.Center + new Vector(-300, 100);
-                        }
-                        if (currentActionTime < 6)
-                        {
-                            SwarmMob.Target = RoomManager.Active.PlayerOne.Center + new Vector(-300, -100);
-                        }
-                        else if (currentActionTime < 8)
-                        {
-                            SwarmMob.Target = RoomManager.Active.PlayerOne.Center + new Vector(300, 100);
-                        }
-                        else
-                            CurrentState = SwarmState.Aligning;
+                    case SwarmState.Charge:
+                        
+                        SwarmMob.Target = SwarmMob.Target + 3 * (RoomManager.Active.PlayerOne.Center - SwarmMob.Target);
+                        CurrentState = SwarmState.Aligning;
                         break;
                     default:
                         break;
