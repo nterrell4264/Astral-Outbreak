@@ -232,10 +232,11 @@ namespace AstralOutbreak
                 case MapItem.Slug:
                     if(TileValue[x,y] == 0)
                         return new Pod(new Vector(x * Scale, y * Scale), 28, 28, 20);
-                    //return new Bat(new Vector(x * Scale, y * Scale), 12, 12, 1, 1);
                     return new Slug(new Vector(x * Scale, y * Scale), 56, 28, 20);
                     break;
                 case MapItem.Demon:
+                    if(TileValue[x,y] == 0)
+                        return new Bat(new Vector(x * Scale, y * Scale), 12, 12, 1, 1);
                     return new JackRabbit(new Vector(x * Scale, y * Scale), 28, 56, 10);
                     break;
                 case MapItem.Item:

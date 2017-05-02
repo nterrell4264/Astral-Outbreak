@@ -17,7 +17,11 @@ Map Editor Controls
 			-Cursor Value 4: Fire Block
 			-Cursor Value 5: Hidden Passageway
 		3: DemonEnemy
+			-Cursor Value 0: Bat
+			-Cursor Value 1-5: JackRabbitDemon
 		4: SlugEnemy
+			-Cursor Value 0: Pod
+			-Cursor Value 1-5: Slug
 		5: Player Starting position
 			Note: This will remove the old player starting position as there can only be one of these
 		6: Upgrade Item
