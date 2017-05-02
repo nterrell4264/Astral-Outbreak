@@ -58,6 +58,7 @@
     <Compile Include="ObjectSubclasses\EntitySubClasses\Player.cs" />
     <Compile Include="Physics\PhysicsObject.cs" />
     <Compile Include="Physics\Vector.cs" />
+    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Pod.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Physics\World.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\SwarmAI.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\SwarmMob.cs" />
+    <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\Turret.cs" />
     <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>

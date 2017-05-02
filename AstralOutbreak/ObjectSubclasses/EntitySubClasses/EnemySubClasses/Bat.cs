@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
-    public enum BatState { UpLeft, UpRight, DownLeft, DownRight}
+    public enum BatState { UpLeft, UpRight, Up, DownLeft, DownRight}
 
     //An Bat that chases the player
     public class Bat : Enemy
@@ -208,7 +208,27 @@ namespace AstralOutbreak
                         }
                         break;
                     default:
+                        if(Velocity.Y != -300)
+                        {
+                            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
+                            {
+                                CurrentBatState = BatState.UpRight;
+                                break;
+                            }
+                            else
+                            {
+                                CurrentBatState = BatState.DownRight;
+                            }
+                            if (RoomManager.Active.PlayerOne.Position.Y -  48 > Position.Y)
+                            {
+                                CurrentBatState = BatState.Up;
+                            }
+                        }
                         break;
+                }
+                if(RoomManager.Active.PlayerOne.Position.Y < Position.Y - 48)
+                {
+                    CurrentBatState = BatState.Up;
                 }
             }
             else
