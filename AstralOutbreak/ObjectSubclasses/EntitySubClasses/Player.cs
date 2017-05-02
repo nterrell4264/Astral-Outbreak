@@ -149,7 +149,7 @@ namespace AstralOutbreak
                         break;
                     }
                     //If we are jumping
-                    if(jumpTime > 0 && (Game1.Inputs.JumpButtonState == ButtonStatus.Held || Game1.Inputs.JumpButtonState == ButtonStatus.Pressed || jumpTime > JUMPTIME * 2 / 3))
+                    if(jumpTime > 0 && ((Game1.Inputs.JumpButtonState == ButtonStatus.Held || Game1.Inputs.JumpButtonState == ButtonStatus.Pressed || jumpTime > JUMPTIME * 2 / 3)) && Velocity.Y < 0)
                     {
                         jumpTime -= deltaTime;
                         Velocity.Y = -84 / JUMPTIME;
