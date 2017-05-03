@@ -538,6 +538,7 @@ namespace AstralOutbreak
             }
             other.Consumed = true;
             other.Unload = true;
+            Game1.menuManager.Reload();
         }
 
         //Updates the shield of bats
