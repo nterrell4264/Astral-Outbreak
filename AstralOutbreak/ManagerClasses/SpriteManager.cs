@@ -84,6 +84,10 @@ namespace AstralOutbreak
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
                         }
+                        else if(RoomManager.Active.PhysicsObjects[i] is Item)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Item, i);
+                        }
                         else
                         {
                             sb.Draw(masterList["rect"],
@@ -120,6 +124,8 @@ namespace AstralOutbreak
            //             (int)RoomManager.Active.PhysicsObjects[i].Width, (int)RoomManager.Active.PhysicsObjects[i].Height),
              //           Color.Blue);
         //Sub methods of Draw made for each type of entity
+
+            //DRAW FOR PLAYER
         public void Draw(SpriteBatch sb, Player player, int i)
         { 
             float rot = 0;
@@ -222,7 +228,7 @@ namespace AstralOutbreak
 
 
 
-
+        //DRAW FOR SLUGS
         public void Draw(SpriteBatch sb, Slug enemy, int i)
         {
             Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Center.X - (int)RoomManager.Active.CameraX - 32,
@@ -284,7 +290,7 @@ namespace AstralOutbreak
 
 
 
-
+        //DRAW FOR JACKRABBIT
         public void Draw(SpriteBatch sb, JackRabbit enemy, int i)
         {
             Rectangle pos = new Rectangle();
@@ -372,6 +378,11 @@ namespace AstralOutbreak
             sourceRectangle: pos, color: Color.White, effects: flip, layerDepth: .4f);
         }
 
+
+
+
+
+        //DRAW FOR DASH BOSS
         public void Draw(SpriteBatch sb, DashRabbit enemy, int i)
         {
             Rectangle pos = new Rectangle();
@@ -468,6 +479,10 @@ namespace AstralOutbreak
                 sourceRectangle: pos, color: new Color(col, .25f), effects: flip, layerDepth: .42f);
             }
         }
+
+
+
+        //Draw for Multi Boss
         public void Draw(SpriteBatch sb, MultiRabbit enemy, int i)
         {
             Rectangle pos = new Rectangle();
@@ -584,6 +599,8 @@ namespace AstralOutbreak
             }
         }
 
+
+        //Draw for Walls
         public void Draw(SpriteBatch sb, Wall wall, int i)
         {
             Rectangle pos = new Rectangle();
@@ -671,6 +688,8 @@ namespace AstralOutbreak
             sourceRectangle: pos, color: col, effects: flip, layerDepth: 1);
         }
 
+
+        //Draw for Bats
         public void Draw(SpriteBatch sb, SwarmMob enemy, int i)
         {
             Rectangle dest;
@@ -706,6 +725,13 @@ namespace AstralOutbreak
             }
             sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1,1,1,.9f), effects: SpriteEffects.None, layerDepth: .4f);
         }
+
+
+
+
+
+
+        //draw for Bat Shield
         public void Draw(SpriteBatch sb, BatShield bat, int i)
         {
             Rectangle dest;
@@ -741,6 +767,44 @@ namespace AstralOutbreak
             }
             sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, .5f, .9f), effects: SpriteEffects.None, layerDepth: .61f);
         }
+
+
+        //Draw for Items
+        public void Draw(SpriteBatch sb, Item item, int i)
+        {
+            Rectangle dest = new Rectangle((int)item.Position.X - (int)RoomManager.Active.CameraX,
+                  (int)item.Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)item.Width, (int)item.Height);
+            Rectangle pos = new Rectangle();
+            switch(item.MyType)
+            {
+                default:
+                    break;
+                case ItemType.HealthPickup:
+                    pos = new Rectangle(26,6,10,10);
+                    break;
+
+                case ItemType.AbilityUnlock:
+                    switch(item.Value)
+                    {
+                        //Default takes the place of case 0
+                        default: pos = new Rectangle(88,76,14,14);
+                            break;
+                        case 1: pos = new Rectangle(116, 76, 14, 14);
+                            break;
+                        case 2: pos = new Rectangle(130, 76, 14, 14);
+                            break;
+                        case 3: pos = new Rectangle(102, 76, 14, 14);
+                            break;
+                    }
+                    break;
+            }
+            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: Color.White, layerDepth: .21f);
+        }
+
+
+
+
 
         public void AddTexture(Texture2D texture)
         {
