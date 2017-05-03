@@ -233,8 +233,8 @@ namespace AstralOutbreak
                 return false;
             if (obj1 is Item && !(obj2 is Wall))
                 return false;
-            if (obj1 is Enemy && obj2 is Enemy)
-                return false;
+            //if (obj1 is Enemy && obj2 is Enemy)
+            //    return false;
             if (obj1 is Player && obj2 is Enemy)
                 return false;
             else if (obj1 is Enemy && obj2 is Player)
@@ -284,52 +284,52 @@ namespace AstralOutbreak
                     PlayerOne.Health--;
             }
 
-            //Enemies Correct
-            if (obj1 is Enemy && obj2 is Enemy)
-            {
-                if (!(obj1 as Enemy).Corrective)
-                {
-                    if (obj1.Position.X < obj2.Position.X)
-                    {
-                        if(CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE * delta, 0)))
-                            if(obj1.MaxVelocity.X == 0)
-                                obj1.Velocity.X -= CORRECTIVE;
-                            else
-                                obj1.Velocity.X -= CORRECTIVE / 3;
+            ////Enemies Correct
+            //if (obj1 is Enemy && obj2 is Enemy)
+            //{
+            //    if (!(obj1 as Enemy).Corrective)
+            //    {
+            //        if (obj1.Position.X < obj2.Position.X)
+            //        {
+            //            if(CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE * delta, 0)))
+            //                if(obj1.MaxVelocity.X == 0)
+            //                    obj1.Velocity.X -= CORRECTIVE;
+            //                else
+            //                    obj1.Velocity.X -= CORRECTIVE / 3;
 
-                        (obj1 as Enemy).Corrective = true;
-                    }
-                    else if (obj1.Position.X > obj2.Position.X)
-                    {
-                        if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE * delta, 0)))
+            //            (obj1 as Enemy).Corrective = true;
+            //        }
+            //        else if (obj1.Position.X > obj2.Position.X)
+            //        {
+            //            if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE * delta, 0)))
 
-                            if (obj1.MaxVelocity.X == 0)
-                                obj1.Velocity.X += CORRECTIVE;
-                            else
-                                obj1.Velocity.X += CORRECTIVE / 3;
-                        (obj1 as Enemy).Corrective = true;
+            //                if (obj1.MaxVelocity.X == 0)
+            //                    obj1.Velocity.X += CORRECTIVE;
+            //                else
+            //                    obj1.Velocity.X += CORRECTIVE / 3;
+            //            (obj1 as Enemy).Corrective = true;
 
-                    }
-                    else if ((obj2 as Enemy).Corrective)
-                    {
-                        if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE * delta, 0)))
-                            if (obj1.MaxVelocity.X == 0)
-                                obj1.Velocity.X += CORRECTIVE;
-                            else
-                                obj1.Velocity.X += CORRECTIVE / 3;
-                        (obj1 as Enemy).Corrective = true;
-                    }
-                    else
-                    {
-                        if (CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE * delta, 0)))
-                            if (obj1.MaxVelocity.X == 0)
-                                obj1.Velocity.X -= CORRECTIVE;
-                            else
-                                obj1.Velocity.X -= CORRECTIVE / 3;
-                        (obj1 as Enemy).Corrective = true;
-                    }
-                }
-            }
+            //        }
+            //        else if ((obj2 as Enemy).Corrective)
+            //        {
+            //            if (CheckCollision(obj1, obj1.Velocity + new Vector(CORRECTIVE * delta, 0)))
+            //                if (obj1.MaxVelocity.X == 0)
+            //                    obj1.Velocity.X += CORRECTIVE;
+            //                else
+            //                    obj1.Velocity.X += CORRECTIVE / 3;
+            //            (obj1 as Enemy).Corrective = true;
+            //        }
+            //        else
+            //        {
+            //            if (CheckCollision(obj1, obj1.Velocity + new Vector(-CORRECTIVE * delta, 0)))
+            //                if (obj1.MaxVelocity.X == 0)
+            //                    obj1.Velocity.X -= CORRECTIVE;
+            //                else
+            //                    obj1.Velocity.X -= CORRECTIVE / 3;
+            //            (obj1 as Enemy).Corrective = true;
+            //        }
+            //    }
+            //}
 
             //Items
             if (obj1 is Player && obj2 is Item)
