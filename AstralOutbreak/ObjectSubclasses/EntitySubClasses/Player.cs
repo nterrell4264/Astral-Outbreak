@@ -37,6 +37,8 @@ namespace AstralOutbreak
         private const float DASHSPEED = 900;
         private const float ROLLSPEED = 450;
 
+
+
         //Batshields
         private BatShield[] shield;
 
@@ -54,6 +56,9 @@ namespace AstralOutbreak
                     Shooting = false;
             }
         }
+
+        public bool UpwardDash { get; set; }
+        public int UpgradeCount { get; set; }
 
         public Upgrades MyUpgrades { get; set; }
 
