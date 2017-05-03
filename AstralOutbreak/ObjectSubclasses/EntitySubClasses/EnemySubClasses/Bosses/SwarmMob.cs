@@ -25,7 +25,8 @@ namespace AstralOutbreak
             {
                 if (Health > value && !Awake)
                     Awaken();
-                base.Health = value;
+                else
+                    base.Health = value;
                 if (IsDead)
                 {
                     MySwarm.Kill(this);
@@ -46,7 +47,10 @@ namespace AstralOutbreak
                 if (!RoomManager.Active.BossActive)
                 {
                     base.Unload = value;
-                    return;
+                    if (Unload)
+                    {
+                        MySwarm.Kill(this);
+                    }
                 }
             }
         }

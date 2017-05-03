@@ -163,12 +163,11 @@ namespace AstralOutbreak
                     if(CurrentActionTime < 3)
                     {
                         Gravity = false;
-
-
+                        Velocity = (RoomManager.Active.PlayerOne.Center - Center - new Vector(0, 100)) / 3;
                     }
                     else if(CurrentActionTime < 4)
                     {
-
+                        Velocity = new Vector(0, 0);
                     }
                     else if(CurrentActionTime < 5)
                     {
