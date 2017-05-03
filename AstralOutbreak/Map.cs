@@ -240,7 +240,7 @@ namespace AstralOutbreak
                     return new JackRabbit(new Vector(x * Scale, y * Scale), 28, 56, 10);
                     break;
                 case MapItem.Item:
-                    return new Item(new Vector(x * Scale, y * Scale), Scale, Scale, ItemType.AbilityUnlock, TileValue[x,y]);
+                    return new Item(new Vector(x * Scale + 7, y * Scale + 7), 14, 14, ItemType.AbilityUnlock, TileValue[x,y]);
                     break;
                 case MapItem.Boss:
                     switch (TileValue[x,y])

@@ -184,8 +184,10 @@ namespace AstralOutbreak
 
                         //for(int i = 0; i < 30; i++)
                         //    Shoot(new Vector((float)Game1.Rand.NextDouble() - .5f, -(float)Game1.Rand.NextDouble() / 3));
+                        Position.X += 28;
                         Shoot(new Vector(-1, -.1f));
                         Shoot(new Vector(1, -.1f));
+                        Position.X -= 28;
 
 
                         smashCount = 4 + (int)(4 * Health / MaxHealth);
