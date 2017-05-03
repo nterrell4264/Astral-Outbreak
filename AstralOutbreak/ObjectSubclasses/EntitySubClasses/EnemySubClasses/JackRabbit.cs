@@ -52,7 +52,7 @@ namespace AstralOutbreak
         {
             if (awake)
             {
-                sleepTimer = .5f;
+                sleepTimer = 2.5f;
 
                 switch (CurrentJackRabbitState)
                 {
