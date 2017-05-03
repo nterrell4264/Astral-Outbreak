@@ -114,7 +114,7 @@ namespace AstralOutbreak
                         
                         break;
                     case SwarmState.Aligning:
-                        if(currentActionTime > Mobs.Count / 10)
+                        if(currentActionTime > Mobs.Count / 10 + 2)
                         {
                             CurrentState = SwarmState.Charge;
                             break;
