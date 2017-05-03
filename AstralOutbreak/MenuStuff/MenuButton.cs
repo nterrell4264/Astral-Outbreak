@@ -21,31 +21,31 @@ namespace AstralOutbreak
             get { return hitbox.Location; }
             private set { hitbox.Location = value; }
         }
+        private MenuDelegate ClickEvent;
 
         //Constructors
-        public MenuButton(int x, int y, int width, int height, string texture, MenuDelegate clickAction) : base(x, y, texture, false)
+        public MenuButton(int x, int y, int width, int height, string texture, MenuDelegate clickAction, float layer = .1f) : base(x, y, texture, true, layer)
         {
             hitbox = new Rectangle(base.Location, new Point(width, height));
-            SetSpecialCode(clickAction);
+            ClickEvent = clickAction;
         }
-        public MenuButton(Point location, Point size, string texture, MenuDelegate clickAction) : base(location, texture, false)
+        public MenuButton(Point location, Point size, string texture, MenuDelegate clickAction, float layer = .1f) : base(location, texture, true, layer)
         {
             hitbox = new Rectangle(base.Location, size);
-            SetSpecialCode(clickAction);
+            ClickEvent = clickAction;
         }
-        public MenuButton(Rectangle casting, string texture, MenuDelegate clickAction) : base(casting.X, casting.Y, texture, false)
+        public MenuButton(Rectangle casting, string texture, MenuDelegate clickAction, float layer = .1f) : base(casting.X, casting.Y, texture, true, layer)
         {
             hitbox = casting;
-            SetSpecialCode(clickAction);
+            ClickEvent = clickAction;
         }
 
-        public void CheckClicked()
+        public override void Update()
         {
-            //Makes the click check (mouse is down and over button)
             if (Game1.Inputs.M1State == ButtonStatus.Pressed && 
                 Game1.Inputs.MouseX >= hitbox.X && Game1.Inputs.MouseX < (hitbox.X + hitbox.Width) && Game1.Inputs.MouseY >= hitbox.Y && Game1.Inputs.MouseY < (hitbox.Y + hitbox.Height))
             {
-                SpecialCode();
+                ClickEvent();
             }
         }
     }

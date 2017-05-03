@@ -85,20 +85,71 @@ namespace AstralOutbreak
         {
             //Health
             items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width / 2 - 84, main.GraphicsDevice.Viewport.Height - 50, "HudBG"));
-            updateString = new MenuString(main.GraphicsDevice.Viewport.Width / 2 - 68, main.GraphicsDevice.Viewport.Height - 45, RoomManager.Active.PlayerOne.Health.ToString() + "/10 HP",
-                "UIfont", true);
-            updateString.SetSpecialCode(() => {
-                updateString.text = RoomManager.Active.PlayerOne.Health.ToString() + "/10 HP";
+            updateString = new MenuString(main.GraphicsDevice.Viewport.Width / 2 - 68, main.GraphicsDevice.Viewport.Height - 45, "10/10 HP",
+                "UIfont", true, layer: .09f);
+            updateString.SetUpdateCode(() => {
+                updateString.text = RoomManager.Active.PlayerOne.Health.ToString() + "/" + RoomManager.Active.PlayerOne.MaxHealth.ToString() + " HP";
                 updateString.Location.X = (main.GraphicsDevice.Viewport.Width - 17 * updateString.text.Length) / 2;
             });
             items.Add(updateString);
             //Upgrades
             items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
-            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 49, "rollIcon"));
-            if (RoomManager.Active.PlayerOne.MyUpgrades.HasFlag(Upgrades.Dash))
+            items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 49, "rollIcon", layer: .09f));
+            switch ((int)RoomManager.Active.PlayerOne.MyUpgrades)
             {
-                items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
-                items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon"));
+                case (1):
+                    {
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon", layer: .09f));
+                        break;
+                    }
+                case (2):
+                    {
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "spreadIcon", layer: .09f));
+                        break;
+                    }
+                case (3):
+                    {
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "spreadIcon", layer: .09f));
+                        break;
+                    }
+                case (4):
+                    {
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "batIcon", layer: .09f));
+                        break;
+                    }
+                case (5):
+                    {
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "batIcon", layer: .09f));
+                        break;
+                    }
+                case (6):
+                    {
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "spreadIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "batIcon", layer: .09f));
+                        break;
+                    }
+                case (7):
+                    {
+
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "spreadIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 99, "dashIcon", layer: .09f));
+                        break;
+                    }
             }
 
         }
@@ -106,11 +157,7 @@ namespace AstralOutbreak
         public void Update()
         {
             if (prevState == Game1.CurrentState) {
-                foreach (MenuContent content in items)
-                {
-                    if (content is MenuButton) (content as MenuButton).CheckClicked();
-                    if (content.Updatable) content.SpecialCode();
-                }
+                foreach (MenuContent content in items) content.Update();
             }
             if(prevState != Game1.CurrentState) //Looks like an else, but the above statement can change the GameState.
             {

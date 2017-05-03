@@ -14,31 +14,35 @@ namespace AstralOutbreak
         //Variables
         public Point Location;
         public string textureName;
-
-        public bool Updatable { get; }
-        public MenuDelegate SpecialCode { get; private set; } //Code specific to a menu item, like a button's press event or UI that uses game data.
+        public float depth;
+        private bool updatable;
+        private MenuDelegate UpdateCode;
 
         //Constructors
-        public MenuContent(int x, int y, string texture, bool canUpdate = false)
+        public MenuContent(int x, int y, string texture, bool canUpdate = false, float layer = .1f)
         {
             Location = new Point(x, y);
             textureName = texture;
-            Updatable = canUpdate;
+            updatable = canUpdate;
+            depth = layer;
         }
-        public MenuContent(Point location, string texture, bool canUpdate = false)
+        public MenuContent(Point location, string texture, bool canUpdate = false, float layer = .1f)
         {
             Location = location;
             textureName = texture;
-            Updatable = canUpdate;
+            updatable = canUpdate;
+            depth = layer;
         }
 
-        /// <summary>
-        /// Sets item-specific code. Can't be done in the constructor if it refers to any property of the item itself.
-        /// </summary>
-        /// <param name="code">Lambda expression of the code to put in.</param>
-        public void SetSpecialCode(MenuDelegate code)
+        //Methods
+        public virtual void Update()
         {
-            SpecialCode = code;
+            if(updatable) UpdateCode();
+        }
+
+        public void SetUpdateCode(MenuDelegate code)
+        {
+            UpdateCode = code;
         }
     }
 }

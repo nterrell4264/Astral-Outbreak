@@ -12,12 +12,12 @@ namespace AstralOutbreak
         public string text;
         public string SpriteFont { get; private set; }
 
-        public MenuString(int x, int y, string text, string spriteFont, bool canUpdate = false) : base(x, y, null, canUpdate)
+        public MenuString(int x, int y, string text, string spriteFont, bool canUpdate = false, float layer = .2f) : base(x, y, null, canUpdate, layer)
         {
             this.text = text;
             SpriteFont = spriteFont;   
         }
-        public MenuString(Point location, string text, string spriteFont, bool canUpdate = false) : base(location, null, canUpdate)
+        public MenuString(Point location, string text, string spriteFont, bool canUpdate = false, float layer = .2f) : base(location, null, canUpdate, layer)
         {
             this.text = text;
             SpriteFont = spriteFont;

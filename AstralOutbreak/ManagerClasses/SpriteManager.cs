@@ -109,7 +109,7 @@ namespace AstralOutbreak
                 else
                 {
                     Texture2D texture = masterList["Menus/" + menuPart.textureName];
-                    sb.Draw(texture: texture, destinationRectangle:new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), color: Color.White, layerDepth: .2f);
+                    sb.Draw(texture: texture, destinationRectangle:new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), color: Color.White, layerDepth: menuPart.depth);
                 }
             }
         }
