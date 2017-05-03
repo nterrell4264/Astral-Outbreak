@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-   class MenuManager
+   public class MenuManager
     {
         public static List<MenuContent> items { get; private set; } //List of things to draw
         private GameState prevState; //Holds last frame's GameState for automatic updating
@@ -106,7 +106,7 @@ namespace AstralOutbreak
                 case (2):
                     {
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "spreadIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "batIcon", layer: .09f));
                         break;
                     }
                 case (3):
@@ -114,13 +114,13 @@ namespace AstralOutbreak
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon", layer: .09f));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "spreadIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "batIcon", layer: .09f));
                         break;
                     }
                 case (4):
                     {
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "batIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "spreadIcon", layer: .09f));
                         break;
                     }
                 case (5):
@@ -128,15 +128,15 @@ namespace AstralOutbreak
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon", layer: .09f));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "batIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "spreadIcon", layer: .09f));
                         break;
                     }
                 case (6):
                     {
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "spreadIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "batIcon", layer: .09f));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "batIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "spreadIcon", layer: .09f));
                         break;
                     }
                 case (7):
@@ -145,9 +145,9 @@ namespace AstralOutbreak
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 50, "UpgradeBG"));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 49, "dashIcon", layer: .09f));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 61, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "spreadIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 47, main.GraphicsDevice.Viewport.Height - 99, "batIcon", layer: .09f));
                         items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 122, main.GraphicsDevice.Viewport.Height - 100, "UpgradeBG"));
-                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 99, "dashIcon", layer: .09f));
+                        items.Add(new MenuContent(main.GraphicsDevice.Viewport.Width - 108, main.GraphicsDevice.Viewport.Height - 99, "spreadIcon", layer: .09f));
                         break;
                     }
             }
@@ -202,6 +202,49 @@ namespace AstralOutbreak
                 }
             }
             prevState = Game1.CurrentState;                                                                                                                                                                                                                                                                                                                             
+        }
+
+        public void Reload()
+        {
+            items.Clear();
+            switch (Game1.CurrentState)
+            {
+                case (GameState.MainMenu):
+                    {
+                        LoadMain();
+                        break;
+                    }
+                case (GameState.OptionsMenu):
+                    {
+                        LoadOptions();
+                        break;
+                    }
+                case (GameState.PauseMenu):
+                    {
+                        LoadPause();
+                        break;
+                    }
+                case (GameState.LoadMenu):
+                    {
+                        LoadScreen();
+                        break;
+                    }
+                case (GameState.SaveMenu):
+                    {
+                        LoadSave();
+                        break;
+                    }
+                case (GameState.GameOverMenu):
+                    {
+                        LoadGameOver();
+                        break;
+                    }
+                default:
+                    {
+                        LoadUI();
+                        break;
+                    }
+            }
         }
     }
 }

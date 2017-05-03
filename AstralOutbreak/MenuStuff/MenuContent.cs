@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AstralOutbreak
 {
     public delegate void MenuDelegate();
-    class MenuContent
+    public class MenuContent
     {
         //Variables
         public Point Location;

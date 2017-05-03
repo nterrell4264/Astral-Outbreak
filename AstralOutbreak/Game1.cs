@@ -20,7 +20,7 @@ namespace AstralOutbreak
         SpriteBatch spriteBatch;
         SoundManager soundManager;
         SpriteManager spriteManager;
-        MenuManager menuManager;
+        public static MenuManager menuManager;
         public static InputManager Inputs { get; set; }
         public static Random Rand { get; set; }
 
