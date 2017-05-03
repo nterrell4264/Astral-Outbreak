@@ -137,7 +137,7 @@ namespace AstralOutbreak
                         if(!UpwardDash)
                             MaxVelocity.X = speedLimit;
                         else
-                            MaxVelocity.Y = speedLimit;
+                            MaxVelocity.Y = -1;
                         Velocity.X /= 2;
                         Gravity = true;
                         UpwardDash = false;
