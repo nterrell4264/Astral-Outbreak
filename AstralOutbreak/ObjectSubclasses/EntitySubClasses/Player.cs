@@ -58,7 +58,6 @@ namespace AstralOutbreak
         }
 
         public bool UpwardDash { get; set; }
-        public int UpgradeCount { get; set; }
 
         public Upgrades MyUpgrades { get; set; }
 
@@ -106,6 +105,7 @@ namespace AstralOutbreak
             previousY = Velocity.Y;
             jumpTime = JUMPTIME;
             shield = new BatShield[5];
+            UpwardDash = false;
             for(int i = 0; i < shield.Count(); i++)
             {
                 shield[i] = new BatShield(new Vector(0, 0), 16, 16, 1, 5);
@@ -134,14 +134,18 @@ namespace AstralOutbreak
                     if (CurrentActionTime > .25f)
                     {
                         CurrentPlayerState = PlayerState.Falling;
-                        MaxVelocity.X = speedLimit;
+                        if(!UpwardDash)
+                            MaxVelocity.X = speedLimit;
+                        else
+                            MaxVelocity.Y = speedLimit;
                         Velocity.X /= 2;
                         Gravity = true;
+                        UpwardDash = false;
                     }
                     break;
                 //In the air
                 case PlayerState.Falling:
-                    if(previousY == Velocity.Y && jumpTime == 0)
+                    if(previousY == Velocity.Y && jumpTime == 0 && Velocity.Y != MaxVelocity.Y)
                     {
                         if(Velocity.X == 0)
                         {
@@ -153,8 +157,18 @@ namespace AstralOutbreak
                         }
                         break;
                     }
+                    if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash && Game1.Inputs.JumpButtonState == ButtonStatus.Held)
+                    {
+                        MaxVelocity.Y = DASHSPEED;
+                        Velocity.Y = -MaxVelocity.Y;
+                        CurrentPlayerState = PlayerState.Dashing;
+                        Gravity = false;
+                        canAirDash = false;
+                        UpwardDash = true;
+                        break;
+                    }
                     //If we are jumping
-                    if(jumpTime > 0 && ((Game1.Inputs.JumpButtonState == ButtonStatus.Held || Game1.Inputs.JumpButtonState == ButtonStatus.Pressed || jumpTime > JUMPTIME * 2 / 3)) && Velocity.Y < 0)
+                    if (jumpTime > 0 && ((Game1.Inputs.JumpButtonState == ButtonStatus.Held || Game1.Inputs.JumpButtonState == ButtonStatus.Pressed || jumpTime > JUMPTIME * 2 / 3)) && Velocity.Y < 0)
                     {
                         jumpTime -= deltaTime;
                         Velocity.Y = -84 / JUMPTIME;
