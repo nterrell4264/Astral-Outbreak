@@ -125,7 +125,6 @@ namespace AstralOutbreak
                             CurrentState = SwarmState.ChargingLeft;
                         break;
                     case SwarmState.Charge:
-                        
                         SwarmMob.Target = SwarmMob.Target + 3 * (RoomManager.Active.PlayerOne.Center - SwarmMob.Target);
                         CurrentState = SwarmState.Aligning;
                         break;

@@ -105,7 +105,7 @@ namespace AstralOutbreak
             prevY = Velocity.Y;
             prevX = Position.X;
             Gravity = true;
-            smashCount = 5;
+            smashCount = 6;
         }
 
         public override void Step(float deltaTime)
@@ -158,25 +158,33 @@ namespace AstralOutbreak
                             break;
                     }
                 }
+                else if(smashCount == 0)
+                {
+                    Gravity = false;
+                    Velocity = (RoomManager.Active.PlayerOne.Center - Center - new Vector(0, 100)) * 4;
+                    CurrentJackRabbitState = JackRabbitState.Falling;
+                    smashCount--;
+                }
                 else
                 {
-                    if(CurrentActionTime < 3)
+                    if(CurrentActionTime < .25f)
                     {
-                        Gravity = false;
-                        Velocity = (RoomManager.Active.PlayerOne.Center - Center - new Vector(0, 100)) / 3;
+                        
                     }
-                    else if(CurrentActionTime < 4)
+                    else if(CurrentActionTime < .5f)
                     {
                         Velocity = new Vector(0, 0);
                     }
-                    else if(CurrentActionTime < 5)
+                    else if(CurrentActionTime < 1)
                     {
                         Velocity.Y = 1000;
                     }
                     else if (Velocity.Y != prevY)
                     {
-                        smashCount = 1 + (int)(4 * Health / MaxHealth);
+                        smashCount = 2 + (int)(4 * Health / MaxHealth);
                         Gravity = true;
+                        CurrentJackRabbitState = JackRabbitState.Idle;
+                        Velocity.Y = 0;
                     }
 
                 }
