@@ -188,7 +188,7 @@ namespace AstralOutbreak
                         Shoot(new Vector(1, -.1f));
 
 
-                        smashCount = 2 + (int)(4 * Health / MaxHealth);
+                        smashCount = 4 + (int)(4 * Health / MaxHealth);
                         Gravity = true;
                         CurrentJackRabbitState = JackRabbitState.Idle;
                         Velocity.Y = 0;
