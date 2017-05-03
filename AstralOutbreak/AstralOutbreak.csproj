@@ -53,7 +53,7 @@
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\DashRabbit.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\JackRabbit.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Slug.cs" />
-    <Compile Include="Physics\Item.cs" />
+    <Compile Include="ObjectSubclasses\Item.cs" />
     <Compile Include="ManagerClasses\MenuManager.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\Player.cs" />
     <Compile Include="Physics\PhysicsObject.cs" />
