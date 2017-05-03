@@ -23,12 +23,6 @@ namespace AstralOutbreak
             {
                 currentState = value;
                 CurrentActionTime = 0;
-                if (currentState == JackRabbitState.Idle || currentState == JackRabbitState.Shooting)
-                    MaxVelocity = new Vector(0, 600);
-                else if (currentState == JackRabbitState.Falling)
-                    MaxVelocity = new Vector(1000, 900);
-                else
-                    MaxVelocity = new Vector(225, 600);
                 if (currentState != JackRabbitState.Shooting)
                     Shooting = false;
             }
@@ -99,13 +93,18 @@ namespace AstralOutbreak
         public DashRabbit(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
             //Creates a weapon for the JackRabbitBoss,
-            MyWeapon = new Weapon(.4f, 3, 900, 700);
+            MyWeapon = new Weapon(.4f, 1, 900, 700);
             MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
             prevY = Velocity.Y;
             prevX = Position.X;
             Gravity = true;
             smashCount = 6;
+            MyWeapon.MultiShot = true;
+            MyWeapon.ShotDelay = 0;
+            MyWeapon.BulletSpeed = 600;
+            MyWeapon.Gravity = true;
+            MyWeapon.Range = 448;
         }
 
         public override void Step(float deltaTime)
@@ -175,16 +174,25 @@ namespace AstralOutbreak
                     {
                         Velocity = new Vector(0, 0);
                     }
-                    else if(CurrentActionTime < 1)
+                    else if(Velocity.Y == prevY)
                     {
                         Velocity.Y = 1000;
+                        prevY = 1000;
                     }
-                    else if (Velocity.Y != prevY)
+                    else
                     {
+
+                        //for(int i = 0; i < 30; i++)
+                        //    Shoot(new Vector((float)Game1.Rand.NextDouble() - .5f, -(float)Game1.Rand.NextDouble() / 3));
+                        Shoot(new Vector(-1, -.1f));
+                        Shoot(new Vector(1, -.1f));
+
+
                         smashCount = 2 + (int)(4 * Health / MaxHealth);
                         Gravity = true;
                         CurrentJackRabbitState = JackRabbitState.Idle;
                         Velocity.Y = 0;
+                        CurrentActionTime = .5f;
                     }
 
                 }
