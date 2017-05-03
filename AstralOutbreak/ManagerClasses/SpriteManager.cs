@@ -98,7 +98,7 @@ namespace AstralOutbreak
                         }
                     }
                 }
-                sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
+                //sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
             foreach (MenuContent menuPart in MenuManager.items)
             {
@@ -206,11 +206,11 @@ namespace AstralOutbreak
                 gunRot -= (float)Math.PI;
                 armOrg = new Vector2(28, 10);
             }
-
-            sb.Draw(masterList["PlayerSprites"],
-                destinationRectangle: destArm,
-                sourceRectangle: new Rectangle(5,148,33,16), rotation: gunRot + rot, origin: armOrg,
-                color: Color.White, effects: flip, layerDepth: .5f);
+            if(player.CurrentPlayerState != PlayerState.Dashing)
+                sb.Draw(masterList["PlayerSprites"],
+                    destinationRectangle: destArm,
+                    sourceRectangle: new Rectangle(5,148,33,16), rotation: gunRot + rot, origin: armOrg,
+                    color: Color.White, effects: flip, layerDepth: .5f);
 
             if (player.InvulnTime > 0 && player.CurrentPlayerState!= PlayerState.Rolling)
             {
