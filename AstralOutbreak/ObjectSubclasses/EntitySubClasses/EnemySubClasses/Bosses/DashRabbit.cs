@@ -15,6 +15,7 @@ namespace AstralOutbreak
         private float prevY;
         private float prevX;
         private bool awake;
+        private int smashCount;
         public JackRabbitState CurrentJackRabbitState
         {
             get { return currentState; }
@@ -104,6 +105,7 @@ namespace AstralOutbreak
             prevY = Velocity.Y;
             prevX = Position.X;
             Gravity = true;
+            smashCount = 5;
         }
 
         public override void Step(float deltaTime)
@@ -112,45 +114,72 @@ namespace AstralOutbreak
             //Check if awake
             if (awake)
             {
-                switch (currentState)
+                if (smashCount > 0)
                 {
-                    //When Idle, wait a bit, then charge the player
-                    case JackRabbitState.Idle:
-                        if(CurrentActionTime > 1f)
-                        {
-                            float v = 500 + 500 * (1 - (Health / MaxHealth));
-                            float diff = Position.X - RoomManager.Active.PlayerOne.Position.X;
-                            if(diff < 0)
+                    switch (currentState)
+                    {
+                        //When Idle, wait a bit, then charge the player
+                        case JackRabbitState.Idle:
+                            if (CurrentActionTime > 1f)
                             {
-                                FaceRight = true;
-                                Velocity = new Vector(v, -200);
-                                currentState = JackRabbitState.Falling;
+                                smashCount--;
+                                float v = 500 + 500 * (1 - (Health / MaxHealth));
+                                float diff = Position.X - RoomManager.Active.PlayerOne.Position.X;
+                                if (diff < 0)
+                                {
+                                    FaceRight = true;
+                                    Velocity = new Vector(v, -200);
+                                    currentState = JackRabbitState.Falling;
+                                }
+                                else
+                                {
+                                    FaceRight = false;
+                                    Velocity = new Vector(-v, -200);
+                                    currentState = JackRabbitState.Falling;
+                                }
                             }
-                            else
+                            break;
+                        //When moving, apply friction
+                        case JackRabbitState.Moving:
+                            Velocity.X /= 1.1f;
+                            if (Velocity.X < 1 && Velocity.X > -1)
                             {
-                                FaceRight = false;
-                                Velocity = new Vector(-v, -200);
-                                currentState = JackRabbitState.Falling;
+                                currentState = JackRabbitState.Idle;
                             }
-                        }
-                        break;
-                    //When moving, apply friction
-                    case JackRabbitState.Moving:
-                        Velocity.X /= 1.1f;
-                        if(Velocity.X < 1 && Velocity.X > -1)
-                        {
-                            currentState = JackRabbitState.Idle;
-                        }
-                        break;
-                    //When Falling/Jumping check if we have landed
-                    case JackRabbitState.Falling:
-                        if(Velocity.Y == prevY)
-                        {
-                            currentState = JackRabbitState.Moving;
-                        }
-                        break;
-                    default:
-                        break;
+                            break;
+                        //When Falling/Jumping check if we have landed
+                        case JackRabbitState.Falling:
+                            if (Velocity.Y == prevY)
+                            {
+                                currentState = JackRabbitState.Moving;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    if(CurrentActionTime < 3)
+                    {
+                        Gravity = false;
+
+
+                    }
+                    else if(CurrentActionTime < 4)
+                    {
+
+                    }
+                    else if(CurrentActionTime < 5)
+                    {
+                        Velocity.Y = 1000;
+                    }
+                    else if (Velocity.Y != prevY)
+                    {
+                        smashCount = 1 + (int)(4 * Health / MaxHealth);
+                        Gravity = true;
+                    }
+
                 }
             }
             else

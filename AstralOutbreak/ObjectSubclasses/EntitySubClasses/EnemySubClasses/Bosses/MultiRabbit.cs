@@ -107,7 +107,7 @@ namespace AstralOutbreak
             MyWeapon.BulletSize = 5;
             MyWeapon.MultiShot = true;
             MyWeapon.Source = this;
-            MyWeapon.Gravity = true;
+            MyWeapon.Gravity = false;
             prevY = Velocity.Y;
             prevX = Position.X;
             Gravity = true;

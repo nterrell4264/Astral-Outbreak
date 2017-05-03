@@ -19,9 +19,6 @@ namespace AstralOutbreak
         //Time of the current action
         private float currentActionTime;
 
-        //Collider (INTERNAL USE ONLY)
-        private PhysicsObject collider;
-
         private SwarmState myState;
 
         public SwarmState CurrentState
@@ -62,7 +59,6 @@ namespace AstralOutbreak
         {
             Mobs = new List<SwarmMob>();
             lastCall = -1;
-            collider = new PhysicsObject(SwarmMob.Target, 1, 1);
         }
 
 
@@ -98,7 +94,7 @@ namespace AstralOutbreak
                 switch (CurrentState)
                 {
                     case SwarmState.ChargingLeft:
-                        if (ChargeDist <= 0 || RoomManager.Active.CheckCollision(collider, VELOCITY * deltaTime * new Vector(-1, 0)))
+                        if (ChargeDist <= 0)
                         {
                             CurrentState = SwarmState.Aligning;
                             break;
@@ -108,7 +104,7 @@ namespace AstralOutbreak
                         
                         break;
                     case SwarmState.ChargingRight:
-                        if (ChargeDist <= 0 || RoomManager.Active.CheckCollision(collider, VELOCITY * deltaTime * new Vector(-1, 0)))
+                        if (ChargeDist <= 0)
                         {
                             CurrentState = SwarmState.Aligning;
                             break;
