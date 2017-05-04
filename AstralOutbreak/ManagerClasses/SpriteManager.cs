@@ -56,6 +56,10 @@ namespace AstralOutbreak
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
 
                         }
+                        else if (RoomManager.Active.PhysicsObjects[i] is Projectile)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Projectile, i);
+                        }
                         else if (RoomManager.Active.PhysicsObjects[i] is Slug)
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as Slug, i);
@@ -815,7 +819,18 @@ namespace AstralOutbreak
             }
             sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: Color.White, layerDepth: .21f);
         }
+        //Draw for Bullets
+        public void Draw(SpriteBatch sb, Projectile bullet, int i)
+        {
+            Color col = Color.MediumSeaGreen;
+            Rectangle dest = new Rectangle((int)bullet.Position.X - (int)RoomManager.Active.CameraX,
+                  (int)bullet.Position.Y - (int)RoomManager.Active.CameraY,
+                  (int)bullet.Width, (int)bullet.Height);
+            Rectangle pos = new Rectangle();
+                    pos = new Rectangle(25, 6, 10, 10);
+            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: col, layerDepth: .71f);
 
+        }
 
 
 
