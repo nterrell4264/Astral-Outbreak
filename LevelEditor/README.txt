@@ -3,10 +3,12 @@ Map Editor Controls
 	Click: Use Brush
 	Scroll: Zoom In/Out
 	WASD: Pan the camera
-	Shift: Hold while panning the camera to speed it up
+	Left Shift: Hold while panning the camera to speed it up. Stacks with control
+	Left Ctrl: Hold while panning the camera to increase speed. Stacks with shift
 	Enter: Save the map
 	UP/DOWN: Change Cursor Size
 	LEFT/RIGHT: Change Cursor Value
+	Left CTRL, Left Shift, Delete: New Map button
 
 	Numbers Change Brush Type
 		1: Erase
@@ -41,3 +43,5 @@ Map Editor Controls
 
 	Note: The Map Editor will open up the currently saved LevelMap file if it is avaialable (this is the file saved by the editor).
 			If it cannot find a LevelMap.dat, it will just grab the current map from the main game instead.
+
+	Note: The level editor will automatically make a backup whenever you close it or make a new map.

@@ -13,7 +13,7 @@ namespace LevelEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private LevelInterface level;
+        public LevelInterface Level { get; set; }
         private bool unClicked;
         private KeyboardState kbLast;
 
@@ -39,9 +39,9 @@ namespace LevelEditor
             graphics.ApplyChanges();
             // TODO: Add your initialization logic here
             if (File.Exists("LevelMap.dat"))
-                level = new LevelInterface("LevelMap.dat");
+                Level = new LevelInterface("LevelMap.dat");
             else
-                level = new LevelInterface("MapData.dat");
+                Level = new LevelInterface("MapData.dat");
             unClicked = true;
             kbLast = Keyboard.GetState();
             base.Initialize();
@@ -101,7 +101,7 @@ namespace LevelEditor
             {
                 if (unClicked)
                 {
-                    level.Click(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / level.Scale - 2, GraphicsDevice.Viewport.Height / level.Scale - 2);
+                    Level.Click(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / Level.Scale - 2, GraphicsDevice.Viewport.Height / Level.Scale - 2);
                 }
                 else
                 {
@@ -109,13 +109,13 @@ namespace LevelEditor
                 }
             }
 
-            if(Mouse.GetState().ScrollWheelValue - lastScroll > 0 && level.Scale < 32)
+            if(Mouse.GetState().ScrollWheelValue - lastScroll > 0 && Level.Scale < 32)
             {
-                level.Scale++;
+                Level.Scale++;
             }
-            else if(Mouse.GetState().ScrollWheelValue - lastScroll < 0 && level.Scale > 1)
+            else if(Mouse.GetState().ScrollWheelValue - lastScroll < 0 && Level.Scale > 1)
             {
-                level.Scale--;
+                Level.Scale--;
             }
 
             lastScroll = Mouse.GetState().ScrollWheelValue;
@@ -124,76 +124,83 @@ namespace LevelEditor
             KeyboardState kb = Keyboard.GetState();
             if(kb.IsKeyDown(Keys.D) && (kbLast.IsKeyUp(Keys.D) || kb.IsKeyDown(Keys.LeftShift)))
             {
-                if(level.MapX < level.MapData.Width)
-                    level.MapX++;
+                if(Level.MapX < Level.MapData.Width)
+                    Level.MapX++;
                 if(kb.IsKeyDown(Keys.LeftControl))
-                    if (level.MapX < level.MapData.Width - 2)
-                        level.MapX += 3;
+                    if (Level.MapX < Level.MapData.Width - 2)
+                        Level.MapX += 3;
 
             }
             if (kb.IsKeyDown(Keys.A) && (kbLast.IsKeyUp(Keys.A) || kb.IsKeyDown(Keys.LeftShift)))
             {
-                if (level.MapX > 0)
-                    level.MapX--;
+                if (Level.MapX > 0)
+                    Level.MapX--;
                 if (kb.IsKeyDown(Keys.LeftControl))
-                    if (level.MapX > 2)
-                        level.MapX -= 3;
+                    if (Level.MapX > 2)
+                        Level.MapX -= 3;
             }
             if (kb.IsKeyDown(Keys.S) && (kbLast.IsKeyUp(Keys.S) || kb.IsKeyDown(Keys.LeftShift)))
             {
-                if (level.MapY < level.MapData.Height)
-                    level.MapY++;
+                if (Level.MapY < Level.MapData.Height)
+                    Level.MapY++;
                 if (kb.IsKeyDown(Keys.LeftControl))
-                    if (level.MapY < level.MapData.Height - 2)
-                        level.MapY += 3;
+                    if (Level.MapY < Level.MapData.Height - 2)
+                        Level.MapY += 3;
             }
             if (kb.IsKeyDown(Keys.W) && (kbLast.IsKeyUp(Keys.W) || kb.IsKeyDown(Keys.LeftShift)))
             {
-                if (level.MapY > 0)
-                    level.MapY--;
+                if (Level.MapY > 0)
+                    Level.MapY--;
                 if (kb.IsKeyDown(Keys.LeftControl))
-                    if (level.MapY > 2)
-                        level.MapY -= 3;
+                    if (Level.MapY > 2)
+                        Level.MapY -= 3;
             }
             if (kb.IsKeyDown(Keys.Up) && (kbLast.IsKeyUp(Keys.Up)))
             {
-                if (level.CursorSize < 5)
-                    level.CursorSize++;
+                if (Level.CursorSize < 5)
+                    Level.CursorSize++;
             }
             if (kb.IsKeyDown(Keys.Down) && (kbLast.IsKeyUp(Keys.Down)))
             {
-                if (level.CursorSize > 1)
-                    level.CursorSize--;
+                if (Level.CursorSize > 1)
+                    Level.CursorSize--;
             }
             if (kb.IsKeyDown(Keys.Left) && (kbLast.IsKeyUp(Keys.Left)))
             {
-                if (level.CursorValue > 0)
-                    level.CursorValue--;
+                if (Level.CursorValue > 0)
+                    Level.CursorValue--;
             }
             if (kb.IsKeyDown(Keys.Right) && (kbLast.IsKeyUp(Keys.Right)))
             {
-                if (level.CursorValue < 5)
-                    level.CursorValue++;
+                if (Level.CursorValue < 5)
+                    Level.CursorValue++;
             }
 
             if (kb.IsKeyDown(Keys.D1))
-                level.CursorItem = CursorMode.Erase;
+                Level.CursorItem = CursorMode.Erase;
             if (kb.IsKeyDown(Keys.D2))
-                level.CursorItem = CursorMode.Wall;
+                Level.CursorItem = CursorMode.Wall;
             if (kb.IsKeyDown(Keys.D3))
-                level.CursorItem = CursorMode.Demon;
+                Level.CursorItem = CursorMode.Demon;
             if (kb.IsKeyDown(Keys.D4))
-                level.CursorItem = CursorMode.Slug;
+                Level.CursorItem = CursorMode.Slug;
             if (kb.IsKeyDown(Keys.D5))
-                level.CursorItem = CursorMode.Player;
+                Level.CursorItem = CursorMode.Player;
             if (kb.IsKeyDown(Keys.D6))
-                level.CursorItem = CursorMode.Item;
+                Level.CursorItem = CursorMode.Item;
             if (kb.IsKeyDown(Keys.D7))
-                level.CursorItem = CursorMode.Boss;
+                Level.CursorItem = CursorMode.Boss;
 
             if (kb.IsKeyDown(Keys.Enter) && kbLast.IsKeyUp(Keys.Enter))
-                level.Save("LevelMap.dat");
-
+                Level.Save("LevelMap.dat");
+            if(kb.IsKeyDown(Keys.LeftShift) && kb.IsKeyDown(Keys.LeftControl) && kb.IsKeyDown(Keys.Delete))
+            {
+                int i = 0;
+                while (File.Exists("Backup" + i + ".dat"))
+                    i++;
+                Level.Save("Backup" + i + ".dat");
+                Level = new LevelInterface("");
+            }
             kbLast = kb;
         }
 
@@ -205,7 +212,7 @@ namespace LevelEditor
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            level.Draw(spriteBatch, Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / level.Scale - 2, GraphicsDevice.Viewport.Height / level.Scale - 2);
+            Level.Draw(spriteBatch, Mouse.GetState().Position.X, Mouse.GetState().Position.Y, GraphicsDevice.Viewport.Width / Level.Scale - 2, GraphicsDevice.Viewport.Height / Level.Scale - 2);
             base.Draw(gameTime);
             spriteBatch.End();
         }

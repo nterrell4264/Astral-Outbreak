@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace LevelEditor
 {
@@ -15,7 +16,20 @@ namespace LevelEditor
         static void Main()
         {
             using (var game = new Game1())
-                game.Run();
+            {
+                try
+                {
+
+                    game.Run();
+                }
+                finally
+                {
+                    int i = 0;
+                    while (File.Exists("Backup" + i + ".dat"))
+                        i++;
+                    game.Level.Save("Backup" + i + ".dat");
+                }
+            }
         }
     }
 #endif
