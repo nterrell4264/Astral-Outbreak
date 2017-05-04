@@ -88,8 +88,8 @@ namespace LevelEditor
                 Exit();
 
             
-
-            HandleInput();
+            if(IsActive)
+                HandleInput();
 
             base.Update(gameTime);
         }
