@@ -28,8 +28,12 @@ namespace AstralOutbreak
         public int PlayerStartX { get; set; }
         public int PlayerStartY { get; set; }
 
+        //Player Starting gear
         public Upgrades PlayerUpgrades { get; set; }
-
+        public float MaxHealth { get; set; }
+        public float Health { get; set; }
+        
+        
         /// <summary>
         /// This array lets the map know what assets are currently loaded so that it doesn't give the same entity twice
         /// </summary>
@@ -150,7 +154,8 @@ namespace AstralOutbreak
                         Loaded[i, j] = false;
                     }
                 }
-
+            MaxHealth = RoomManager.Active.PlayerOne.MaxHealth;
+            Health = RoomManager.Active.PlayerOne.Health;
         }
 
         /// <summary>

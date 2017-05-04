@@ -795,7 +795,7 @@ namespace AstralOutbreak
                 default:
                     break;
                 case ItemType.HealthPickup:
-                    pos = new Rectangle(26,6,10,10);
+                    pos = new Rectangle(25,6,10,10);
                     break;
 
                 case ItemType.AbilityUnlock:

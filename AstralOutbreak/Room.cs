@@ -164,6 +164,11 @@ namespace AstralOutbreak
             float scale = MapData.Scale;
             PlayerOne = new Player(new Vector2(MapData.PlayerStartX * scale, MapData.PlayerStartY * scale), 28, 55, 10);
             PlayerOne.MyUpgrades = MapData.PlayerUpgrades;
+            if(MapData.MaxHealth != 0)
+            {
+                PlayerOne.MaxHealth = MapData.MaxHealth;
+                PlayerOne.Health = MapData.Health;
+            }
             if (PlayerOne.MyUpgrades.HasFlag(Upgrades.MultiShot))
                 PlayerOne.MyWeapon.MultiShot = true;
             PhysicsObjects.Add(PlayerOne);
