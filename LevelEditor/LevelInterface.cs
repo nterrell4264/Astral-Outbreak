@@ -80,10 +80,10 @@ namespace LevelEditor
                 }
                 catch
                 {
-                    MapData = new Map(1024, 1024);
+                    MapData = new Map(512, 256);
                 }
             else
-                MapData = new Map(1024, 1024);
+                MapData = new Map(512, 256);
             MapData.Scale = 28;
             CursorItem = CursorMode.Erase;
             CursorSize = 1;
@@ -91,7 +91,8 @@ namespace LevelEditor
             MapY = 0;
             Gridlines = true;
             Scale = 8;
-            MapData.Scale = 28;
+            MapData.Health = 10;
+            MapData.MaxHealth = 10;
             CursorValue = 1;
             if (MapData.TileValue.GetLength(0) != MapData.Width || MapData.TileValue.GetLength(1) != MapData.Height)
                 MapData.TileValue = new int[MapData.Width, MapData.Height];
