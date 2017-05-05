@@ -174,6 +174,7 @@ namespace AstralOutbreak
             PhysicsObjects.Add(PlayerOne);
             CameraTrack(PlayerOne);
             List<GameObject> newData = MapData.LoadHard(CameraX, CameraY, Width, Height, BUFFER);
+            CoreBoss.CoreLives = true;
             lock (listLock)
             {
                 for (int i = 0; i < newData.Count; i++)

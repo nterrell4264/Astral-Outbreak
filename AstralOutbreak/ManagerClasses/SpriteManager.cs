@@ -84,6 +84,10 @@ namespace AstralOutbreak
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as BatShield, i);
                         }
+                        else if (RoomManager.Active.PhysicsObjects[i] is Bat)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Bat, i);
+                        }
                         else if (RoomManager.Active.PhysicsObjects[i] is Player)
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as Player, i);
@@ -744,7 +748,42 @@ namespace AstralOutbreak
             sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1,1,1,.9f), effects: SpriteEffects.None, layerDepth: .4f);
         }
 
+        //Non boss bats
+        public void Draw(SpriteBatch sb, Bat enemy, int i)
+        {
+            Rectangle dest;
 
+            Rectangle pos = new Rectangle();
+            int s = (int)(enemy.CurrentActionTime * 8) % 4;
+            switch (s)
+            {
+                default:
+                    pos = new Rectangle(71, 14, 54, 15);
+                    dest = new Rectangle((int)enemy.Center.X - (int)RoomManager.Active.CameraX - 27,
+                  (int)enemy.Center.Y - (int)RoomManager.Active.CameraY - 7,
+                  54, 15);
+                    break;
+                case 1:
+                    pos = new Rectangle(132, 15, 56, 17);
+                    dest = new Rectangle((int)enemy.Center.X - (int)RoomManager.Active.CameraX - 28,
+                  (int)enemy.Center.Y - (int)RoomManager.Active.CameraY - 8,
+                  56, 17);
+                    break;
+                case 2:
+                    pos = new Rectangle(198, 14, 36, 23);
+                    dest = new Rectangle((int)enemy.Center.X - (int)RoomManager.Active.CameraX - 18,
+                  (int)enemy.Center.Y - (int)RoomManager.Active.CameraY - 11,
+                  36, 23);
+                    break;
+                case 3:
+                    pos = new Rectangle(132, 15, 56, 17);
+                    dest = new Rectangle((int)enemy.Center.X - (int)RoomManager.Active.CameraX - 28,
+                  (int)enemy.Center.Y - (int)RoomManager.Active.CameraY - 8,
+                  56, 17);
+                    break;
+            }
+            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, 1, .9f), effects: SpriteEffects.None, layerDepth: .4f);
+        }
 
 
 

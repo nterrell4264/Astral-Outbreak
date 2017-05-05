@@ -22,10 +22,11 @@ namespace AstralOutbreak
 
             set
             {
-                base.Health = MaxHealth;
+                if(!Damaged)
+                    base.Health = value;
                 if (IsDead)
                 {
-                    if (RoomManager.Active.BossActive)
+                    if (CoreBoss.CoreLives)
                     {
                         Damaged = true;
                         IsDead = false;
@@ -53,6 +54,8 @@ namespace AstralOutbreak
             if (Awake && !Damaged)
             {
                 Shoot(RoomManager.Active.PlayerOne.Center - Center);
+                if (CoreBoss.CoreLives && RoomManager.Active.AllowBossActivation())
+                    RoomManager.Active.BossActive = true;
             }
             Awake = CheckLineOfSight(RoomManager.Active.MapData);
             if (Damaged && CurrentActionTime > 10)

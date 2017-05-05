@@ -235,8 +235,19 @@ namespace AstralOutbreak
                     return v;
                     break;
                 case MapItem.Slug:
-                    if(TileValue[x,y] == 0)
-                        return new Pod(new Vector(x * Scale, y * Scale), 28, 28, 20);
+                    if (TileValue[x, y] == 0)
+                    {
+                        Pod p = new Pod(new Vector(x * Scale, y * Scale), 28, 28, 20);
+                        if (y >= Height - 1 || MapData[x, y + 1] == MapItem.Wall)
+                            p.Direction = Facing.Up;
+                        else if (y < 1 || MapData[x, y - 1] == MapItem.Wall)
+                            p.Direction = Facing.Down;
+                        else if (x < 1 || MapData[x - 1, y] == MapItem.Wall)
+                            p.Direction = Facing.Right;
+                        else if (x >= Width - 1 || MapData[x + 1, y] == MapItem.Wall)
+                            p.Direction = Facing.Left;
+                        return p;
+                    }
                     return new Slug(new Vector(x * Scale, y * Scale), 56, 28, 20);
                     break;
                 case MapItem.Demon:
@@ -251,12 +262,16 @@ namespace AstralOutbreak
                     switch (TileValue[x,y])
                     {
                         default:
+                        case 0:
+                            return new Turret(new Vector(x * Scale, y * Scale), 28, 28, 10);
                         case 1:
                             return new DashRabbit(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
                         case 2:
                             return new SwarmMob(new Vector(x * Scale, y * Scale), 12, 12, 1, 1);
                         case 3:
                             return new MultiRabbit(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
+                        case 4:
+                            return new CoreBoss(new Vector(x * Scale - 14, y * Scale - 14), 56, 56, 2000);
                     }
                     break;
                 default:

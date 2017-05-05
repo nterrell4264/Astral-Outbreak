@@ -7,10 +7,12 @@ using Microsoft.Xna.Framework;
 
 namespace AstralOutbreak
 {
+    public enum Facing { Up, Left, Right, Down}
+
     public class Pod : Enemy
     {
         private bool rest;
-
+        public Facing Direction { get; set; }
         //Is the pod at rest, or shooting?
         public bool Resting
         {
@@ -38,7 +40,23 @@ namespace AstralOutbreak
             //Check if awake
             if (!Resting)
             {
-                Shoot(new Vector(0, -1));
+                switch (Direction)
+                {
+                    case Facing.Up:
+                        Shoot(new Vector(0, -1));
+                        break;
+                    case Facing.Left:
+                        Shoot(new Vector(-1, 0));
+                        break;
+                    case Facing.Right:
+                        Shoot(new Vector(1, 0));
+                        break;
+                    case Facing.Down:
+                        Shoot(new Vector(0, 1));
+                        break;
+                    default:
+                        break;
+                }
                 if (CurrentActionTime > MyWeapon.ShotDelay * 3)
                     Resting = true;
             }
