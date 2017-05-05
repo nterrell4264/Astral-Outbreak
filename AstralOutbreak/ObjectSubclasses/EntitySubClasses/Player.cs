@@ -482,7 +482,23 @@ namespace AstralOutbreak
                     CurrentPlayerState = PlayerState.Idle;
                     break;
             }
-            Aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
+            Vector aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
+            if (aim.Magnitude() > 56)
+            {
+                if (FaceRight)
+                    aim = base.BulletSource + aim * 20 / aim.Magnitude() + aim.Rotate(-Math.PI / 2) * 6.5f / aim.Magnitude();
+                else
+                    aim = base.BulletSource + aim * 20 / aim.Magnitude() + aim.Rotate(Math.PI / 2) * 6.5f / aim.Magnitude();
+                Aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - aim.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - aim.Y);
+            }
+            else
+            {
+                if(FaceRight)
+                    Aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y).Rotate(Math.PI/45);
+                else
+                    Aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y).Rotate(-Math.PI / 45);
+            }
+            aim = new Vector(Game1.Inputs.MouseX + RoomManager.Active.CameraX - Center.X, Game1.Inputs.MouseY + RoomManager.Active.CameraY - Center.Y);
             if (//(Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed) && 
                 CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
             {
@@ -490,9 +506,9 @@ namespace AstralOutbreak
                 {
                     Shoot(Aim);
                 }
-                if (Aim.X > 0)
+                if (aim.X > 0)
                     FaceRight = true;
-                else if (Aim.X < 0)
+                else if (aim.X < 0)
                     FaceRight = false;
             }
             else
