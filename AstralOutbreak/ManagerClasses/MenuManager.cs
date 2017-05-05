@@ -13,7 +13,7 @@ namespace AstralOutbreak
     {
         public static List<MenuContent> items { get; private set; } //List of things to draw
         private GameState prevState; //Holds last frame's GameState for automatic updating
-        private Game1 main; //Used for Exit command
+        private Game1 main; //Used to accommodate for window size changes, as well as the Exit button.
 
         private MenuContent updateMenu; //Used for defining a MenuContent with update code.
         private MenuString updateString; //Used for defining a MenuString with update code.
@@ -78,8 +78,8 @@ namespace AstralOutbreak
         }
         private void LoadGameOver() //Loads game over menu assets
         {
-            items.Add(new MenuButton(32, 182, 150, 75, "RetryButton", () => { RoomManager.Active.ReloadRoom();  Game1.CurrentState = GameState.Playing; })); 
-            items.Add(new MenuButton(32, 282, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(300, 182, 150, 75, "RetryButton", () => { RoomManager.Active.ReloadRoom();  Game1.CurrentState = GameState.Playing; })); 
+            items.Add(new MenuButton(300, 282, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadUI() //Loads GUI assets
         {
@@ -157,12 +157,6 @@ namespace AstralOutbreak
                 updateMenu.IsVisible = RoomManager.Active.BossActive;
             });
             items.Add(updateMenu);
-            updateMenu = new MenuContent(main.GraphicsDevice.Viewport.Width / 2 - 200, 2, "BossHealthBar", canUpdate: true, visible: false);
-            updateMenu.SetUpdateCode(() =>
-            {
-
-            });
-
         }
 
         public void Update()

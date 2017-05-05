@@ -26,8 +26,9 @@ namespace AstralOutbreak
         //    }
         //}
 
-        public SpriteManager()
+        public SpriteManager(Game1 game)
         {
+            main = game;
             masterList = new Dictionary<string, Texture2D>();
             fontList = new Dictionary<string, SpriteFont>();
         }
@@ -35,6 +36,7 @@ namespace AstralOutbreak
         //Class
         private Dictionary<string, Texture2D> masterList;
         private Dictionary<string, SpriteFont> fontList;
+        private Game1 main; //Used to accommodate for window size changes.
 
         //Methods
         public void Update()
@@ -106,18 +108,34 @@ namespace AstralOutbreak
                         }
                     }
                 }
+                //Boss health
+                if (RoomManager.Active.BossActive)
+                {
+                    double bossPercent = RoomManager.Active.CurrentBoss.Health / RoomManager.Active.CurrentBoss.MaxHealth;
+                    Color barColor = Color.Green;
+                    if (bossPercent <= .75) barColor = Color.YellowGreen;
+                    if (bossPercent <= .5) barColor = Color.Yellow;
+                    if (bossPercent <= .25) barColor = Color.Orange;
+                    if (bossPercent <= .1) barColor = Color.Red;
+                    sb.Draw(masterList["rect"], new Rectangle(main.GraphicsDevice.Viewport.Width / 2 - 200,
+                     3, (int)(398 * bossPercent), 19), barColor);
+                }
                 //sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
+            //Menus
             foreach (MenuContent menuPart in MenuManager.items)
             {
-                if (menuPart is MenuString)
+                if (menuPart.IsVisible)
                 {
-                    sb.DrawString(spriteFont: fontList[(menuPart as MenuString).SpriteFont], text: (menuPart as MenuString).text, position: new Vector2(menuPart.Location.X, menuPart.Location.Y), color: Color.Black, rotation: 0, origin: new Vector2(0, 0), scale: 1, effects: SpriteEffects.None, layerDepth: .1f);
-                }
-                else
-                {
-                    Texture2D texture = masterList["Menus/" + menuPart.textureName];
-                    sb.Draw(texture: texture, destinationRectangle:new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), color: Color.White, layerDepth: menuPart.depth);
+                    if (menuPart is MenuString)
+                    {
+                        sb.DrawString(spriteFont: fontList[(menuPart as MenuString).SpriteFont], text: (menuPart as MenuString).text, position: new Vector2(menuPart.Location.X, menuPart.Location.Y), color: Color.Black, rotation: 0, origin: new Vector2(0, 0), scale: 1, effects: SpriteEffects.None, layerDepth: .1f);
+                    }
+                    else
+                    {
+                        Texture2D texture = masterList["Menus/" + menuPart.textureName];
+                        sb.Draw(texture: texture, destinationRectangle: new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), color: Color.White, layerDepth: menuPart.depth);
+                    }
                 }
             }
         }
