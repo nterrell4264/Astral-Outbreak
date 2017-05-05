@@ -232,10 +232,6 @@ namespace AstralOutbreak
                         case 5: pos = new Rectangle(333, 6, 28, 55);
                             break;
                     }
-                    if(player.FaceRight)
-                        destArm = new Rectangle(destArm.X + 5, destArm.Y, destArm.Width, destArm.Height);
-                    else
-                        destArm = new Rectangle(destArm.X - 5, destArm.Y, destArm.Width, destArm.Height);
                     break;
             }
             //if(player.CurrentPlayerState != PlayerState.Rolling)
