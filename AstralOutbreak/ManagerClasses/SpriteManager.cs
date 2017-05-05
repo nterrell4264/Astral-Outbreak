@@ -207,6 +207,7 @@ namespace AstralOutbreak
                     }
                     break;
                 case PlayerState.Falling: pos = new Rectangle(4, 78, 32, 55);
+                    destArm = new Rectangle(destArm.X, destArm.Y - 5, destArm.Width, destArm.Height);
                     break;
                 case PlayerState.Rolling:
                     pos = new Rectangle(3, 181, 32, 56);
@@ -231,6 +232,10 @@ namespace AstralOutbreak
                         case 5: pos = new Rectangle(333, 6, 28, 55);
                             break;
                     }
+                    if(player.FaceRight)
+                        destArm = new Rectangle(destArm.X + 5, destArm.Y, destArm.Width, destArm.Height);
+                    else
+                        destArm = new Rectangle(destArm.X - 5, destArm.Y, destArm.Width, destArm.Height);
                     break;
             }
             //if(player.CurrentPlayerState != PlayerState.Rolling)
@@ -933,14 +938,16 @@ namespace AstralOutbreak
         //Draw for Bullets
         public void Draw(SpriteBatch sb, Projectile bullet, int i)
         {
-            Color col = Color.MediumSeaGreen;
-            Rectangle dest = new Rectangle((int)bullet.Position.X - (int)RoomManager.Active.CameraX,
-                  (int)bullet.Position.Y - (int)RoomManager.Active.CameraY,
-                  (int)bullet.Width, (int)bullet.Height);
-            Rectangle pos = new Rectangle();
-                    pos = new Rectangle(25, 6, 10, 10);
-            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: col, layerDepth: .71f);
-
+            if (!bullet.IsDead)
+            {
+                Color col = Color.MediumSeaGreen;
+                Rectangle dest = new Rectangle((int)bullet.Position.X - (int)RoomManager.Active.CameraX,
+                      (int)bullet.Position.Y - (int)RoomManager.Active.CameraY,
+                      (int)bullet.Width, (int)bullet.Height);
+                Rectangle pos = new Rectangle();
+                pos = new Rectangle(25, 6, 10, 10);
+                sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: col, layerDepth: .71f);
+            }
         }
 
 
