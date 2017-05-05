@@ -194,6 +194,7 @@ namespace AstralOutbreak
                 }
             }
         }
+        //Hooray!
         public static void Victory()
         {
             CurrentState = GameState.MainMenu;
