@@ -8,7 +8,7 @@ using System.IO;
 namespace AstralOutbreak
 {
     //Enum that handles all of the states our game can be in
-    public enum GameState { MainMenu, OptionsMenu, PauseMenu, LoadMenu, SaveMenu, Playing, GameOverMenu }
+    public enum GameState { MainMenu, OptionsMenu, PauseMenu, LoadMenu, SaveMenu, Playing, GameOverMenu, Victory }
 
     /// <summary>
     /// This is the main type for your game.
@@ -32,6 +32,7 @@ namespace AstralOutbreak
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+
             Content.RootDirectory = "Content";
         }
 
@@ -43,6 +44,9 @@ namespace AstralOutbreak
         /// </summary>
         protected override void Initialize()
         {
+            graphics.PreferredBackBufferWidth = graphics.PreferredBackBufferWidth * 12 / 10;
+            graphics.PreferredBackBufferHeight = graphics.PreferredBackBufferHeight * 12 / 10;
+            graphics.ApplyChanges();
             Rand = new Random();
             if (File.Exists("config.txt"))
                 try
@@ -189,6 +193,10 @@ namespace AstralOutbreak
                         input.Close();
                 }
             }
+        }
+        public static void Victory()
+        {
+            CurrentState = GameState.MainMenu;
         }
     }
 }

@@ -158,6 +158,7 @@ namespace AstralOutbreak
         public void ReloadRoom()
         {
             BossActive = false;
+            CurrentBoss = null;
             SwarmMob.Awake = false;
             SwarmMob.MySwarm.Clear();
             MapData.Reload();
@@ -289,6 +290,11 @@ namespace AstralOutbreak
             {
                 if ((obj1 as Player).InvulnTime <= 0 && (obj2 as Wall).MyType == WallType.Fire)
                     PlayerOne.Health--;
+            }
+
+            if(obj1 is Player && obj2 is EscapePod)
+            {
+                Game1.Victory();
             }
 
             ////Enemies Correct

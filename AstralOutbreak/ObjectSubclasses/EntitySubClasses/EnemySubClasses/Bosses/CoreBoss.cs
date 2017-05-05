@@ -28,6 +28,7 @@ namespace AstralOutbreak
                 {
                     RoomManager.Active.BossActive = false;
                     RoomManager.Active.CurrentBoss = null;
+                    Game1.Victory();
                     CoreLives = false;
                 }
             }
