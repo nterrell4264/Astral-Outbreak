@@ -24,17 +24,17 @@ namespace AstralOutbreak
         private MenuDelegate ClickEvent;
 
         //Constructors
-        public MenuButton(int x, int y, int width, int height, string texture, MenuDelegate clickAction, float layer = .1f) : base(x, y, texture, true, layer)
+        public MenuButton(int x, int y, int width, int height, string texture, MenuDelegate clickAction, bool visible = true, float layer = .1f) : base(x, y, texture, true, visible, layer)
         {
             hitbox = new Rectangle(base.Location, new Point(width, height));
             ClickEvent = clickAction;
         }
-        public MenuButton(Point location, Point size, string texture, MenuDelegate clickAction, float layer = .1f) : base(location, texture, true, layer)
+        public MenuButton(Point location, Point size, string texture, MenuDelegate clickAction, bool visible = true, float layer = .1f) : base(location, texture, true, visible, layer)
         {
             hitbox = new Rectangle(base.Location, size);
             ClickEvent = clickAction;
         }
-        public MenuButton(Rectangle casting, string texture, MenuDelegate clickAction, float layer = .1f) : base(casting.X, casting.Y, texture, true, layer)
+        public MenuButton(Rectangle casting, string texture, MenuDelegate clickAction, bool visible = true, float layer = .1f) : base(casting.X, casting.Y, texture, true, visible, layer)
         {
             hitbox = casting;
             ClickEvent = clickAction;

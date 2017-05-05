@@ -12,26 +12,30 @@ namespace AstralOutbreak
     public class MenuContent
     {
         //Variables
-        public Point Location;
         public string textureName;
+        public Point Location;
         public float depth;
-        private bool updatable;
-        private MenuDelegate UpdateCode;
+        public bool IsVisible;
+
+        private bool updatable; //if UI should update every frame
+        private MenuDelegate UpdateCode; //Code if UI updates.
 
         //Constructors
-        public MenuContent(int x, int y, string texture, bool canUpdate = false, float layer = .1f)
+        public MenuContent(int x, int y, string texture, bool canUpdate = false, bool visible = true, float layer = .1f)
         {
             Location = new Point(x, y);
             textureName = texture;
             updatable = canUpdate;
             depth = layer;
+            IsVisible = visible;
         }
-        public MenuContent(Point location, string texture, bool canUpdate = false, float layer = .1f)
+        public MenuContent(Point location, string texture, bool canUpdate = false, bool visible = true, float layer = .1f)
         {
             Location = location;
             textureName = texture;
             updatable = canUpdate;
             depth = layer;
+            IsVisible = visible;
         }
 
         //Methods

@@ -151,6 +151,11 @@ namespace AstralOutbreak
                         break;
                     }
             }
+            //Boss Health Bar
+            updateMenu = new MenuContent(main.GraphicsDevice.Viewport.Width / 2 - 212, 0, "BossHealthBar", canUpdate: true, visible: false);
+            updateMenu.SetUpdateCode(() => {
+                updateMenu.IsVisible = RoomManager.Active.BossActive;
+            });
 
         }
 

@@ -99,6 +99,7 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/dashIcon"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/spreadIcon"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/batIcon"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/BossHealthBar"));
             spriteManager.AddTexture(Content.Load<Texture2D>("TileSheet"));
 
             // TODO: use this.Content to load your game content here
