@@ -215,14 +215,16 @@ namespace AstralOutbreak
                     }
                     break;
             }
-
+            //if(player.CurrentPlayerState != PlayerState.Rolling)
+            //    dest = new Rectangle((int)(player.Position.X - pos.Width / 2 + player.Width - RoomManager.Active.CameraX),
+            //    (int)(player.Position.Y - RoomManager.Active.CameraY + (int)player.Height / 2 + player.Height - pos.Height), pos.Width, pos.Height);
             sb.Draw(masterList["PlayerSprites"],
             destinationRectangle: dest,
             sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
             color: Color.White, effects: flip, layerDepth: .6f);
-            float gunRot = RoomManager.Active.PlayerOne.Aim.GetAngle();
+            float gunRot = player.Aim.GetAngle();
             Vector2 armOrg = new Vector2(5, 10);
-            if (!RoomManager.Active.PlayerOne.FaceRight)
+            if (!player.FaceRight)
             {
                 gunRot -= (float)Math.PI;
                 armOrg = new Vector2(28, 10);
