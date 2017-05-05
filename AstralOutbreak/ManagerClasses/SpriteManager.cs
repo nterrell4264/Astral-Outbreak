@@ -109,17 +109,7 @@ namespace AstralOutbreak
                     }
                 }
                 //Boss health
-                if (RoomManager.Active.BossActive)
-                {
-                    double bossPercent = RoomManager.Active.CurrentBoss.Health / RoomManager.Active.CurrentBoss.MaxHealth;
-                    Color barColor = Color.Green;
-                    if (bossPercent <= .75) barColor = Color.YellowGreen;
-                    if (bossPercent <= .5) barColor = Color.Yellow;
-                    if (bossPercent <= .25) barColor = Color.Orange;
-                    if (bossPercent <= .1) barColor = Color.Red;
-                    sb.Draw(masterList["rect"], new Rectangle(main.GraphicsDevice.Viewport.Width / 2 - 200,
-                     3, (int)(398 * bossPercent), 19), barColor);
-                }
+                
                 //sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
             sb.End();
@@ -139,6 +129,17 @@ namespace AstralOutbreak
                         sb.Draw(texture: texture, destinationRectangle: new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), color: Color.White, layerDepth: menuPart.depth);
                     }
                 }
+            }
+            if (Game1.CurrentState == GameState.Playing && RoomManager.Active.BossActive)
+            {
+                double bossPercent = RoomManager.Active.CurrentBoss.Health / RoomManager.Active.CurrentBoss.MaxHealth;
+                Color barColor = Color.Green;
+                if (bossPercent <= .75) barColor = Color.YellowGreen;
+                if (bossPercent <= .5) barColor = Color.Yellow;
+                if (bossPercent <= .25) barColor = Color.Orange;
+                if (bossPercent <= .1) barColor = Color.Red;
+                sb.Draw(masterList["rect"], new Rectangle(main.GraphicsDevice.Viewport.Width / 2 - 200,
+                 3, (int)(398 * bossPercent), 19), barColor);
             }
         }
 
