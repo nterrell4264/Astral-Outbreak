@@ -122,6 +122,8 @@ namespace AstralOutbreak
                 }
                 //sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
+            sb.End();
+            sb.Begin();
             //Menus
             foreach (MenuContent menuPart in MenuManager.items)
             {
@@ -259,12 +261,12 @@ namespace AstralOutbreak
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
-                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .6f);
+                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .59f);
                 if (player.CurrentPlayerState != PlayerState.Dashing)
                     sb.Draw(masterList["PlayerSprites"],
                     destinationRectangle: destArm,
                     sourceRectangle: new Rectangle(5, 148, 33, 16), rotation: gunRot + rot, origin: armOrg,
-                    color: new Color(1, 0, 0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .5f);
+                    color: new Color(1, 0, 0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .49f);
             }
         }
 

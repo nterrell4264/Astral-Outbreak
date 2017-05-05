@@ -116,7 +116,6 @@ namespace AstralOutbreak
             if (MySwarm.Mobs.Count > 0)
             {
                 Awake = true;
-                MySwarm.Activate();
                 Target = (MySwarm.GetCenter() + RoomManager.Active.PlayerOne.Center) / 2;
                 List<PhysicsObject> swarmMobs = new List<PhysicsObject>();
                 for (int i = 0; i < 15; i++)
@@ -128,6 +127,7 @@ namespace AstralOutbreak
                     }
                 }
                 RoomManager.Active.AddEntities(swarmMobs);
+                MySwarm.Activate();
             }
         }
     }
