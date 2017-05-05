@@ -109,7 +109,7 @@ namespace AstralOutbreak
                     }
                 }
                 //Boss health
-                if (RoomManager.Active.BossActive)
+                if (RoomManager.Active.CurrentBoss != null)
                 {
                     double bossPercent = RoomManager.Active.CurrentBoss.Health / RoomManager.Active.CurrentBoss.MaxHealth;
                     Color barColor = Color.Green;
