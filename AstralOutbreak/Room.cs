@@ -401,7 +401,7 @@ namespace AstralOutbreak
             {
                 PhysicsObjects.Add(obj);
             }
-            obj.Velocity = vel;
+            obj.Velocity += vel;
         }
 
         //Adds entities to the room

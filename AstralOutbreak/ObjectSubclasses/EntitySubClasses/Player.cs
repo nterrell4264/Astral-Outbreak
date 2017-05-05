@@ -168,16 +168,7 @@ namespace AstralOutbreak
                         }
                         break;
                     }
-                    if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash && Game1.Inputs.JumpButtonState == ButtonStatus.Held)
-                    {
-                        MaxVelocity.Y = DASHSPEED;
-                        Velocity.Y = -MaxVelocity.Y;
-                        CurrentPlayerState = PlayerState.Dashing;
-                        Gravity = false;
-                        canAirDash = false;
-                        UpwardDash = true;
-                        break;
-                    }
+                    
                     //If we are jumping
                     if (jumpTime > 0 && ((Game1.Inputs.JumpButtonState == ButtonStatus.Held || Game1.Inputs.JumpButtonState == ButtonStatus.Pressed || jumpTime > JUMPTIME * 2 / 3)) && Velocity.Y < 0)
                     {
@@ -193,6 +184,7 @@ namespace AstralOutbreak
                     if (!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
                     {
                         Velocity.X = 0;
+
                     }
                     if (Velocity.X > 0)
                     {
@@ -265,16 +257,26 @@ namespace AstralOutbreak
                         }
                         if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
                         {
-                            MaxVelocity.X = DASHSPEED;
-                            if (FaceRight)
-                                Velocity.X = MaxVelocity.X;
-                            else
-                                Velocity.X = -MaxVelocity.X;
-                            CurrentPlayerState = PlayerState.Dashing;
-                            Velocity.Y = 0;
-                            Gravity = false;
-                            canAirDash = false;
-                            break;
+                            //if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash && Game1.Inputs.JumpButtonState == ButtonStatus.Held)
+                            //{
+                                MaxVelocity.Y = DASHSPEED;
+                                Velocity.Y = -MaxVelocity.Y;
+                                CurrentPlayerState = PlayerState.Dashing;
+                                Gravity = false;
+                                canAirDash = false;
+                                UpwardDash = true;
+                                break;
+                            //}
+                            //MaxVelocity.X = DASHSPEED;
+                            //if (FaceRight)
+                            //    Velocity.X = MaxVelocity.X;
+                            //else
+                            //    Velocity.X = -MaxVelocity.X;
+                            //CurrentPlayerState = PlayerState.Dashing;
+                            //Velocity.Y = 0;
+                            //Gravity = false;
+                            //canAirDash = false;
+                            //break;
                         }
                     }
                     break;

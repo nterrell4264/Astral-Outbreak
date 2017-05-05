@@ -109,19 +109,11 @@ namespace AstralOutbreak
                     }
                 }
                 //Boss health
-                if (RoomManager.Active.CurrentBoss != null)
-                {
-                    double bossPercent = RoomManager.Active.CurrentBoss.Health / RoomManager.Active.CurrentBoss.MaxHealth;
-                    Color barColor = Color.Green;
-                    if (bossPercent <= .75) barColor = Color.YellowGreen;
-                    if (bossPercent <= .5) barColor = Color.Yellow;
-                    if (bossPercent <= .25) barColor = Color.Orange;
-                    if (bossPercent <= .1) barColor = Color.Red;
-                    sb.Draw(masterList["rect"], new Rectangle(main.GraphicsDevice.Viewport.Width / 2 - 200,
-                     3, (int)(398 * bossPercent), 19), barColor);
-                }
+                
                 //sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
+            sb.End();
+            sb.Begin();
             //Menus
             foreach (MenuContent menuPart in MenuManager.items)
             {
@@ -137,6 +129,17 @@ namespace AstralOutbreak
                         sb.Draw(texture: texture, destinationRectangle: new Rectangle(menuPart.Location, new Point(texture.Width, texture.Height)), color: Color.White, layerDepth: menuPart.depth);
                     }
                 }
+            }
+            if (Game1.CurrentState == GameState.Playing && RoomManager.Active.BossActive)
+            {
+                double bossPercent = RoomManager.Active.CurrentBoss.Health / RoomManager.Active.CurrentBoss.MaxHealth;
+                Color barColor = Color.Green;
+                if (bossPercent <= .75) barColor = Color.YellowGreen;
+                if (bossPercent <= .5) barColor = Color.Yellow;
+                if (bossPercent <= .25) barColor = Color.Orange;
+                if (bossPercent <= .1) barColor = Color.Red;
+                sb.Draw(masterList["rect"], new Rectangle(main.GraphicsDevice.Viewport.Width / 2 - 200,
+                 3, (int)(398 * bossPercent), 19), barColor);
             }
         }
 
@@ -207,6 +210,7 @@ namespace AstralOutbreak
                     }
                     break;
                 case PlayerState.Falling: pos = new Rectangle(4, 78, 32, 55);
+                    destArm = new Rectangle(destArm.X, destArm.Y - 5, destArm.Width, destArm.Height);
                     break;
                 case PlayerState.Rolling:
                     pos = new Rectangle(3, 181, 32, 56);
@@ -233,14 +237,16 @@ namespace AstralOutbreak
                     }
                     break;
             }
-
+            //if(player.CurrentPlayerState != PlayerState.Rolling)
+            //    dest = new Rectangle((int)(player.Position.X - pos.Width / 2 + player.Width - RoomManager.Active.CameraX),
+            //    (int)(player.Position.Y - RoomManager.Active.CameraY + (int)player.Height / 2 + player.Height - pos.Height), pos.Width, pos.Height);
             sb.Draw(masterList["PlayerSprites"],
             destinationRectangle: dest,
             sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
             color: Color.White, effects: flip, layerDepth: .6f);
-            float gunRot = RoomManager.Active.PlayerOne.Aim.GetAngle();
+            float gunRot = player.Aim.GetAngle();
             Vector2 armOrg = new Vector2(5, 10);
-            if (!RoomManager.Active.PlayerOne.FaceRight)
+            if (!player.FaceRight)
             {
                 gunRot -= (float)Math.PI;
                 armOrg = new Vector2(28, 10);
@@ -256,12 +262,12 @@ namespace AstralOutbreak
                 sb.Draw(masterList["PlayerSprites"],
                 destinationRectangle: dest,
                 sourceRectangle: pos, rotation: rot, origin: new Vector2(player.Width / 2, player.Height / 2),
-                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .6f);
+                color: new Color(1,0,0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .59f);
                 if (player.CurrentPlayerState != PlayerState.Dashing)
                     sb.Draw(masterList["PlayerSprites"],
                     destinationRectangle: destArm,
                     sourceRectangle: new Rectangle(5, 148, 33, 16), rotation: gunRot + rot, origin: armOrg,
-                    color: new Color(1, 0, 0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .5f);
+                    color: new Color(1, 0, 0, (player.InvulnTime * 4) % 1), effects: flip, layerDepth: .49f);
             }
         }
 
@@ -931,14 +937,16 @@ namespace AstralOutbreak
         //Draw for Bullets
         public void Draw(SpriteBatch sb, Projectile bullet, int i)
         {
-            Color col = Color.MediumSeaGreen;
-            Rectangle dest = new Rectangle((int)bullet.Position.X - (int)RoomManager.Active.CameraX,
-                  (int)bullet.Position.Y - (int)RoomManager.Active.CameraY,
-                  (int)bullet.Width, (int)bullet.Height);
-            Rectangle pos = new Rectangle();
-                    pos = new Rectangle(25, 6, 10, 10);
-            sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: col, layerDepth: .71f);
-
+            if (!bullet.IsDead)
+            {
+                Color col = Color.MediumSeaGreen;
+                Rectangle dest = new Rectangle((int)bullet.Position.X - (int)RoomManager.Active.CameraX,
+                      (int)bullet.Position.Y - (int)RoomManager.Active.CameraY,
+                      (int)bullet.Width, (int)bullet.Height);
+                Rectangle pos = new Rectangle();
+                pos = new Rectangle(25, 6, 10, 10);
+                sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: col, layerDepth: .71f);
+            }
         }
 
 

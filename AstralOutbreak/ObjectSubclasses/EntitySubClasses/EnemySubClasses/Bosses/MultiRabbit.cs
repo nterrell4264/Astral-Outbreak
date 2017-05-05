@@ -53,6 +53,7 @@ namespace AstralOutbreak
                 if (IsDead)
                 {
                     RoomManager.Active.BossActive = false;
+                    RoomManager.Active.CurrentBoss = null;
                 }
             }
         }

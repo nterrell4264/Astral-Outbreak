@@ -92,6 +92,7 @@ namespace AstralOutbreak
         public void Die()
         {
             RoomManager.Active.BossActive = false;
+            RoomManager.Active.CurrentBoss = null;
             SwarmMob.Awake = false;
         }
 

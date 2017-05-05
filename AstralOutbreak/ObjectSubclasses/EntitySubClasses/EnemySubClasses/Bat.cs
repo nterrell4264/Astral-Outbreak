@@ -74,6 +74,7 @@ namespace AstralOutbreak
         {
             Gravity = false;
             MaxVelocity = new Vector(300, 300);
+            PlatformDown = true;
         }
 
         public Bat(SwarmMob mob) : base(new Vector(mob.Position), mob.Width, mob.Height, mob.Health, mob.Damage, mob.Mobile)

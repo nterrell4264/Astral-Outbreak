@@ -21,6 +21,10 @@ namespace AstralOutbreak
             Damage = damage;
             Source = source;
             Gravity = false;
+            if (source is Player)
+                Velocity = source.Velocity + new Vector(0, 0);
+            else
+                Velocity = new Vector(0,0);
         }
 
         //Each step, projectiles damage themselves
