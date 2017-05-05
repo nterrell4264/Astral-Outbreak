@@ -73,7 +73,7 @@ namespace AstralOutbreak
         public Bat(Vector2 pos, float width, float height, float health, float damage, bool mobile = true) : base(pos, width, height, health, 1, mobile)
         {
             Gravity = false;
-            MaxVelocity = new Vector(400, 400);
+            MaxVelocity = new Vector(300, 300);
         }
 
         public Bat(SwarmMob mob) : base(new Vector(mob.Position), mob.Width, mob.Height, mob.Health, mob.Damage, mob.Mobile)
@@ -89,155 +89,164 @@ namespace AstralOutbreak
             //If it is awake
             if (Awake)
             {
-                switch (CurrentBatState)
+                //switch (CurrentBatState)
+                //{
+                //    case BatState.UpLeft:
+                //        if(Velocity.X != -300)
+                //        {
+                //            if(Center.Y > RoomManager.Active.PlayerOne.Center.Y)
+                //            {
+                //                CurrentBatState = BatState.UpRight;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.DownRight;
+                //            }
+                //        }
+                //        if (Velocity.Y != -300)
+                //        {
+                //            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
+                //            {
+                //                CurrentBatState = BatState.DownLeft;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.DownRight;
+                //            }
+                //        }
+                //        if (CurrentActionTime > .5f)
+                //        {
+                //            CurrentBatState = BatState.DownLeft;
+                //        }
+                //        break;
+                //    case BatState.UpRight:
+                //        if (Velocity.X != 300)
+                //        {
+                //            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
+                //            {
+                //                CurrentBatState = BatState.UpLeft;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.DownLeft;
+                //            }
+                //        }
+                //        if (Velocity.Y != -300)
+                //        {
+                //            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
+                //            {
+                //                CurrentBatState = BatState.DownLeft;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.DownRight;
+                //            }
+                //        }
+                //        if (CurrentActionTime > .5f)
+                //        {
+                //            CurrentBatState = BatState.DownRight;
+                //        }
+                //        break;
+                //    case BatState.DownLeft:
+                //        if (Velocity.X != -300)
+                //        {
+                //            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
+                //            {
+                //                CurrentBatState = BatState.UpRight;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.DownRight;
+                //            }
+                //        }
+                //        if (Velocity.Y != 300)
+                //        {
+                //            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
+                //            {
+                //                CurrentBatState = BatState.UpLeft;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.UpRight;
+                //            }
+                //        }
+                //        if (CurrentActionTime > .5f)
+                //        {
+                //            CurrentBatState = BatState.UpLeft;
+                //        }
+                //        break;
+                //    case BatState.DownRight:
+                //        if (Velocity.X != 300)
+                //        {
+                //            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
+                //            {
+                //                CurrentBatState = BatState.UpLeft;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.DownLeft;
+                //            }
+                //        }
+                //        if (Velocity.Y != 300)
+                //        {
+                //            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
+                //            {
+                //                CurrentBatState = BatState.UpLeft;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.UpRight;
+                //            }
+                //        }
+                //        if (CurrentActionTime > .5f)
+                //        {
+                //            CurrentBatState = BatState.UpRight;
+                //        }
+                //        break;
+                //    default:
+                //        if(Velocity.Y != -300)
+                //        {
+                //            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
+                //            {
+                //                CurrentBatState = BatState.UpRight;
+                //                break;
+                //            }
+                //            else
+                //            {
+                //                CurrentBatState = BatState.DownRight;
+                //            }
+                //            if (RoomManager.Active.PlayerOne.Position.Y -  48 > Position.Y)
+                //            {
+                //                CurrentBatState = BatState.Up;
+                //            }
+                //        }
+                //        break;
+
+                //}
+                if (Math.Abs(Position.X - Target.X) > Math.Abs(Position.Y - Target.Y))
                 {
-                    case BatState.UpLeft:
-                        if(Velocity.X != -300)
-                        {
-                            if(Center.Y > RoomManager.Active.PlayerOne.Center.Y)
-                            {
-                                CurrentBatState = BatState.UpRight;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.DownRight;
-                            }
-                        }
-                        if (Velocity.Y != -300)
-                        {
-                            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
-                            {
-                                CurrentBatState = BatState.DownLeft;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.DownRight;
-                            }
-                        }
-                        if (CurrentActionTime > .5f)
-                        {
-                            CurrentBatState = BatState.DownLeft;
-                        }
-                        break;
-                    case BatState.UpRight:
-                        if (Velocity.X != 300)
-                        {
-                            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
-                            {
-                                CurrentBatState = BatState.UpLeft;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.DownLeft;
-                            }
-                        }
-                        if (Velocity.Y != -300)
-                        {
-                            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
-                            {
-                                CurrentBatState = BatState.DownLeft;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.DownRight;
-                            }
-                        }
-                        if (CurrentActionTime > .5f)
-                        {
-                            CurrentBatState = BatState.DownRight;
-                        }
-                        break;
-                    case BatState.DownLeft:
-                        if (Velocity.X != -300)
-                        {
-                            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
-                            {
-                                CurrentBatState = BatState.UpRight;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.DownRight;
-                            }
-                        }
-                        if (Velocity.Y != 300)
-                        {
-                            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
-                            {
-                                CurrentBatState = BatState.UpLeft;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.UpRight;
-                            }
-                        }
-                        if (CurrentActionTime > .5f)
-                        {
-                            CurrentBatState = BatState.UpLeft;
-                        }
-                        break;
-                    case BatState.DownRight:
-                        if (Velocity.X != 300)
-                        {
-                            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
-                            {
-                                CurrentBatState = BatState.UpLeft;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.DownLeft;
-                            }
-                        }
-                        if (Velocity.Y != 300)
-                        {
-                            if (Center.X > RoomManager.Active.PlayerOne.Center.X)
-                            {
-                                CurrentBatState = BatState.UpLeft;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.UpRight;
-                            }
-                        }
-                        if (CurrentActionTime > .5f)
-                        {
-                            CurrentBatState = BatState.UpRight;
-                        }
-                        break;
-                    default:
-                        if(Velocity.Y != -300)
-                        {
-                            if (Center.Y > RoomManager.Active.PlayerOne.Center.Y)
-                            {
-                                CurrentBatState = BatState.UpRight;
-                                break;
-                            }
-                            else
-                            {
-                                CurrentBatState = BatState.DownRight;
-                            }
-                            if (RoomManager.Active.PlayerOne.Position.Y -  48 > Position.Y)
-                            {
-                                CurrentBatState = BatState.Up;
-                            }
-                        }
-                        break;
+                    Acceleration.X = Target.X - Center.X;
                 }
-                if(RoomManager.Active.PlayerOne.Position.Y < Position.Y - 48)
+                else
                 {
-                    CurrentBatState = BatState.Up;
+                    Acceleration.Y = Target.Y - Center.Y;
                 }
+                //if(RoomManager.Active.PlayerOne.Position.Y < Position.Y - 48)
+                //{
+                //    CurrentBatState = BatState.Up;
+                //}
             }
             else
             {
-                if (CheckLineOfSight(RoomManager.Active.MapData) && RoomManager.Active.AllowBossActivation())
+                if (CheckLineOfSight(RoomManager.Active.MapData))
                     Awake = true;
             }
 
