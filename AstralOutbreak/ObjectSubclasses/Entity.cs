@@ -57,7 +57,7 @@ namespace AstralOutbreak
             Aim = new Vector(0, 0);
         }
 
-        public void Shoot(Vector direction)
+        public virtual void Shoot(Vector direction)
         {
             if (MyWeapon != null)
             {

@@ -57,6 +57,17 @@ namespace AstralOutbreak
             }
         }
 
+        public override Vector BulletSource
+        {
+            get
+            {
+                if(FaceRight)
+                    return base.BulletSource + Aim * 20 / Aim.Magnitude() + Aim.Rotate(-Math.PI / 2) * 6.5f / Aim.Magnitude();
+                else
+                    return base.BulletSource + Aim * 20 / Aim.Magnitude() + Aim.Rotate(Math.PI / 2) * 6.5f / Aim.Magnitude();
+            }
+        }
+
         public bool UpwardDash { get; set; }
 
         public Upgrades MyUpgrades { get; set; }
@@ -475,8 +486,10 @@ namespace AstralOutbreak
             if (//(Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed) && 
                 CurrentPlayerState != PlayerState.Dashing && CurrentPlayerState != PlayerState.Rolling)
             {
-                if((Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed))
+                if ((Game1.Inputs.M1State == ButtonStatus.Held || Game1.Inputs.M1State == ButtonStatus.Pressed))
+                {
                     Shoot(Aim);
+                }
                 if (Aim.X > 0)
                     FaceRight = true;
                 else if (Aim.X < 0)
@@ -566,7 +579,7 @@ namespace AstralOutbreak
             }
         }
 
-
+        
 
     }//End Class
 }

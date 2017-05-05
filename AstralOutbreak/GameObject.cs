@@ -21,6 +21,8 @@ namespace AstralOutbreak
         //Is this entity trying to go down a platform
         public bool PlatformDown { get; set; }
 
+        public virtual Vector BulletSource { get { return Center; } }
+
         /// <summary>
         /// Making this true tells the engine to unload the object.
         /// </summary>

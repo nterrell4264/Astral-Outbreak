@@ -103,17 +103,17 @@ namespace AstralOutbreak
             if (Source != null)
             {
                 Vector shotVel = direction * BulletSpeed / direction.Magnitude();
-                var p = new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
+                var p = new Projectile(new Vector(Source.BulletSource.X - BulletSize / 2, Source.BulletSource.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
                 p.Gravity = this.Gravity;
                 RoomManager.Active.AddBullet(p, shotVel);
                 if (MultiShot)
                 {
-                    p = new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
+                    p = new Projectile(new Vector(Source.BulletSource.X - BulletSize / 2, Source.BulletSource.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
                     p.Gravity = this.Gravity;
-                    RoomManager.Active.AddBullet(p, shotVel.Rotate(Math.PI / 45));
-                    p = new Projectile(new Vector(Source.Center.X - BulletSize / 2, Source.Center.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
+                    RoomManager.Active.AddBullet(p, shotVel.Rotate(Math.PI / 45 * BulletSize / 5));
+                    p = new Projectile(new Vector(Source.BulletSource.X - BulletSize / 2, Source.BulletSource.Y - BulletSize / 2), BulletSize, BulletSize, bulletHealth, Damage, Source);
                     p.Gravity = this.Gravity;
-                    RoomManager.Active.AddBullet(p, shotVel.Rotate(-Math.PI / 45));
+                    RoomManager.Active.AddBullet(p, shotVel.Rotate(-Math.PI / 45 * BulletSize / 5));
                 }
             }
         }
