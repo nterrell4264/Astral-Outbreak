@@ -78,7 +78,7 @@ namespace AstralOutbreak
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             menuManager = new MenuManager(this);
-            spriteManager = new SpriteManager();
+            spriteManager = new SpriteManager(this);
             spriteManager.AddFont("font", Content.Load<SpriteFont>("font"));
             spriteManager.AddFont("UIfont", Content.Load<SpriteFont>("UIfont"));
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
