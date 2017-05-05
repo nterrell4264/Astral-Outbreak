@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    public class CoreBoss : Enemy
+    public class CoreBoss : Enemy, Boss
     {
         public static bool CoreLives { get; set; }
         private bool awake;
@@ -87,6 +87,7 @@ namespace AstralOutbreak
         {
             awake = true;
             RoomManager.Active.BossActive = true;
+            RoomManager.Active.CurrentBoss = this;
         }
 
 

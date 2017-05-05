@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
-    public class MultiRabbit : Enemy
+    public class MultiRabbit : Enemy, Boss
     {
         private JackRabbitState currentState;
 
@@ -241,6 +241,8 @@ namespace AstralOutbreak
         {
             awake = true;
             RoomManager.Active.BossActive = true;
+            RoomManager.Active.CurrentBoss = this;
+
         }
 
 

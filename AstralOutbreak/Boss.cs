@@ -9,8 +9,8 @@ namespace AstralOutbreak
     //Does the thing a boss needs to do
     public interface Boss
     {
-        float Health { get; set; }
-        float MaxHealth { get; set; }
+        float Health { get; }
+        float MaxHealth { get; }
 
     }
 }
