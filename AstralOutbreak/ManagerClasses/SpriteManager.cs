@@ -407,97 +407,149 @@ namespace AstralOutbreak
         //DRAW FOR DASH BOSS
         public void Draw(SpriteBatch sb, DashRabbit enemy, int i)
         {
+            //Rectangle pos = new Rectangle();
+            //Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX - 3,
+            //      (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY - 5,
+            //      35, 61);
+            //SpriteEffects flip = SpriteEffects.None;
+            //if (!enemy.FaceRight)
+            //    flip = SpriteEffects.FlipHorizontally;
+            //switch (enemy.CurrentJackRabbitState)
+            //{
+            //    default:
+            //        break;
+            //    case JackRabbitState.Falling:
+            //        pos = new Rectangle(5, 160, 31, 61);
+            //        break;
+            //    case JackRabbitState.Idle:
+            //        pos = new Rectangle(4, 227, 35, 59);
+            //        break;
+            //    case JackRabbitState.Moving:
+
+            //        int t = (int)(enemy.CurrentActionTime * 8) % 6;
+            //        switch (t)
+            //        {
+            //            default:
+            //                pos = new Rectangle(5, 99, 46, 55);
+            //                dest.X -= 6;
+            //                dest.Width += 12;
+            //                break;
+            //            case 1:
+            //                pos = new Rectangle(68, 99, 47, 54);
+            //                dest.X -= 6;
+            //                dest.Width += 12;
+            //                break;
+            //            case 2:
+            //                pos = new Rectangle(138, 105, 33, 60);
+            //                break;
+            //            case 3:
+            //                pos = new Rectangle(206, 104, 30, 61);
+            //                break;
+            //            case 4:
+            //                pos = new Rectangle(258, 99, 44, 54);
+            //                dest.X -= 6;
+            //                dest.Width += 12;
+            //                break;
+            //            case 5:
+            //                pos = new Rectangle(323, 101, 46, 54);
+            //                dest.X -= 6;
+            //                dest.Width += 12;
+            //                break;
+            //        }
+            //        break;
+            //    case JackRabbitState.Shooting:
+
+            //        int s = (int)(enemy.CurrentActionTime * 8) % 6;
+            //        switch (s)
+            //        {
+            //            default:
+            //                pos = new Rectangle(6, 28, 32, 63);
+            //                break;
+            //            case 1:
+            //                pos = new Rectangle(68, 28, 37, 63);
+            //                break;
+            //            case 2:
+            //                pos = new Rectangle(131, 28, 41, 63);
+            //                dest.X -= 6;
+            //                dest.Width += 12;
+            //                break;
+            //            case 3:
+            //                pos = new Rectangle(205, 28, 34, 63);
+            //                break;
+            //            case 4:
+            //                pos = new Rectangle(270, 28, 41, 63);
+            //                dest.X -= 6;
+            //                dest.Width += 12;
+            //                break;
+            //            case 5:
+            //                pos = new Rectangle(329, 28, 30, 63);
+            //                break;
+            //        }
+            //        break;
+
+            //}
+            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Center.X - (int)RoomManager.Active.CameraX - 48,
+                 (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY,
+                 80, 51);
             Rectangle pos = new Rectangle();
-            Rectangle dest = new Rectangle((int)RoomManager.Active.PhysicsObjects[i].Position.X - (int)RoomManager.Active.CameraX - 3,
-                  (int)RoomManager.Active.PhysicsObjects[i].Position.Y - (int)RoomManager.Active.CameraY - 5,
-                  35, 61);
+
             SpriteEffects flip = SpriteEffects.None;
-            if (!enemy.FaceRight)
+            if (enemy.FaceRight)
                 flip = SpriteEffects.FlipHorizontally;
             switch (enemy.CurrentJackRabbitState)
             {
                 default:
                     break;
                 case JackRabbitState.Falling:
-                    pos = new Rectangle(5, 160, 31, 61);
-                    break;
-                case JackRabbitState.Idle:
-                    pos = new Rectangle(4, 227, 35, 59);
+                    pos = new Rectangle(97, 5, 65, 34);
                     break;
                 case JackRabbitState.Moving:
-
-                    int t = (int)(enemy.CurrentActionTime * 8) % 6;
-                    switch (t)
+                    int o = (int)(enemy.CurrentActionTime * 8) % 4;
+                    switch (o)
                     {
                         default:
-                            pos = new Rectangle(5, 99, 46, 55);
-                            dest.X -= 6;
-                            dest.Width += 12;
+                            pos = new Rectangle(97, 5, 65, 34);
                             break;
                         case 1:
-                            pos = new Rectangle(68, 99, 47, 54);
-                            dest.X -= 6;
-                            dest.Width += 12;
+                            pos = new Rectangle(187, 6, 64, 34);
                             break;
                         case 2:
-                            pos = new Rectangle(138, 105, 33, 60);
+                            pos = new Rectangle(269, 6, 64, 34);
                             break;
                         case 3:
-                            pos = new Rectangle(206, 104, 30, 61);
-                            break;
-                        case 4:
-                            pos = new Rectangle(258, 99, 44, 54);
-                            dest.X -= 6;
-                            dest.Width += 12;
-                            break;
-                        case 5:
-                            pos = new Rectangle(323, 101, 46, 54);
-                            dest.X -= 6;
-                            dest.Width += 12;
+                            pos = new Rectangle(359, 7, 64, 34);
                             break;
                     }
                     break;
-                case JackRabbitState.Shooting:
-
-                    int s = (int)(enemy.CurrentActionTime * 8) % 6;
-                    switch (s)
+                case JackRabbitState.Idle:
+                    int y = (int)(enemy.CurrentActionTime * 8) % 4;
+                    switch (y)
                     {
                         default:
-                            pos = new Rectangle(6, 28, 32, 63);
+                            pos = new Rectangle(97, 5, 65, 34);
                             break;
                         case 1:
-                            pos = new Rectangle(68, 28, 37, 63);
+                            pos = new Rectangle(187, 6, 64, 34);
                             break;
                         case 2:
-                            pos = new Rectangle(131, 28, 41, 63);
-                            dest.X -= 6;
-                            dest.Width += 12;
+                            pos = new Rectangle(269, 6, 64, 34);
                             break;
                         case 3:
-                            pos = new Rectangle(205, 28, 34, 63);
-                            break;
-                        case 4:
-                            pos = new Rectangle(270, 28, 41, 63);
-                            dest.X -= 6;
-                            dest.Width += 12;
-                            break;
-                        case 5:
-                            pos = new Rectangle(329, 28, 30, 63);
+                            pos = new Rectangle(359, 7, 64, 34);
                             break;
                     }
                     break;
-
             }
-            Color col = new Color(1, enemy.Health / enemy.MaxHealth / 2, enemy.Health / enemy.MaxHealth / 2, 1);
-            sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+            Color col = Color.White;// new Color(enemy.Health / enemy.MaxHealth / 2, enemy.Health / enemy.MaxHealth / 2, 1, 1);
+            sb.Draw(masterList["SlugSprites"], destinationRectangle: dest,
             sourceRectangle: pos, color: col, effects: flip, layerDepth: .4f);
             if (enemy.CurrentJackRabbitState == JackRabbitState.Falling)
             {
                 dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
-                sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+                sb.Draw(masterList["SlugSprites"], destinationRectangle: dest,
                 sourceRectangle: pos, color: new Color(col, .5f), effects: flip, layerDepth: .41f);
                 dest = new Rectangle(dest.X - (int)enemy.Velocity.X / 120, dest.Y - (int)enemy.Velocity.Y / 120, dest.Width, dest.Height);
-                sb.Draw(masterList["JackrabbitSprites"], destinationRectangle: dest,
+                sb.Draw(masterList["SlugSprites"], destinationRectangle: dest,
                 sourceRectangle: pos, color: new Color(col, .25f), effects: flip, layerDepth: .42f);
             }
         }

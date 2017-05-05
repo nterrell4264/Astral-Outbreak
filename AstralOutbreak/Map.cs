@@ -265,7 +265,7 @@ namespace AstralOutbreak
                         case 0:
                             return new Turret(new Vector(x * Scale, y * Scale), 28, 28, 10);
                         case 1:
-                            return new DashRabbit(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
+                            return new DashRabbit(new Vector(x * Scale, y * Scale), 84, 42, 250, damage: 1);
                         case 2:
                             return new SwarmMob(new Vector(x * Scale, y * Scale), 12, 12, 1, 1);
                         case 3:

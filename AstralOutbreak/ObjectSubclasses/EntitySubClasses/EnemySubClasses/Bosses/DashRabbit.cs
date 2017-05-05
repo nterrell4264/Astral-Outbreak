@@ -94,7 +94,7 @@ namespace AstralOutbreak
         {
             //Creates a weapon for the JackRabbitBoss,
             MyWeapon = new Weapon(.4f, 1, 900, 700);
-            MyWeapon.BulletSize = 5;
+            MyWeapon.BulletSize = 10;
             MyWeapon.Source = this;
             prevY = Velocity.Y;
             prevX = Position.X;
