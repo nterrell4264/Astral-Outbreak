@@ -35,6 +35,7 @@ namespace AstralOutbreak
 
         //Keep track of the player
         public Player PlayerOne { get; set; }
+        public Boss CurrentBoss { get; set; }
 
         //Is a boss active?
         public bool BossActive { get; set; }
