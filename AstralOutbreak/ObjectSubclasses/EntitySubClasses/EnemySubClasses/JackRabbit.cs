@@ -62,11 +62,9 @@ namespace AstralOutbreak
                 {
                     case JackRabbitState.Moving:
 
-                        if (RoomManager.Active.PlayerOne.Position.Y > Position.Y + 1 && !PlatformDown && RoomManager.Active.PlayerOne.Position.X + 30 > Position.X && RoomManager.Active.PlayerOne.OriginX - 30 < Position.X)
+                        if (RoomManager.Active.PlayerOne.Position.Y > Position.Y + 1 && RoomManager.Active.PlayerOne.Position.X + 30 > Position.X && RoomManager.Active.PlayerOne.Position.X - 30 < Position.X)
                         {
                             PlatformDown = true;
-                            CurrentJackRabbitState = JackRabbitState.Falling;
-                            break;
                         }
 
                         if (Position.X >= RoomManager.Active.PlayerOne.Position.X - 20 && Position.X <= RoomManager.Active.PlayerOne.Position.X + 20 /*&& Position.Y != RoomManager.Active.PlayerOne.Position.Y*/ && CurrentJackRabbitState != JackRabbitState.Falling)
@@ -367,7 +365,7 @@ namespace AstralOutbreak
             else
             {
                 sleepTimer -= deltaTime;
-                if (sleepTimer <= 0)
+                if (sleepTimer <= 0 && CurrentJackRabbitState != JackRabbitState.Falling)
                 {
                     awake = false;
                     CurrentJackRabbitState = JackRabbitState.Idle;
