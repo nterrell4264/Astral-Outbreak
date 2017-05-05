@@ -108,7 +108,6 @@ namespace AstralOutbreak
                         }
                     }
                 }
-                //Boss health
                 
                 //sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
@@ -130,7 +129,8 @@ namespace AstralOutbreak
                     }
                 }
             }
-            if (Game1.CurrentState == GameState.Playing && RoomManager.Active.BossActive)
+            //Boss health
+            if (Game1.CurrentState == GameState.Playing && RoomManager.Active.CurrentBoss != null)
             {
                 double bossPercent = RoomManager.Active.CurrentBoss.Health / RoomManager.Active.CurrentBoss.MaxHealth;
                 Color barColor = Color.Green;
