@@ -9,12 +9,13 @@ namespace AstralOutbreak
     public enum SwarmState { ChargingLeft, ChargingRight, Aligning, Charge }
 
     //Handler class for the swarm boss
-    public class SwarmAI
+    public class SwarmAI: Boss
     {
         private const float VELOCITY = 300;
 
         //List of all swarm mobs
         public List<SwarmMob> Mobs{ get; set; }
+        private int maxBats;
 
         //Time of the current action
         private float currentActionTime;
@@ -49,6 +50,22 @@ namespace AstralOutbreak
             }
         }
 
+        public float Health
+        {
+            get
+            {
+                return Mobs.Count;
+            }
+        }
+
+        public float MaxHealth
+        {
+            get
+            {
+                return maxBats;
+            }
+        }
+
         public float ChargeDist;
 
         //Last Call
@@ -65,6 +82,8 @@ namespace AstralOutbreak
         //Activates the Swarm
         public void Activate()
         {
+            maxBats = (int)Health;
+            RoomManager.Active.CurrentBoss = this;
             RoomManager.Active.BossActive = true;
             SwarmMob.Target = GetCenter();
         }
@@ -82,6 +101,8 @@ namespace AstralOutbreak
             Mobs.Remove(mob);
             if (Mobs.Count == 0)
                 Die();
+            if (mob.Unload)
+                maxBats--;
         }
 
         //Steps if and only if the timestamp is newer than the last call
