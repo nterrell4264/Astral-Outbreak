@@ -62,11 +62,10 @@ namespace AstralOutbreak
             MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
             Gravity = false;
-            MyWeapon.MultiShot = true;
             MyWeapon.ShotDelay = 0;
             MyWeapon.BulletSpeed = 600;
-            MyWeapon.Gravity = true;
             MyWeapon.Range = 448;
+            Aim = new Vector(1f, 1f);
         }
 
         public override void Step(float deltaTime)
@@ -75,7 +74,16 @@ namespace AstralOutbreak
             //Check if awake
             if (awake)
             {
-                
+                if(CurrentActionTime > .5f)
+                {
+                    Shoot(new Vector(-Aim.X, Aim.Y));
+                    Shoot(new Vector(-Aim.X, Aim.Y));
+                    CurrentActionTime = 0;
+                }
+                else
+                {
+                    Aim = Aim.Rotate(-Math.PI / 180);
+                }
             }
             else
             {

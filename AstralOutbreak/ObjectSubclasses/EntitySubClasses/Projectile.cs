@@ -18,6 +18,8 @@ namespace AstralOutbreak
 
         public Projectile(Vector2 pos, float width, float height, float health, float damage, GameObject source = null, bool mobile = true) : base(pos, width, height, health, mobile)
         {
+            if (source is CoreBoss)
+                Collides = false;
             Damage = damage;
             Source = source;
             Gravity = false;
@@ -32,6 +34,14 @@ namespace AstralOutbreak
         {
             Health -= deltaTime;
             base.Step(deltaTime);
+            if(!Collides)
+            {
+                for(int i = 0; i < 5; i++)
+                {
+                    if (this.CheckCollision(RoomManager.Active.PlayerOne.Shield[i]) && !(Source is Player))
+                        Strike(RoomManager.Active.PlayerOne.Shield[i]);
+                }
+            }
         }
 
         //When Projectiles hit things they die and inflict damage.
