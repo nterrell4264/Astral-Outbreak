@@ -103,6 +103,10 @@ namespace AstralOutbreak
                 }
                 base.Health = value;
                 IsDead = Health <= 0;
+                if (IsDead)
+                {
+                    DialogueManager.Update(Triggers.Death);
+                }
             }
         }
 
@@ -552,13 +556,16 @@ namespace AstralOutbreak
                             break;
                         case 1:
                             MyUpgrades = MyUpgrades | Upgrades.Dash;
+                            DialogueManager.Update(Triggers.DashPickup);
                             break;
                         case 2:
                             MyUpgrades = MyUpgrades | Upgrades.BatShield;
+                            DialogueManager.Update(Triggers.BatShieldPickup);
                             break;
                         case 3:
                             MyUpgrades = MyUpgrades | Upgrades.MultiShot;
                             MyWeapon.MultiShot = true;
+                            DialogueManager.Update(Triggers.MultiShotPickup);
                             break;
                         default:
                             break;

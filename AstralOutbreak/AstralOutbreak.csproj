@@ -38,6 +38,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DialogueInfo.cs" />
+    <Compile Include="ManagerClasses\DialogueManager.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EscapePod.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\Boss.cs" />
     <Compile Include="ObjectSubclasses\EntitySubClasses\EnemySubClasses\Bosses\CoreBoss.cs" />

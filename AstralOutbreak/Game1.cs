@@ -24,6 +24,9 @@ namespace AstralOutbreak
         public static InputManager Inputs { get; set; }
         public static Random Rand { get; set; }
 
+        //Dialogue update timer
+        public float DialogueTimer { get; set; }
+
         //Current game state
         public static GameState CurrentState { get; set; }
         public static GameState prevMenu { get; set; } //Tracks previous menu state for options and new games.
@@ -84,8 +87,11 @@ namespace AstralOutbreak
             menuManager = new MenuManager(this);
             spriteManager = new SpriteManager(this);
             spriteManager.AddFont("font", Content.Load<SpriteFont>("font"));
+            spriteManager.AddFont("textfont", Content.Load<SpriteFont>("font"));
             spriteManager.AddFont("UIfont", Content.Load<SpriteFont>("UIfont"));
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Avatars"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("TextBox"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("SlugSprites"));
@@ -140,8 +146,21 @@ namespace AstralOutbreak
             Inputs.Update();
             if (CurrentState == GameState.Playing) //Game time updating
             {
-                if (RoomManager.Active.PlayerOne.IsDead) CurrentState = GameState.GameOverMenu;
+                if (RoomManager.Active.PlayerOne.IsDead && !DialogueManager.Active) CurrentState = GameState.GameOverMenu;
                 RoomManager.Active.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
+                if (DialogueManager.Active)
+                {
+                    DialogueTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if(DialogueTimer > 5)
+                    {
+                        DialogueManager.Update();
+                        DialogueTimer = 0;
+                    }
+                }
+                else
+                {
+                    DialogueTimer = 0;
+                } 
             }
             menuManager.Update();
             // TODO: Add your update logic here
@@ -191,6 +210,7 @@ namespace AstralOutbreak
                 {
                     if (input != null)
                         input.Close();
+                    DialogueManager.Update(Triggers.Start);
                 }
             }
         }
