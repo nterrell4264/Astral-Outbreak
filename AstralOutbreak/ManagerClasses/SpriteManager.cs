@@ -175,6 +175,14 @@ namespace AstralOutbreak
                     break;
                 case PlayerState.Idle:
                     pos = new Rectangle(3, 181, 32, 56);
+                    if (player.FaceRight == true)
+                    {
+                        destArm = new Rectangle(destArm.X - 3, destArm.Y - 2, destArm.Width, destArm.Height);
+                    }
+                    else
+                    {
+                        destArm = new Rectangle(destArm.X + 3, destArm.Y - 2, destArm.Width, destArm.Height);
+                    }
                     break;
                 case PlayerState.Dashing:
                     dest.Width += 60;
