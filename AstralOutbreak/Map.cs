@@ -469,5 +469,32 @@ namespace AstralOutbreak
                     Loaded[i, j] = false;
         }
 
+        public int CountEnemies()
+        {
+            int count = 0;
+            for (int i = 0; i < Width; i++)
+                for (int j = 0; j < Height; j++)
+                {
+                    if (!Loaded[i, j] && (this[i,j] == MapItem.Demon || this[i,j] == MapItem.Slug))
+                    {
+                        count++;
+                    }
+                }
+            return count;
+        }
+
+        public int CountItems()
+        {
+            int count = 0;
+            for (int i = 0; i < Width; i++)
+                for (int j = 0; j < Height; j++)
+                {
+                    if (!Loaded[i, j] && (this[i, j] == MapItem.Item))
+                    {
+                        count++;
+                    }
+                }
+            return count;
+        }
     }
 }

@@ -224,5 +224,42 @@ namespace AstralOutbreak
         {
             WonGame = true;
         }
+
+        public static Tuple<float, float> Score(Map map)
+        {
+            if (File.Exists("MapData.dat"))
+            {
+                int countEnemy = 0;
+                int countMaxEnemy = 0;
+                int countItems = 0;
+                int countMaxItems = 0;
+                StreamReader input = null;
+                try
+                {
+                    input = new StreamReader(File.OpenRead("MapData.dat"));
+                    Map m = ((JsonConvert.DeserializeObject<Map>(input.ReadToEnd())));
+                    countEnemy = RoomManager.MapData.CountEnemies();
+                    countMaxEnemy = m.CountEnemies();
+                    countItems = RoomManager.MapData.CountItems();
+                    countMaxItems = m.CountItems();
+
+                }
+                catch (Exception e)
+                {
+                    
+                }
+                finally
+                {
+                    if (input != null)
+                        input.Close();
+                }
+                if (countMaxItems == 0 || countMaxEnemy == 0)
+                    return null;
+
+                return new Tuple<float, float>(1 - (countEnemy / (float)countMaxEnemy), 1 - (countItems / (float)countMaxItems));
+            }
+            else
+                return null;
+        }
     }
 }
