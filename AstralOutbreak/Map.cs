@@ -278,6 +278,9 @@ namespace AstralOutbreak
                             return new MultiRabbit(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
                         case 4:
                             return new CoreBoss(new Vector(x * Scale - 14, y * Scale - 14), 56, 56, 2000);
+                        case 6:
+                            return new EscapePod(new Vector(x * Scale - 14, y * Scale - 14), 56, 56);
+
                     }
                     break;
                 default:
