@@ -162,6 +162,10 @@ namespace AstralOutbreak
                 else
                 {
                     DialogueTimer = 0;
+                    if (WonGame)
+                    {
+                        CurrentState = GameState.MainMenu;
+                    }
                 } 
             }
             menuManager.Update();
