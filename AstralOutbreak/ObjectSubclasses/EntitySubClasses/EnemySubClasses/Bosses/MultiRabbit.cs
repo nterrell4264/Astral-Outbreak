@@ -54,6 +54,7 @@ namespace AstralOutbreak
                 {
                     RoomManager.Active.BossActive = false;
                     RoomManager.Active.CurrentBoss = null;
+                    DialogueManager.Update(Triggers.MultiBossEnd);
                 }
             }
         }
@@ -243,6 +244,7 @@ namespace AstralOutbreak
             awake = true;
             RoomManager.Active.BossActive = true;
             RoomManager.Active.CurrentBoss = this;
+            DialogueManager.Update(Triggers.MultiBossStart);
 
         }
 

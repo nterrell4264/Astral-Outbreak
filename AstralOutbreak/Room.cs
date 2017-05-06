@@ -157,6 +157,7 @@ namespace AstralOutbreak
         //Re-sets up the room from the current map
         public void ReloadRoom()
         {
+            Game1.WonGame = false;
             BossActive = false;
             CurrentBoss = null;
             SwarmMob.Awake = false;
