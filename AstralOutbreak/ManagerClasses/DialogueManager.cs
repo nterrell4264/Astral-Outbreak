@@ -139,8 +139,8 @@ namespace AstralOutbreak
                     //newDialogue.Add(new DialogueInfo("", Speaker.Player, Color.White));
                     break;
                 case Triggers.MultiBossEnd:
-                    newDialogue.Add(new DialogueInfo("Ha ha ha, you only... delay the inevitable, mortal...", Speaker.Player, Color.White));
-                    newDialogue.Add(new DialogueInfo("We've already taken over the main computer... this colony is done for...", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Ha ha ha, you only... delay the inevitable, mortal...", Speaker.Jack, new Color(.5f, .5f, 1, 1)));
+                    newDialogue.Add(new DialogueInfo("We've already taken over the main computer... this colony is done for...", Speaker.Jack, new Color(.5f, .5f, 1, 1)));
                     break;
                 case Triggers.BatBossStart:
                     newDialogue.Add(new DialogueInfo("Its quiet. Too quiet.", Speaker.Player, Color.White));
