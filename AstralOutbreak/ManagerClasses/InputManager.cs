@@ -4,37 +4,29 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AstralOutbreak
 {
     public enum ButtonStatus { Unpressed, Pressed, Held}
+    public enum ActionButton { JumpButton, LeftButton, DownButton, RightButton, RollButton, DashButton, PauseButton}
     public class InputManager
     {
         private KeyboardState keyState; //Key state this frame
         private KeyboardState prevKeyState; //Key state last frame
-        private MouseState mouseState;
-        private MouseState prevMouseState;
+        private MouseState mouseState; //Mouse state this frame
+        private MouseState prevMouseState; //Mouse state last frame
+        public bool checkUpdate = false;
+        public ActionButton updateKey;
 
-        //Button Bindings
-        public Keys jumpButton { get; set; }
-        public Keys leftButton { get; set; }
-        public Keys rightButton { get; set; }
-        public Keys downButton { get; set; }
-        public Keys rollButton { get; set; }
-        public Keys dashButton { get; set; }
-        public Keys pauseButton { get; set; }
-
-        //Button Statuses
-        public ButtonStatus JumpButtonState { get; private set; }
-        public ButtonStatus LeftButtonState { get; private set; }
-        public ButtonStatus RightButtonState { get; private set; }
-        public ButtonStatus DownButtonState { get; private set; }
-        public ButtonStatus RollButtonState { get; private set; }
-        public ButtonStatus DashButtonState { get; private set; }
+        private List<KeySet> keyList;
+        public KeySet this[ActionButton button]
+        {
+            get { return keyList[(int)button]; }
+        }
         public ButtonStatus ShootButtonState { get; private set; }
-        public ButtonStatus PauseButtonState { get; private set; }
 
         //Mouse stuff
         public int MouseX
@@ -86,17 +78,20 @@ namespace AstralOutbreak
             }
         }
         
+        //Constructor
         public InputManager() //Hard codes keys - Called on first boot or if JSON fails to load from file
         {
-            jumpButton = Keys.W;
-            leftButton = Keys.A;
-            rightButton = Keys.D;
-            rollButton = Keys.LeftShift;
-            dashButton = Keys.Space;
-            pauseButton = Keys.Escape;
-            downButton = Keys.S;
+            keyList = new List<KeySet>();
+            keyList.Add(new KeySet(ActionButton.JumpButton, Keys.W));
+            keyList.Add(new KeySet(ActionButton.LeftButton, Keys.A));
+            keyList.Add(new KeySet(ActionButton.DownButton, Keys.S));
+            keyList.Add(new KeySet(ActionButton.RightButton, Keys.D));
+            keyList.Add(new KeySet(ActionButton.RollButton, Keys.LeftShift));
+            keyList.Add(new KeySet(ActionButton.DashButton, Keys.Space));
+            keyList.Add(new KeySet(ActionButton.PauseButton, Keys.Escape));
         }
 
+        //Methods
         public void Update() //Updates all buttons
         {
             prevKeyState = keyState;
@@ -104,32 +99,38 @@ namespace AstralOutbreak
             keyState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
-            JumpButtonState = UpdateKey(jumpButton);
-            LeftButtonState = UpdateKey(leftButton);
-            RightButtonState = UpdateKey(rightButton);
-            RollButtonState = UpdateKey(rollButton);
-            DashButtonState = UpdateKey(dashButton);
-            PauseButtonState = UpdateKey(pauseButton);
-            DownButtonState = UpdateKey(downButton);
-            ShootButtonState = M1State;
-        }
-
-        /// <summary>
-        /// Updates a key state based on a key's status
-        /// </summary>
-        /// <param name="state">The button state to update</param>
-        /// <param name="button">The key used to determine the state</param>
-        private ButtonStatus UpdateKey(Keys key)
-        {
-            if (keyState.IsKeyDown(key))
+            if (Game1.CurrentState == GameState.OptionsMenu)
             {
-                if (prevKeyState.IsKeyDown(key)) return ButtonStatus.Held;
-                else return ButtonStatus.Pressed;
+                if (checkUpdate)
+                {
+                    foreach (Keys key in keyState.GetPressedKeys())
+                    {
+                        if (!prevKeyState.IsKeyDown(key))
+                        {
+                            keyList[(int)updateKey].Key = key;
+                            Game1.menuManager.Reload();
+                            break;
+                        }
+                    }
+                }
             }
-            else return ButtonStatus.Unpressed;
+            if (Game1.CurrentState == GameState.Playing)
+            {
+                foreach (KeySet action in keyList) UpdateAction(action);
+                ShootButtonState = M1State;
+            }
+            UpdateAction(keyList[(int)ActionButton.PauseButton]);
         }
 
-
+        private void UpdateAction(KeySet action)
+        {
+            if (keyState.IsKeyDown(action.Key))
+            {
+                if (prevKeyState.IsKeyDown(action.Key)) action.Status = ButtonStatus.Held;
+                else action.Status = ButtonStatus.Pressed;
+            }
+            else action.Status = ButtonStatus.Unpressed;
+        }
 
         public void SaveToFile()
         {

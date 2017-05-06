@@ -65,7 +65,7 @@ namespace AstralOutbreak
                 Inputs = new InputManager();
             IsMouseVisible = true;
             Graphics = graphics;
-            graphics.ToggleFullScreen();
+            //graphics.ToggleFullScreen();
             CurrentState = GameState.MainMenu;
             ResetGame();
             RoomManager.Active.Width = GraphicsDevice.Viewport.Width;
@@ -115,7 +115,6 @@ namespace AstralOutbreak
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -125,7 +124,7 @@ namespace AstralOutbreak
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Inputs.PauseButtonState == ButtonStatus.Pressed)
+            if (Inputs[ActionButton.PauseButton].Status == ButtonStatus.Pressed)
             {
                 switch (CurrentState)
                 {

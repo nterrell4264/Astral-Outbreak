@@ -47,7 +47,7 @@ namespace AstralOutbreak
             get { return currentplayerstate; }
             private set
             {
-                if (value == PlayerState.Falling && currentplayerstate != PlayerState.Dashing && Game1.Inputs.JumpButtonState == ButtonStatus.Pressed)
+                if (value == PlayerState.Falling && currentplayerstate != PlayerState.Dashing && Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Pressed)
                     jumpTime = JUMPTIME;
                 else jumpTime = 0;
                 currentplayerstate = value;
@@ -170,7 +170,7 @@ namespace AstralOutbreak
                     }
                     
                     //If we are jumping
-                    if (jumpTime > 0 && ((Game1.Inputs.JumpButtonState == ButtonStatus.Held || Game1.Inputs.JumpButtonState == ButtonStatus.Pressed || jumpTime > JUMPTIME * 2 / 3)) && Velocity.Y < 0)
+                    if (jumpTime > 0 && ((Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Pressed || jumpTime > JUMPTIME * 2 / 3)) && Velocity.Y < 0)
                     {
                         jumpTime -= deltaTime;
                         Velocity.Y = -84 / JUMPTIME;
@@ -181,7 +181,7 @@ namespace AstralOutbreak
                         if (Velocity.Y < 0)
                             Velocity.Y /= 1.1f;
                     }
-                    if (!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
+                    if (!(Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Unpressed) && !(Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Unpressed))
                     {
                         Velocity.X = 0;
 
@@ -192,18 +192,18 @@ namespace AstralOutbreak
                             Velocity.X = speedLimit / 2;
                         Acceleration.X += 10;
 
-                        if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                        if ((Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Pressed))
                         {
                             Velocity.X = -.1f;
                             Acceleration.X = -10;
                             break;
                         }
-                        else if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
+                        else if (Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
+                        if (Game1.Inputs[ActionButton.DashButton].Status == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = MaxVelocity.X;
@@ -220,18 +220,18 @@ namespace AstralOutbreak
                             Velocity.X = -speedLimit / 2;
                         Acceleration.X += -10;
 
-                        if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+                        if ((Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Pressed))
                         {
                             Velocity.X = .1f;
                             Acceleration.X = 10;
                             break;
                         }
-                        else if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
+                        else if (Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
                             Acceleration.X = 0;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
+                        if (Game1.Inputs[ActionButton.DashButton].Status == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = -MaxVelocity.X;
@@ -244,20 +244,20 @@ namespace AstralOutbreak
                     }
                     else
                     {
-                        if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+                        if ((Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Pressed))
                         {
-                            if(!(Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                            if(!(Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Pressed))
                                 Velocity.X = .1f;
                             break;
                         }
-                        else if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                        else if ((Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Pressed))
                         {
                             Velocity.X = -.1f;
                             break;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
+                        if (Game1.Inputs[ActionButton.DashButton].Status == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash)
                         {
-                            //if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash && Game1.Inputs.JumpButtonState == ButtonStatus.Held)
+                            //if (Game1.Inputs[ActionButton.DashButton].Status == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash) && canAirDash && Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Held)
                             //{
                                 MaxVelocity.Y = DASHSPEED;
                                 Velocity.Y = -MaxVelocity.Y;
@@ -283,12 +283,12 @@ namespace AstralOutbreak
                 //Not moving
                 case PlayerState.Idle:
                     Velocity.X = 0;
-                    if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed)
-                        && !(Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Pressed)
+                        && !(Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Pressed))
                     {
                         Velocity.X = -.1f;
                         CurrentPlayerState = PlayerState.Running;
-                        if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
+                        if ((Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Pressed))
                         {
                             Velocity.Y -= 310;
                             CurrentPlayerState = PlayerState.Falling;
@@ -296,12 +296,12 @@ namespace AstralOutbreak
                         }
                         break;
                     }
-                    if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed)
-                        && !(Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Pressed)
+                        && !(Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Pressed))
                     {
                         Velocity.X = .1f;
                         CurrentPlayerState = PlayerState.Running;
-                        if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
+                        if ((Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Pressed))
                         {
                             Velocity.Y -= 310;
                             CurrentPlayerState = PlayerState.Falling;
@@ -309,13 +309,13 @@ namespace AstralOutbreak
                         }
                         break;
                     }
-                    if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Pressed))
                     {
                         Velocity.Y -= 310;
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
-                    if ((Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs[ActionButton.RollButton].Status == ButtonStatus.Pressed))
                     {
                         MaxVelocity.X = ROLLSPEED;
                         if (FaceRight)
@@ -329,7 +329,7 @@ namespace AstralOutbreak
                     }
                     if (Velocity.Y != previousY)
                             CurrentPlayerState = PlayerState.Falling;
-                    if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
+                    if (Game1.Inputs[ActionButton.DashButton].Status == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                     {
                         MaxVelocity.X = DASHSPEED;
                         if (FaceRight)
@@ -370,7 +370,7 @@ namespace AstralOutbreak
                     break;
                 //Moving on the ground
                 case PlayerState.Running:
-                    if(!(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed) && !(Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
+                    if(!(Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Unpressed) && !(Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Unpressed))
                     {
                         Velocity.X = 0;
                         CurrentPlayerState = PlayerState.Idle;
@@ -378,7 +378,7 @@ namespace AstralOutbreak
                     }
                     if (Velocity.X > 0)
                     {
-                        if (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
+                        if (Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
                             CurrentPlayerState = PlayerState.Idle;
@@ -388,17 +388,17 @@ namespace AstralOutbreak
                             Velocity.X = speedLimit / 2;
                         Acceleration.X += 10;
 
-                        if (Velocity.X > 0 && (Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed))
+                        if (Velocity.X > 0 && (Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Pressed))
                         {
                             Velocity.X = -.1f;
                             CurrentPlayerState = PlayerState.Running;
                         }
-                        if(Game1.Inputs.RightButtonState == ButtonStatus.Unpressed)
+                        if(Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
                             CurrentPlayerState = PlayerState.Idle;
                         }
-                        if(Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
+                        if(Game1.Inputs[ActionButton.DashButton].Status == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = MaxVelocity.X;
@@ -409,7 +409,7 @@ namespace AstralOutbreak
                     }
                     else if(Velocity.X < 0)
                     {
-                        if (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed)
+                        if (Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Unpressed)
                         {
                             Velocity.X = 0;
                             CurrentPlayerState = PlayerState.Idle;
@@ -419,12 +419,12 @@ namespace AstralOutbreak
                             Velocity.X = -speedLimit / 2;
                         Acceleration.X += -10;
 
-                        if (Velocity.X < 0 && (Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed))
+                        if (Velocity.X < 0 && (Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Pressed))
                         {
                             Velocity.X = .1f;
                             CurrentPlayerState = PlayerState.Running;
                         }
-                        if (Game1.Inputs.DashButtonState == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
+                        if (Game1.Inputs[ActionButton.DashButton].Status == ButtonStatus.Pressed && MyUpgrades.HasFlag(Upgrades.Dash))
                         {
                             MaxVelocity.X = DASHSPEED;
                             Velocity.X = -MaxVelocity.X;
@@ -436,13 +436,13 @@ namespace AstralOutbreak
                     }
                     else
                     {
-                        if ((Game1.Inputs.LeftButtonState == ButtonStatus.Held || Game1.Inputs.LeftButtonState == ButtonStatus.Pressed)
-                        && (Game1.Inputs.RightButtonState == ButtonStatus.Unpressed))
+                        if ((Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Pressed)
+                        && (Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Unpressed))
                         {
                             Velocity.X = -.1f;
                         }
-                        else if ((Game1.Inputs.RightButtonState == ButtonStatus.Held || Game1.Inputs.RightButtonState == ButtonStatus.Pressed)
-                            && (Game1.Inputs.LeftButtonState == ButtonStatus.Unpressed))
+                        else if ((Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Held || Game1.Inputs[ActionButton.RightButton].Status == ButtonStatus.Pressed)
+                            && (Game1.Inputs[ActionButton.LeftButton].Status == ButtonStatus.Unpressed))
                         {
                             Velocity.X = .1f;
                         }
@@ -450,13 +450,13 @@ namespace AstralOutbreak
                             CurrentPlayerState = PlayerState.Idle;
                     }
 
-                    if ((Game1.Inputs.JumpButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs[ActionButton.JumpButton].Status == ButtonStatus.Pressed))
                     {
                         Velocity.Y -= 310;
                         CurrentPlayerState = PlayerState.Falling;
                         break;
                     }
-                    if ((Game1.Inputs.RollButtonState == ButtonStatus.Pressed))
+                    if ((Game1.Inputs[ActionButton.RollButton].Status == ButtonStatus.Pressed))
                     {
                         MaxVelocity.X = ROLLSPEED;
                         if (Velocity.X > 0)

@@ -120,7 +120,7 @@ namespace AstralOutbreak
                 {
                     if (menuPart is MenuString)
                     {
-                        sb.DrawString(spriteFont: fontList[(menuPart as MenuString).SpriteFont], text: (menuPart as MenuString).text, position: new Vector2(menuPart.Location.X, menuPart.Location.Y), color: Color.Black, rotation: 0, origin: new Vector2(0, 0), scale: 1, effects: SpriteEffects.None, layerDepth: .1f);
+                        sb.DrawString(spriteFont: fontList[(menuPart as MenuString).SpriteFont], text: (menuPart as MenuString).text, position: new Vector2(menuPart.Location.X, menuPart.Location.Y), color: Color.Black, rotation: 0, origin: new Vector2(0, 0), scale: 1, effects: SpriteEffects.None, layerDepth: menuPart.depth);
                     }
                     else
                     {

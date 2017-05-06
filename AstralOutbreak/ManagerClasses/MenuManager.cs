@@ -38,26 +38,52 @@ namespace AstralOutbreak
         }
         private void LoadOptions() //Loads options menu assets
         {
-            //Backgrounds
-            items.Add(new MenuContent(475, 50, "SmallMenuBG"));
-            items.Add(new MenuContent(475, 100, "SmallMenuBG"));
-            items.Add(new MenuContent(475, 150, "SmallMenuBG"));
-            items.Add(new MenuContent(475, 200, "SmallMenuBG"));
-            items.Add(new MenuContent(475, 250, "SmallMenuBG"));
-            items.Add(new MenuContent(475, 300, "SmallMenuBG"));
-            items.Add(new MenuContent(475, 350, "SmallMenuBG"));
+            //Backgrounds, some fo which which also trigger key rebinding
+            items.Add(new MenuButton(475, 50, 300, 25, "SmallMenuBG", () => {
+                Game1.Inputs.checkUpdate = true;
+                Game1.Inputs.updateKey = Game1.Inputs[ActionButton.JumpButton].Button;
+            }, layer: .3f));
+            items.Add(new MenuButton(475, 100, 300, 50, "SmallMenuBG", () => {
+                Game1.Inputs.checkUpdate = true;
+                Game1.Inputs.updateKey = Game1.Inputs[ActionButton.LeftButton].Button;
+            }));
+            items.Add(new MenuButton(475, 150, 300, 50, "SmallMenuBG", () => {
+                Game1.Inputs.checkUpdate = true;
+                Game1.Inputs.updateKey = Game1.Inputs[ActionButton.DownButton].Button;
+            }));
+            items.Add(new MenuButton(475, 200, 300, 50, "SmallMenuBG", () => {
+                Game1.Inputs.checkUpdate = true;
+                Game1.Inputs.updateKey = Game1.Inputs[ActionButton.RightButton].Button;
+            }));
+            items.Add(new MenuButton(475, 250, 300, 50, "SmallMenuBG", () => {
+                Game1.Inputs.checkUpdate = true;
+                Game1.Inputs.updateKey = Game1.Inputs[ActionButton.DashButton].Button;
+            }));
+            items.Add(new MenuButton(475, 300, 300, 50, "SmallMenuBG", () => {
+                Game1.Inputs.checkUpdate = true;
+                Game1.Inputs.updateKey = Game1.Inputs[ActionButton.RollButton].Button;
+            }));
+            items.Add(new MenuButton(475, 350, 300, 50, "SmallMenuBG", () => {
+                Game1.Inputs.checkUpdate = true;
+                Game1.Inputs.updateKey = Game1.Inputs[ActionButton.PauseButton].Button;
+            }));
+            items.Add(new MenuContent(475, 400, "SmallMenuBG"));
             items.Add(new MenuContent(50, 50, "LargeMenuBG"));
             items.Add(new MenuContent(50, 200, "LargeMenuBG"));
             //Text
-            items.Add(new MenuString(500, 55, "Left = A", "font"));
-            items.Add(new MenuString(500, 105, "Right = D", "font"));
-            items.Add(new MenuString(500, 155, "Jump = W", "font"));
-            items.Add(new MenuString(500, 205, "Dash = Space", "font"));
-            items.Add(new MenuString(500, 255, "Roll = LShift", "font"));
-            items.Add(new MenuString(500, 305, "Shoot = M1", "font"));
-            items.Add(new MenuString(500, 355, "Pause = Escape", "font"));
+            items.Add(new MenuString(500, 55, "Jump = " + Game1.Inputs[ActionButton.JumpButton].Key.ToString(), "font"));
+            items.Add(new MenuString(500, 105, "Left = " + Game1.Inputs[ActionButton.LeftButton].Key.ToString(), "font"));
+            items.Add(new MenuString(500, 155, "Down = " + Game1.Inputs[ActionButton.DownButton].Key.ToString(), "font"));
+            items.Add(new MenuString(500, 205, "Right = " + Game1.Inputs[ActionButton.RightButton].Key.ToString(), "font"));
+            items.Add(new MenuString(500, 255, "Dash = " + Game1.Inputs[ActionButton.DashButton].Key.ToString(), "font"));
+            items.Add(new MenuString(500, 305, "Roll = " + Game1.Inputs[ActionButton.RollButton].Key.ToString(), "font"));
+            items.Add(new MenuString(500, 355, "Pause = " + Game1.Inputs[ActionButton.PauseButton].Key.ToString(), "font"));
+            items.Add(new MenuString(500, 405, "Shoot = M1", "font"));
             //Other
-            items.Add(new MenuButton(50, 350, 150, 75, "ResumeButton", () => { Game1.CurrentState = Game1.prevMenu; }));
+            items.Add(new MenuButton(50, 350, 150, 75, "ResumeButton", () => {
+                Game1.Inputs.SaveToFile();
+                Game1.CurrentState = Game1.prevMenu;
+            }));
         }
         private void LoadPause() //Loads pause menu assets
         {
