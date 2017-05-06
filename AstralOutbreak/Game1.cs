@@ -25,7 +25,7 @@ namespace AstralOutbreak
         public static Random Rand { get; set; }
 
         //Victory boolean
-        public static bool WonGame { get; set; };
+        public static bool WonGame { get; set; }
         //Dialogue update timer
         public float DialogueTimer { get; set; }
 
