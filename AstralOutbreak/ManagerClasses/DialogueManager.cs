@@ -135,6 +135,7 @@ namespace AstralOutbreak
                     newDialogue.Add(new DialogueInfo("Glug... glug.", Speaker.Slug, Color.White));
                     break;
                 case Triggers.MultiBossStart:
+                    newDialogue.Add(new DialogueInfo("Test", Speaker.Jack, new Color(.5f, .5f, 1, 1)));
                     newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
                     break;
                 case Triggers.MultiBossEnd:

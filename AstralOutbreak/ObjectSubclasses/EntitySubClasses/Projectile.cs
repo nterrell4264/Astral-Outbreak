@@ -18,7 +18,7 @@ namespace AstralOutbreak
 
         public Projectile(Vector2 pos, float width, float height, float health, float damage, GameObject source = null, bool mobile = true) : base(pos, width, height, health, mobile)
         {
-            if (source is CoreBoss)
+            if (source is CoreBoss || source is MultiRabbit)
                 Collides = false;
             Damage = damage;
             Source = source;
