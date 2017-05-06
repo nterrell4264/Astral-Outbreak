@@ -129,10 +129,10 @@ namespace AstralOutbreak
                     newDialogue.Add(new DialogueInfo("I have... failed.", Speaker.Player, Color.Red));
                     break;
                 case Triggers.SlugBossStart:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Slug, Color.White));
+                    newDialogue.Add(new DialogueInfo("Glug, Glug!", Speaker.Slug, Color.White));
                     break;
                 case Triggers.SlugBossEnd:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Glug... glug.", Speaker.Slug, Color.White));
                     break;
                 case Triggers.MultiBossStart:
                     newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
@@ -160,7 +160,8 @@ namespace AstralOutbreak
                     break;
                 case Triggers.BatShieldPickup:
                     newDialogue.Add(new DialogueInfo("Ahhggg!!! More bats!", Speaker.Player, Color.White));
-                    newDialogue.Add(new DialogueInfo("Ahhggg!!! More bats!", Speaker.Bat, Color.White));
+                    newDialogue.Add(new DialogueInfo("Mommy? Mommy!", Speaker.Bat, new Color(1, 1, .5f, .9f)));
+                    newDialogue.Add(new DialogueInfo("AHHHHH!!!!", Speaker.Player, Color.White));
                     break;
                 default:
                     break;

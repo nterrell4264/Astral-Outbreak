@@ -59,8 +59,10 @@ namespace AstralOutbreak
                     CurrentActionTime = 0;
 
 
-                if (CoreBoss.CoreLives && RoomManager.Active.AllowBossActivation())
+                if (CoreBoss.CoreLives && RoomManager.Active.AllowBossActivation() && !RoomManager.Active.BossActive)
+                {
                     RoomManager.Active.BossActive = true;
+                }
             }
             Awake = CheckLineOfSight(RoomManager.Active.MapData);
             if (Damaged && CurrentActionTime > 10)
