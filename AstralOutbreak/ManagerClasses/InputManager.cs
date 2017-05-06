@@ -108,6 +108,7 @@ namespace AstralOutbreak
                         if (!prevKeyState.IsKeyDown(key))
                         {
                             keyList[(int)updateKey].Key = key;
+                            checkUpdate = false;
                             Game1.menuManager.Reload();
                             break;
                         }
