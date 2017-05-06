@@ -120,7 +120,7 @@ namespace AstralOutbreak
             switch (t)
             {
                 case Triggers.Start:
-                    newDialogue.Add(new DialogueInfo("Ugh, where am I? I think I got knocked out early in all the confusion.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Ugh, where am I? I think I got knocked out earlier in all the confusion.", Speaker.Player, Color.White));
                     newDialogue.Add(new DialogueInfo("I'm not really sure what happend, but I'm pretty sure I was trying to head for an escape pod.", Speaker.Player, Color.White));
                     newDialogue.Add(new DialogueInfo("I should try to find the ship's main computer, and ask it where the escape pods are.", Speaker.Player, Color.White));
                     newDialogue.Add(new DialogueInfo("I can probably get out of this room by rolling with <LEFT SHIFT>.", Speaker.Player, Color.White));
