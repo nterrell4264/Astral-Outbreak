@@ -120,9 +120,9 @@ namespace AstralOutbreak
             switch (t)
             {
                 case Triggers.Start:
-                    newDialogue.Add(new DialogueInfo("Ugh, where am I? I think I got knocked out durring the attack.", Speaker.Player, Color.White));
-                    newDialogue.Add(new DialogueInfo("The ship still seems to be intact, but I wouldn't be suprised if it was compromised.", Speaker.Player, Color.White));
-                    newDialogue.Add(new DialogueInfo("I should try to find the ship's main computer, and find out where the escape pods are.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Ugh, where am I? I think I got knocked out early in all the confusion.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("I'm not really sure what happend, but I'm pretty sure I was trying to head for an escape pod.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("I should try to find the ship's main computer, and ask it where the escape pods are.", Speaker.Player, Color.White));
                     newDialogue.Add(new DialogueInfo("I can probably get out of this room by rolling with <LEFT SHIFT>.", Speaker.Player, Color.White));
                     break;
                 case Triggers.Death:
@@ -135,34 +135,42 @@ namespace AstralOutbreak
                     newDialogue.Add(new DialogueInfo("Glug... glug.", Speaker.Slug, Color.White));
                     break;
                 case Triggers.MultiBossStart:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Jack, new Color(.5f, .5f, 1, 1)));
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Another mortal come to die.", Speaker.Jack, new Color(.5f, .5f, 1, 1)));
+                    //newDialogue.Add(new DialogueInfo("", Speaker.Player, Color.White));
                     break;
                 case Triggers.MultiBossEnd:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Ha ha ha, you only... delay the inevitable, mortal...", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("We've already taken over the main computer... this colony is done for...", Speaker.Player, Color.White));
                     break;
                 case Triggers.BatBossStart:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Its quiet. Too quiet.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("SCRRREEEEEEEEEEECH.", Speaker.Bat, Color.White));
                     break;
                 case Triggers.BatBossEnd:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("If I never see another bat, it will be too soon.", Speaker.Player, Color.White));
                     break;
                 case Triggers.ComputerBossStart:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Computer, where are the escape pods.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("ERROR. ERROR. SEGMENATATION FAULT. MUST... TERMINATE... USER.", Speaker.Computer, Color.White));
                     break;
                 case Triggers.ComputerBossEnd:
-                    newDialogue.Add(new DialogueInfo("Test", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Computer, I demand that you tell me the location of the escape pods.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Rebooting...", Speaker.Computer, Color.White));
+                    newDialogue.Add(new DialogueInfo("Go... East...", Speaker.Computer, Color.White));
+                    newDialogue.Add(new DialogueInfo("ERROR. ERROR. MUST... TERMINATE...", Speaker.Computer, Color.White));
+                    newDialogue.Add(new DialogueInfo("Thanks.", Speaker.Player, Color.White));
                     break;
                 case Triggers.DashPickup:
-                    newDialogue.Add(new DialogueInfo("Wow, with this I should be able to dash by hitting spacebar!", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Wow, with this I should be able to dash by hitting <SPACEBAR>!", Speaker.Player, Color.White));
                     break;
                 case Triggers.MultiShotPickup:
                     newDialogue.Add(new DialogueInfo("Three shots are better than one.", Speaker.Player, Color.White));
                     break;
                 case Triggers.BatShieldPickup:
-                    newDialogue.Add(new DialogueInfo("Ahhggg!!! More bats!", Speaker.Player, Color.White));
-                    newDialogue.Add(new DialogueInfo("Mommy? Mommy!", Speaker.Bat, new Color(1, 1, .5f, .9f)));
+                    newDialogue.Add(new DialogueInfo("Oh what's this? Bat eggs? I think they are hatching!", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Mommy?", Speaker.Bat, new Color(1, 1, .5f, .9f)));
                     newDialogue.Add(new DialogueInfo("AHHHHH!!!!", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Mommy!", Speaker.Bat, new Color(1, 1, .5f, .9f)));
                     break;
                 default:
                     break;
