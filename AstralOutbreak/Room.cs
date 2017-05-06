@@ -20,6 +20,7 @@ namespace AstralOutbreak
 
         //Last deltatime
         private float delta;
+        public float TotalPlayTime { get; set; }
 
 
         //Bounds of the camera
@@ -51,6 +52,7 @@ namespace AstralOutbreak
             PhysicalLogic = DetermineCollision;
             Collide += HandleCollision;
             PlayerOne = null;
+            TotalPlayTime = 0;
         }
 
         /// <summary>
@@ -61,6 +63,7 @@ namespace AstralOutbreak
         {
             List<PhysicsObject> loaded = new List<PhysicsObject>(PhysicsObjects.Count);
             this.delta = deltaTime;
+            TotalPlayTime += deltaTime;
             CheckUnload();
             LoadFromMap();
             for (int i = 0; i < PhysicsObjects.Count; i++)
@@ -185,6 +188,7 @@ namespace AstralOutbreak
                     PhysicsObjects.Add(newData[i]);
                 }
             }
+            TotalPlayTime = MapData.TotalPlayTime;
         }
 
         public void CheckUnload()
