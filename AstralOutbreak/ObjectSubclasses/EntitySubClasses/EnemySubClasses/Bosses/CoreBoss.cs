@@ -30,7 +30,7 @@ namespace AstralOutbreak
                     RoomManager.Active.CurrentBoss = null;
                     DialogueManager.Update(Triggers.ComputerBossEnd);
 
-                    Game1.Victory();
+                    //Game1.Victory();
                     CoreLives = false;
                     
                 }
