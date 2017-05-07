@@ -104,10 +104,11 @@ namespace AstralOutbreak
         public void Kill(SwarmMob mob)
         {
             Mobs.Remove(mob);
-            if (Mobs.Count == 0)
-                Die();
             if (mob.Unload)
                 maxBats--;
+            else if (Mobs.Count == 0)
+                Die();
+
         }
 
         //Steps if and only if the timestamp is newer than the last call
