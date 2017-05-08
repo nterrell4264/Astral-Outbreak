@@ -28,8 +28,11 @@ namespace AstralOutbreak
                 {
                     RoomManager.Active.BossActive = false;
                     RoomManager.Active.CurrentBoss = null;
-                    Game1.Victory();
+                    DialogueManager.Update(Triggers.ComputerBossEnd);
+
+                    //Game1.Victory();
                     CoreLives = false;
+                    
                 }
             }
         }
@@ -98,6 +101,8 @@ namespace AstralOutbreak
             awake = true;
             RoomManager.Active.BossActive = true;
             RoomManager.Active.CurrentBoss = this;
+            DialogueManager.Update(Triggers.ComputerBossStart);
+
         }
 
 

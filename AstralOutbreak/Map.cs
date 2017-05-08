@@ -32,8 +32,9 @@ namespace AstralOutbreak
         public Upgrades PlayerUpgrades { get; set; }
         public float MaxHealth { get; set; }
         public float Health { get; set; }
-        
-        
+        public float TotalPlayTime { get; set; }
+
+
         /// <summary>
         /// This array lets the map know what assets are currently loaded so that it doesn't give the same entity twice
         /// </summary>
@@ -89,6 +90,7 @@ namespace AstralOutbreak
             Width = 0;
             Height = 0;
             Resizable = false;
+            TotalPlayTime = 0;
         }
 
         /// <summary>
@@ -114,6 +116,8 @@ namespace AstralOutbreak
                     Loaded[i, j] = false;
                     TileValue[i, j] = 0;
                 }
+            TotalPlayTime = 0;
+
         }
 
         /// <summary>
@@ -156,6 +160,8 @@ namespace AstralOutbreak
                 }
             MaxHealth = RoomManager.Active.PlayerOne.MaxHealth;
             Health = RoomManager.Active.PlayerOne.Health;
+            TotalPlayTime = RoomManager.Active.TotalPlayTime;
+
         }
 
         /// <summary>
@@ -272,6 +278,9 @@ namespace AstralOutbreak
                             return new MultiRabbit(new Vector(x * Scale, y * Scale), 28, 56, 250, damage: 1);
                         case 4:
                             return new CoreBoss(new Vector(x * Scale - 14, y * Scale - 14), 56, 56, 2000);
+                        case 6:
+                            return new EscapePod(new Vector(x * Scale - 14, y * Scale - 14), 56, 56);
+
                     }
                     break;
                 default:
@@ -469,5 +478,32 @@ namespace AstralOutbreak
                     Loaded[i, j] = false;
         }
 
+        public int CountEnemies()
+        {
+            int count = 0;
+            for (int i = 0; i < Width; i++)
+                for (int j = 0; j < Height; j++)
+                {
+                    if (!Loaded[i, j] && (this[i,j] == MapItem.Demon || this[i,j] == MapItem.Slug))
+                    {
+                        count++;
+                    }
+                }
+            return count;
+        }
+
+        public int CountItems()
+        {
+            int count = 0;
+            for (int i = 0; i < Width; i++)
+                for (int j = 0; j < Height; j++)
+                {
+                    if (!Loaded[i, j] && (this[i, j] == MapItem.Item))
+                    {
+                        count++;
+                    }
+                }
+            return count;
+        }
     }
 }

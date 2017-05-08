@@ -24,6 +24,11 @@ namespace AstralOutbreak
         public static InputManager Inputs { get; set; }
         public static Random Rand { get; set; }
 
+        //Victory boolean
+        public static bool WonGame { get; set; }
+        //Dialogue update timer
+        public float DialogueTimer { get; set; }
+
         //Current game state
         public static GameState CurrentState { get; set; }
         public static GameState prevMenu { get; set; } //Tracks previous menu state for options and new games.
@@ -65,7 +70,7 @@ namespace AstralOutbreak
                 Inputs = new InputManager();
             IsMouseVisible = true;
             Graphics = graphics;
-            graphics.ToggleFullScreen();
+            //graphics.ToggleFullScreen();
             CurrentState = GameState.MainMenu;
             ResetGame();
             RoomManager.Active.Width = GraphicsDevice.Viewport.Width;
@@ -84,8 +89,11 @@ namespace AstralOutbreak
             menuManager = new MenuManager(this);
             spriteManager = new SpriteManager(this);
             spriteManager.AddFont("font", Content.Load<SpriteFont>("font"));
+            spriteManager.AddFont("textfont", Content.Load<SpriteFont>("font"));
             spriteManager.AddFont("UIfont", Content.Load<SpriteFont>("UIfont"));
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Avatars"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("TextBox"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("SlugSprites"));
@@ -115,7 +123,6 @@ namespace AstralOutbreak
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -125,7 +132,7 @@ namespace AstralOutbreak
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Inputs.PauseButtonState == ButtonStatus.Pressed)
+            if (Inputs[ActionButton.PauseButton].Status == ButtonStatus.Pressed)
             {
                 switch (CurrentState)
                 {
@@ -140,8 +147,25 @@ namespace AstralOutbreak
             Inputs.Update();
             if (CurrentState == GameState.Playing) //Game time updating
             {
-                if (RoomManager.Active.PlayerOne.IsDead) CurrentState = GameState.GameOverMenu;
+                if (RoomManager.Active.PlayerOne.IsDead && !DialogueManager.Active) CurrentState = GameState.GameOverMenu;
                 RoomManager.Active.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
+                if (DialogueManager.Active)
+                {
+                    DialogueTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if(DialogueTimer > 5)
+                    {
+                        DialogueManager.Update();
+                        DialogueTimer = 0;
+                    }
+                }
+                else
+                {
+                    DialogueTimer = 0;
+                    if (WonGame)
+                    {
+                        CurrentState = GameState.MainMenu;
+                    }
+                } 
             }
             menuManager.Update();
             // TODO: Add your update logic here
@@ -191,13 +215,51 @@ namespace AstralOutbreak
                 {
                     if (input != null)
                         input.Close();
+                    DialogueManager.Update(Triggers.Start);
                 }
             }
         }
         //Hooray!
         public static void Victory()
         {
-            CurrentState = GameState.MainMenu;
+            WonGame = true;
+        }
+
+        public static Tuple<float, float> Score(Map map)
+        {
+            if (File.Exists("MapData.dat"))
+            {
+                int countEnemy = 0;
+                int countMaxEnemy = 0;
+                int countItems = 0;
+                int countMaxItems = 0;
+                StreamReader input = null;
+                try
+                {
+                    input = new StreamReader(File.OpenRead("MapData.dat"));
+                    Map m = ((JsonConvert.DeserializeObject<Map>(input.ReadToEnd())));
+                    countEnemy = RoomManager.MapData.CountEnemies();
+                    countMaxEnemy = m.CountEnemies();
+                    countItems = RoomManager.MapData.CountItems();
+                    countMaxItems = m.CountItems();
+
+                }
+                catch (Exception e)
+                {
+                    
+                }
+                finally
+                {
+                    if (input != null)
+                        input.Close();
+                }
+                if (countMaxItems == 0 || countMaxEnemy == 0)
+                    return null;
+
+                return new Tuple<float, float>(1 - (countEnemy / (float)countMaxEnemy), 1 - (countItems / (float)countMaxItems));
+            }
+            else
+                return null;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace AstralOutbreak
 
         //Last deltatime
         private float delta;
+        public float TotalPlayTime { get; set; }
 
 
         //Bounds of the camera
@@ -51,6 +52,7 @@ namespace AstralOutbreak
             PhysicalLogic = DetermineCollision;
             Collide += HandleCollision;
             PlayerOne = null;
+            TotalPlayTime = 0;
         }
 
         /// <summary>
@@ -61,6 +63,7 @@ namespace AstralOutbreak
         {
             List<PhysicsObject> loaded = new List<PhysicsObject>(PhysicsObjects.Count);
             this.delta = deltaTime;
+            TotalPlayTime += deltaTime;
             CheckUnload();
             LoadFromMap();
             for (int i = 0; i < PhysicsObjects.Count; i++)
@@ -157,6 +160,7 @@ namespace AstralOutbreak
         //Re-sets up the room from the current map
         public void ReloadRoom()
         {
+            Game1.WonGame = false;
             BossActive = false;
             CurrentBoss = null;
             SwarmMob.Awake = false;
@@ -184,6 +188,7 @@ namespace AstralOutbreak
                     PhysicsObjects.Add(newData[i]);
                 }
             }
+            TotalPlayTime = MapData.TotalPlayTime;
         }
 
         public void CheckUnload()
@@ -227,7 +232,7 @@ namespace AstralOutbreak
                     case WallType.Regular:
                         break;
                     case WallType.Platform:
-                        return !(obj1 is Projectile) && (obj1.Position.Y + obj1.Height <= obj2.Position.Y && (Game1.Inputs.DownButtonState == ButtonStatus.Unpressed || !(obj1 is Player)) 
+                        return !(obj1 is Projectile) && (obj1.Position.Y + obj1.Height <= obj2.Position.Y && (Game1.Inputs[ActionButton.DownButton].Status == ButtonStatus.Unpressed || !(obj1 is Player)) 
                             && !(obj1 is GameObject && (obj1 as GameObject).PlatformDown));
                     case WallType.BossDoor:
                         return BossActive;

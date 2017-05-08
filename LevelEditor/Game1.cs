@@ -172,7 +172,7 @@ namespace LevelEditor
             }
             if (kb.IsKeyDown(Keys.Right) && (kbLast.IsKeyUp(Keys.Right)))
             {
-                if (Level.CursorValue < 5)
+                if (Level.CursorValue < 6)
                     Level.CursorValue++;
             }
 

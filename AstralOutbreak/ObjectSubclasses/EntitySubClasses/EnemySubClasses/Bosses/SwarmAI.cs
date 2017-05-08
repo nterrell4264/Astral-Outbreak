@@ -86,6 +86,8 @@ namespace AstralOutbreak
             RoomManager.Active.CurrentBoss = this;
             RoomManager.Active.BossActive = true;
             SwarmMob.Target = GetCenter();
+            DialogueManager.Update(Triggers.BatBossStart);
+
         }
 
         //Deactivate the Swarm
@@ -94,16 +96,19 @@ namespace AstralOutbreak
             RoomManager.Active.BossActive = false;
             RoomManager.Active.CurrentBoss = null;
             SwarmMob.Awake = false;
+            DialogueManager.Update(Triggers.BatBossEnd);
+
         }
 
         //Removes a mob from the swarm (presumably due to death)
         public void Kill(SwarmMob mob)
         {
             Mobs.Remove(mob);
-            if (Mobs.Count == 0)
-                Die();
             if (mob.Unload)
                 maxBats--;
+            else if (Mobs.Count == 0)
+                Die();
+
         }
 
         //Steps if and only if the timestamp is newer than the last call

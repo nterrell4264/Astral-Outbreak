@@ -108,7 +108,7 @@ namespace AstralOutbreak
                         }
                     }
                 }
-                
+
                 //sb.DrawString(fontList["font"], "" + RoomManager.Active.PlayerOne.Velocity.X, new Vector(20, 20), Color.White);
             }
             sb.End();
@@ -120,7 +120,7 @@ namespace AstralOutbreak
                 {
                     if (menuPart is MenuString)
                     {
-                        sb.DrawString(spriteFont: fontList[(menuPart as MenuString).SpriteFont], text: (menuPart as MenuString).text, position: new Vector2(menuPart.Location.X, menuPart.Location.Y), color: Color.Black, rotation: 0, origin: new Vector2(0, 0), scale: 1, effects: SpriteEffects.None, layerDepth: .1f);
+                        sb.DrawString(spriteFont: fontList[(menuPart as MenuString).SpriteFont], text: (menuPart as MenuString).text, position: new Vector2(menuPart.Location.X, menuPart.Location.Y), color: Color.Black, rotation: 0, origin: new Vector2(0, 0), scale: 1, effects: SpriteEffects.None, layerDepth: menuPart.depth);
                     }
                     else
                     {
@@ -140,6 +140,13 @@ namespace AstralOutbreak
                 if (bossPercent <= .1) barColor = Color.Red;
                 sb.Draw(masterList["rect"], new Rectangle(main.GraphicsDevice.Viewport.Width / 2 - 200,
                  3, (int)(398 * bossPercent), 19), barColor);
+            }
+            //Dialogue box
+            if (Game1.CurrentState == GameState.Playing && DialogueManager.Active)
+            {
+                sb.Draw(masterList["TextBox"], DialogueManager.Box, new Color(.5f, .5f, .6f, .25f));
+                sb.Draw(masterList["Avatars"], DialogueManager.AvatarDest, DialogueManager.AvatarPos, DialogueManager.AvatarCol);
+                sb.DrawString(fontList["textfont"], DialogueManager.CurrentDialogue, DialogueManager.TextDest, Color.Black);
             }
         }
 
