@@ -15,6 +15,9 @@ namespace AstralOutbreak
         private GameState prevState; //Holds last frame's GameState for automatic updating
         private Game1 main; //Used to accommodate for window size changes, as well as the Exit button.
 
+        private int windowWidth;
+        private int windowHeight;
+
         private MenuContent updateMenu; //Used for defining a MenuContent with update code.
         private MenuString updateString; //Used for defining a MenuString with update code.
 
@@ -22,6 +25,8 @@ namespace AstralOutbreak
         {
             items = new List<MenuContent>();
             main = game;
+            windowWidth = game.GraphicsDevice.Viewport.Width;
+            windowHeight = game.GraphicsDevice.Viewport.Height;
             LoadMain();
             prevState = GameState.MainMenu;
         }
@@ -29,12 +34,13 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(300, 250, 150, 75, "StartButton", () => { RoomManager.Active.ReloadRoom(); Game1.CurrentState = GameState.Playing;}));
-            items.Add(new MenuButton(200, 350, 150, 75, "OptionsButton", () => {
+            items.Add(new MenuButton(windowWidth / 2 - 175, 300, 150, 75, "NewButton", () => { RoomManager.Active.ReloadRoom(); Game1.CurrentState = GameState.Playing;}));
+            items.Add(new MenuButton(windowWidth / 2 + 25, 300, 150, 75, "ResumeButton", () => { RoomManager.LoadGame("SaveData.dat"); Game1.CurrentState = GameState.Playing; }));
+            items.Add(new MenuButton(windowWidth / 2 - 175, 400, 150, 75, "OptionsButton", () => {
                 Game1.CurrentState = GameState.OptionsMenu;
                 Game1.prevMenu = GameState.MainMenu;
             }));
-            items.Add(new MenuButton(400, 350, 150, 75, "QuitButton", () => { main.Exit(); }));
+            items.Add(new MenuButton(windowWidth / 2 + 25, 400, 150, 75, "QuitButton", () => { main.Exit(); }));
         }
         private void LoadOptions() //Loads options menu assets
         {
@@ -87,12 +93,13 @@ namespace AstralOutbreak
         }
         private void LoadPause() //Loads pause menu assets
         {
-            items.Add(new MenuButton(300, 50, 150, 75, "ResumeButton", () => { Game1.CurrentState = GameState.Playing; }));
-            items.Add(new MenuButton(300, 200, 150, 75, "OptionsButton", () => {
+            items.Add(new MenuButton(windowWidth / 2 - 75, windowHeight / 2 - 188, 150, 75, "ResumeButton", () => { Game1.CurrentState = GameState.Playing; }));
+            items.Add(new MenuButton(windowWidth / 2 - 175, windowHeight / 2 - 38, 150, 75, "SaveButton", () => { Game1.CurrentState = GameState.SaveMenu; }));
+            items.Add(new MenuButton(windowWidth / 2 + 25, windowHeight / 2 - 38, 150, 75, "OptionsButton", () => {
                 Game1.CurrentState = GameState.OptionsMenu;
                 Game1.prevMenu = GameState.PauseMenu;
             }));
-            items.Add(new MenuButton(300, 350, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(windowWidth / 2 - 75, windowHeight / 2 + 112, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadScreen() //Loads loading screen assets
         {
@@ -100,12 +107,14 @@ namespace AstralOutbreak
         }
         private void LoadSave() //Loads save menu assets
         {
-
+            items.Add(new MenuButton(windowWidth / 2 - 175, windowHeight / 2 - 38, 150, 75, "SaveButton", () => { RoomManager.SaveGame("SaveData.dat"); }));
+            items.Add(new MenuButton(windowWidth / 2 + 25, windowHeight / 2 - 38, 150, 75, "LoadButton", () => { RoomManager.LoadGame("SaveData.dat"); }));
+            items.Add(new MenuButton(windowWidth / 2 - 75, windowHeight / 2 + 62, 150, 75, "ResumeButton", () => { Game1.CurrentState = GameState.PauseMenu; }));
         }
         private void LoadGameOver() //Loads game over menu assets
         {
-            items.Add(new MenuButton(300, 182, 150, 75, "RetryButton", () => { RoomManager.Active.ReloadRoom();  Game1.CurrentState = GameState.Playing; })); 
-            items.Add(new MenuButton(300, 282, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
+            items.Add(new MenuButton(windowWidth / 2 - 75, 182, 150, 75, "RetryButton", () => { RoomManager.Active.ReloadRoom();  Game1.CurrentState = GameState.Playing; })); 
+            items.Add(new MenuButton(windowWidth / 2 - 75, 282, 150, 75, "QuitButton", () => { Game1.ResetGame(); Game1.CurrentState = GameState.MainMenu; }));
         }
         private void LoadUI() //Loads GUI assets
         {

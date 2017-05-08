@@ -91,6 +91,7 @@ namespace AstralOutbreak
             spriteManager.AddFont("font", Content.Load<SpriteFont>("font"));
             spriteManager.AddFont("textfont", Content.Load<SpriteFont>("font"));
             spriteManager.AddFont("UIfont", Content.Load<SpriteFont>("UIfont"));
+            //Level sprites
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("MoreSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Avatars"));
@@ -99,11 +100,15 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("JackrabbitSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("SlugSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("MiscSprites"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/StartButton"));
+            //Buttons
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/NewButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/OptionsButton"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/SaveButton"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("Menus/LoadButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/ResumeButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/RetryButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/QuitButton"));
+            //Other UI
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/SmallMenuBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/LargeMenuBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/HudBG"));
@@ -133,6 +138,7 @@ namespace AstralOutbreak
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            Inputs.Update();
             if (Inputs[ActionButton.PauseButton].Status == ButtonStatus.Pressed)
             {
                 switch (CurrentState)
@@ -145,7 +151,6 @@ namespace AstralOutbreak
                         break;
                 }
             }
-            Inputs.Update();
             if (CurrentState == GameState.Playing) //Game time updating
             {
                 if (RoomManager.Active.PlayerOne.IsDead && !DialogueManager.Active) CurrentState = GameState.GameOverMenu;
@@ -169,11 +174,6 @@ namespace AstralOutbreak
                 } 
             }
             menuManager.Update();
-            // TODO: Add your update logic here
-            if (Keyboard.GetState().IsKeyDown(Keys.D1))
-                RoomManager.SaveGame("SaveData.dat");
-            if (Keyboard.GetState().IsKeyDown(Keys.D2))
-                RoomManager.LoadGame("SaveData.dat");
             base.Update(gameTime);
         }
 
