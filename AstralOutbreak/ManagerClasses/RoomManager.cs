@@ -70,6 +70,7 @@ namespace AstralOutbreak
                         if (loaded != null)
                         {
                             Active.LoadRoom(loaded);
+                            DialogueManager.Clear();
                             return true;
                         }
                         else

@@ -113,6 +113,10 @@ namespace AstralOutbreak
                 }
             }
         }
+        public static void Clear()
+        {
+            Active = false;
+        }
         public static void Update(Triggers t)
         {
             Dialogue.index = 0;
