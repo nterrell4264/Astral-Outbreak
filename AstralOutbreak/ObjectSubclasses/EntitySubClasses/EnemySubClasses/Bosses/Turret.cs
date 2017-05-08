@@ -44,6 +44,7 @@ namespace AstralOutbreak
             MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
             Gravity = false;
+            Aim = new Vector(0, -1);
         }
 
 
