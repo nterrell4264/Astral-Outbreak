@@ -68,7 +68,7 @@ namespace AstralOutbreak
                         return new Rectangle(84, 0, 28, 28);
                         break;
                     case Speaker.Computer:
-                        return new Rectangle(112, 0, 28, 28);
+                        return new Rectangle(112, 0, 86, 43);
                         break;
                 }
             }
@@ -136,7 +136,6 @@ namespace AstralOutbreak
                     break;
                 case Triggers.MultiBossStart:
                     newDialogue.Add(new DialogueInfo("Another mortal come to die.", Speaker.Jack, new Color(.5f, .5f, 1, 1)));
-                    //newDialogue.Add(new DialogueInfo("", Speaker.Player, Color.White));
                     break;
                 case Triggers.MultiBossEnd:
                     newDialogue.Add(new DialogueInfo("Ha ha ha, you only... delay the inevitable, mortal...", Speaker.Jack, new Color(.5f, .5f, 1, 1)));
@@ -150,7 +149,7 @@ namespace AstralOutbreak
                     newDialogue.Add(new DialogueInfo("If I never see another bat, it will be too soon.", Speaker.Player, Color.White));
                     break;
                 case Triggers.ComputerBossStart:
-                    newDialogue.Add(new DialogueInfo("Computer, where are the escape pods.", Speaker.Player, Color.White));
+                    newDialogue.Add(new DialogueInfo("Computer, where are the escape pods?", Speaker.Player, Color.White));
                     newDialogue.Add(new DialogueInfo("ERROR. ERROR. SEGMENATATION FAULT. MUST... TERMINATE... USER.", Speaker.Computer, Color.White));
                     break;
                 case Triggers.ComputerBossEnd:
