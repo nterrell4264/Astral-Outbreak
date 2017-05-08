@@ -48,6 +48,14 @@ namespace AstralOutbreak
         {
             if (Game1.CurrentState == GameState.Playing)
             {
+                for(int i = 0; i < 11; i++)
+                    for (int j = 0; j < 11; j++)
+                    {
+                        sb.Draw(masterList["MoreSprites"], destinationRectangle: new Rectangle(i * 127 - (int)RoomManager.Active.CameraX % 127, j * 127 - (int)RoomManager.Active.CameraY % 127, 127, 127), sourceRectangle: new Rectangle(0,0,127,127), color: new Color(.4f, .5f, .6f, 1), layerDepth: 1);
+                    }
+                sb.End();
+                sb.Begin(SpriteSortMode.BackToFront);
+
                 //Roommanager.active.physicsobjects is the list of objects
                 for (int i = 0; i < RoomManager.Active.PhysicsObjects.Count; i++)
                 {

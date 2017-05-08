@@ -92,6 +92,7 @@ namespace AstralOutbreak
             spriteManager.AddFont("textfont", Content.Load<SpriteFont>("font"));
             spriteManager.AddFont("UIfont", Content.Load<SpriteFont>("UIfont"));
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("MoreSprites"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Avatars"));
             spriteManager.AddTexture(Content.Load<Texture2D>("TextBox"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
