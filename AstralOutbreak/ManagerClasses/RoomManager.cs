@@ -51,10 +51,12 @@ namespace AstralOutbreak
                 {
                     output.WriteLine(JsonConvert.SerializeObject(MapData.Save()));
                 }
+                DialogueManager.Update(Triggers.Saved);
                 return true;
             }
             catch
             {
+                DialogueManager.Update(Triggers.FailedSave);
                 return false;
             }
         }
@@ -71,18 +73,16 @@ namespace AstralOutbreak
                         {
                             Active.LoadRoom(loaded);
                             DialogueManager.Clear();
+                            DialogueManager.Update(Triggers.Load);
                             return true;
                         }
-                        else
-                            return false;
                     }
                 }
                 catch
                 {
-                    return false;
                 }
-            else
-                return false;
+            DialogueManager.Update(Triggers.FailedLoad);
+            return false;
         }
 
     }

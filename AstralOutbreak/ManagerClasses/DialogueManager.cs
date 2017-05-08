@@ -12,7 +12,7 @@ namespace AstralOutbreak
         SlugBossStart, SlugBossEnd, MultiBossStart, MultiBossEnd, BatBossStart, BatBossEnd, ComputerBossStart, ComputerBossEnd,
         //Item Pickups
         DashPickup, MultiShotPickup, BatShieldPickup,
-        Victory, Saved
+        Victory, Saved, FailedSave, Load, FailedLoad
     }
 
     //Manages dialogue pop ups
@@ -22,6 +22,8 @@ namespace AstralOutbreak
 
         public static DialogueManager Dialogue { get; private set; }
         public static bool Active { get; set; }
+        public static bool DisplayOnMenu { get; set; }
+
 
         private List<DialogueInfo> currentDialogue;
 
@@ -121,6 +123,7 @@ namespace AstralOutbreak
         }
         public static void Update(Triggers t)
         {
+            DisplayOnMenu = false;
             Dialogue.index = 0;
             List<DialogueInfo> newDialogue = new List<DialogueInfo>();
             switch (t)
@@ -133,18 +136,31 @@ namespace AstralOutbreak
                     break;
                 case Triggers.Saved:
                     newDialogue.Add(new DialogueInfo("Saved successfully.", Speaker.Player, Color.White));
+                    DisplayOnMenu = true;
+                    break;
+                case Triggers.FailedSave:
+                    newDialogue.Add(new DialogueInfo("Unable to save.", Speaker.Player, Color.White));
+                    DisplayOnMenu = true;
+                    break;
+                case Triggers.Load:
+                    newDialogue.Add(new DialogueInfo("Loaded successfully.", Speaker.Player, Color.White));
+                    DisplayOnMenu = true;
+                    break;
+                case Triggers.FailedLoad:
+                    newDialogue.Add(new DialogueInfo("Unable to load file.", Speaker.Player, Color.White));
+                    DisplayOnMenu = true;
                     break;
                 case Triggers.Victory:
                     newDialogue.Add(new DialogueInfo("I made it.", Speaker.Player, Color.White));
                     break;
                 case Triggers.Death:
-                    newDialogue.Add(new DialogueInfo("I have... failed.", Speaker.Player, Color.Red));
+                    newDialogue.Add(new DialogueInfo("I have... failed.", Speaker.Player, new Color(1, 1, 1, 1)));
                     break;
                 case Triggers.SlugBossStart:
                     newDialogue.Add(new DialogueInfo("Glug, Glug!", Speaker.Slug, Color.White));
                     break;
                 case Triggers.SlugBossEnd:
-                    newDialogue.Add(new DialogueInfo("Glug... glug.", Speaker.Slug, Color.White));
+                    newDialogue.Add(new DialogueInfo("Glug... Glug...", Speaker.Slug, Color.White));
                     break;
                 case Triggers.MultiBossStart:
                     newDialogue.Add(new DialogueInfo("Another mortal come to die.", Speaker.Jack, new Color(.5f, .5f, 1, 1)));

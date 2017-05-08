@@ -159,7 +159,7 @@ namespace AstralOutbreak
                  3, (int)(398 * bossPercent), 19), barColor);
             }
             //Dialogue box
-            if (Game1.CurrentState == GameState.Playing && DialogueManager.Active)
+            if ((Game1.CurrentState == GameState.Playing || DialogueManager.DisplayOnMenu) && DialogueManager.Active)
             {
                 sb.Draw(masterList["TextBox"], DialogueManager.Box, new Color(.5f, .5f, .6f, .25f));
                 sb.Draw(masterList["Avatars"], DialogueManager.AvatarDest, DialogueManager.AvatarPos, DialogueManager.AvatarCol);

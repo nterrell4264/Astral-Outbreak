@@ -27,7 +27,7 @@ namespace AstralOutbreak
         //Victory boolean
         public static bool WonGame { get; set; }
         //Dialogue update timer
-        public float DialogueTimer { get; set; }
+        public static float DialogueTimer { get; set; }
 
         //Current game state
         public static GameState CurrentState { get; set; }
@@ -158,7 +158,7 @@ namespace AstralOutbreak
                 if (DialogueManager.Active)
                 {
                     DialogueTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if(DialogueTimer > 5)
+                    if (DialogueTimer > 5)
                     {
                         DialogueManager.Update();
                         DialogueTimer = 0;
@@ -171,7 +171,23 @@ namespace AstralOutbreak
                     {
                         CurrentState = GameState.MainMenu;
                     }
-                } 
+                }
+            }
+            else if (DialogueManager.DisplayOnMenu)
+            {
+                if (DialogueManager.Active)
+                {
+                    DialogueTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (DialogueTimer > 3)
+                    {
+                        DialogueManager.Update();
+                        DialogueTimer = 0;
+                    }
+                }
+                else
+                {
+                    DialogueTimer = 0;
+                }
             }
             menuManager.Update();
             base.Update(gameTime);
