@@ -34,7 +34,7 @@ namespace AstralOutbreak
         //Load options
         private void LoadMain() //Loads main menu assets
         {
-            items.Add(new MenuButton(windowWidth / 2 - 175, 300, 150, 75, "NewButton", () => { RoomManager.Active.ReloadRoom(); Game1.CurrentState = GameState.Playing;}));
+            items.Add(new MenuButton(windowWidth / 2 - 175, 300, 150, 75, "NewButton", () => { DialogueManager.Update(Triggers.Start); RoomManager.Active.ReloadRoom(); Game1.CurrentState = GameState.Playing;}));
             items.Add(new MenuButton(windowWidth / 2 + 25, 300, 150, 75, "ResumeButton", () => { RoomManager.LoadGame("SaveData.dat"); Game1.CurrentState = GameState.Playing; }));
             items.Add(new MenuButton(windowWidth / 2 - 175, 400, 150, 75, "OptionsButton", () => {
                 Game1.CurrentState = GameState.OptionsMenu;

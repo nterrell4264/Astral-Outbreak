@@ -216,7 +216,6 @@ namespace AstralOutbreak
                 {
                     if (input != null)
                         input.Close();
-                    DialogueManager.Update(Triggers.Start);
                 }
             }
         }
