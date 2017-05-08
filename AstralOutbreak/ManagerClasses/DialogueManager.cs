@@ -11,7 +11,9 @@ namespace AstralOutbreak
         //Boss Triggers
         SlugBossStart, SlugBossEnd, MultiBossStart, MultiBossEnd, BatBossStart, BatBossEnd, ComputerBossStart, ComputerBossEnd,
         //Item Pickups
-        DashPickup, MultiShotPickup, BatShieldPickup}
+        DashPickup, MultiShotPickup, BatShieldPickup,
+        Victory, Saved
+    }
 
     //Manages dialogue pop ups
     public class DialogueManager
@@ -128,6 +130,12 @@ namespace AstralOutbreak
                     newDialogue.Add(new DialogueInfo("I'm not really sure what happend, but I'm pretty sure I was trying to head for an escape pod.", Speaker.Player, Color.White));
                     newDialogue.Add(new DialogueInfo("I should try to find the ship's main computer, and ask it where the escape pods are.", Speaker.Player, Color.White));
                     newDialogue.Add(new DialogueInfo("I can probably get out of this room by rolling with <LEFT SHIFT>.", Speaker.Player, Color.White));
+                    break;
+                case Triggers.Saved:
+                    newDialogue.Add(new DialogueInfo("Saved successfully.", Speaker.Player, Color.White));
+                    break;
+                case Triggers.Victory:
+                    newDialogue.Add(new DialogueInfo("I made it.", Speaker.Player, Color.White));
                     break;
                 case Triggers.Death:
                     newDialogue.Add(new DialogueInfo("I have... failed.", Speaker.Player, Color.Red));
