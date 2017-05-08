@@ -51,7 +51,7 @@ namespace AstralOutbreak
                 for(int i = 0; i < 11; i++)
                     for (int j = 0; j < 11; j++)
                     {
-                        sb.Draw(masterList["MoreSprites"], destinationRectangle: new Rectangle(i * 127 - (int)RoomManager.Active.CameraX % 127, j * 127 - (int)RoomManager.Active.CameraY % 127, 127, 127), sourceRectangle: new Rectangle(0,0,127,127), color: new Color(.4f, .5f, .6f, 1), layerDepth: 1);
+                        sb.Draw(masterList["MoreSprites"], destinationRectangle: new Rectangle(i * 127 - (int)RoomManager.Active.CameraX % 127, j * 127 - (int)RoomManager.Active.CameraY % 127, 127, 127), sourceRectangle: new Rectangle(0,0,127,127), color: new Color(.4f, .5f, .6f, .9f), layerDepth: 1);
                     }
                 sb.End();
                 sb.Begin(SpriteSortMode.BackToFront);
@@ -64,6 +64,11 @@ namespace AstralOutbreak
                         if (RoomManager.Active.PhysicsObjects[i] is Wall)
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as Wall, i);
+
+                        }
+                        else if (RoomManager.Active.PhysicsObjects[i] is Turret)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as Turret, i);
 
                         }
                         else if (RoomManager.Active.PhysicsObjects[i] is Projectile)
@@ -105,6 +110,10 @@ namespace AstralOutbreak
                         else if (RoomManager.Active.PhysicsObjects[i] is Item)
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as Item, i);
+                        }
+                        else if (RoomManager.Active.PhysicsObjects[i] is CoreBoss)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as CoreBoss, i);
                         }
                         else
                         {
@@ -794,17 +803,57 @@ namespace AstralOutbreak
                     col = Color.Black;
                     break;
                 case WallType.BossDoor:
-                    col = Color.DimGray;
+                    sheet = masterList["MoreSprites"];
+                    if (RoomManager.Active.BossActive)
+                    {
+                        pos = new Rectangle(192, 47, 28, 28);
+                        col = new Color(.5f, .5f, .6f, 1f);
+                    }
+                    else
+                    {
+                        pos = new Rectangle(150, 47, 28, 28);
+                        col = new Color(.5f, .5f, .6f, 1f);
+                    }
                     break;
                 case WallType.SecretTunnel:
                     sheet = masterList["TileSheet"];
-                    pos = new Rectangle(84, 84, 28, 28);
                     pos = new Rectangle(0, 0, 28, 28);
                     break;
                 
             }
             if (wall.MyType == WallType.Fire)
-                col = Color.Red;
+            {
+                col = Color.Orange;
+                Rectangle dest2 = new Rectangle(dest.X, dest.Y - 8, 28, 12);
+                Rectangle pos2 = pos;
+                switch ((int)(RoomManager.Active.TotalPlayTime * 60) % 5)
+                {
+                    default:
+                    case 0:
+                        pos2 = new Rectangle(143, 19, 28, 12);
+                        break;
+                    case 1:
+                        pos2 = new Rectangle(172, 19, 28, 12);
+                        break;
+                    case 2:
+                        pos2 = new Rectangle(201, 19, 28, 12);
+                        break;
+                    case 3:
+                        pos2 = new Rectangle(230, 19, 28, 12);
+                        break;
+                    case 4:
+                        pos2 = new Rectangle(259, 19, 28, 12);
+                        break;
+                }
+                sb.Draw(masterList["MoreSprites"], destinationRectangle: dest2,
+            sourceRectangle: pos2, color: Color.White, effects: flip, layerDepth: .9f);
+                dest2 = new Rectangle(dest.X, dest.Y + 4, 28, 12);
+                sb.Draw(masterList["MoreSprites"], destinationRectangle: dest2,
+            sourceRectangle: pos2, color: Color.White, effects: flip, layerDepth: .9f);
+                dest2 = new Rectangle(dest.X, dest.Y + 16, 28, 12);
+                sb.Draw(masterList["MoreSprites"], destinationRectangle: dest2,
+            sourceRectangle: pos2, color: Color.White, effects: flip, layerDepth: .9f);
+            }
             sb.Draw(sheet, destinationRectangle: dest,
             sourceRectangle: pos, color: col, effects: flip, layerDepth: 1);
         }
@@ -845,6 +894,39 @@ namespace AstralOutbreak
                     break;
             }
             sb.Draw(texture: masterList["MiscSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1,1,1,.9f), effects: SpriteEffects.None, layerDepth: .4f);
+        }
+
+        //Turret draw
+        public void Draw(SpriteBatch sb, Turret enemy, int i)
+        {
+            Vector2 org = new Vector2(14, 14);
+            Rectangle dest;
+            Rectangle pos = new Rectangle();
+            if (!enemy.Damaged && enemy.Awake)
+            {
+                pos = new Rectangle(300, 12, 46, 28);
+            }
+            else
+            {
+                pos = new Rectangle(350, 12, 46, 28);
+            }
+            dest = new Rectangle((int)enemy.Center.X - (int)RoomManager.Active.CameraX,
+            (int)enemy.Center.Y - (int)RoomManager.Active.CameraY,
+            48, 28);
+            sb.Draw(texture: masterList["MoreSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, 1, 1f), origin: org, rotation: enemy.Aim.GetAngle(),effects: SpriteEffects.None, layerDepth: .4f);
+        }
+
+        //Core Boss draw
+        public void Draw(SpriteBatch sb, CoreBoss enemy, int i)
+        {
+            Vector2 org = new Vector2(69, 60);
+            Rectangle dest;
+            Rectangle pos = new Rectangle();
+            pos = new Rectangle(437, 14, 118, 121);
+            dest = new Rectangle((int)enemy.Center.X - (int)RoomManager.Active.CameraX,
+            (int)enemy.Center.Y - (int)RoomManager.Active.CameraY,
+            118, 121);
+            sb.Draw(texture: masterList["MoreSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, 1, 1f), origin: org, effects: SpriteEffects.None, layerDepth: .4f);
         }
 
         //Non boss bats

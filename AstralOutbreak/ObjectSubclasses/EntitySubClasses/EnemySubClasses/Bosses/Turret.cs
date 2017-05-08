@@ -40,7 +40,7 @@ namespace AstralOutbreak
         public Turret(Vector2 pos, float width, float height, float health, float damage = 1f, bool mobile = true) : base(pos, width, height, health, damage, mobile)
         {
             //Creates a weapon for the Turret,
-            MyWeapon = new Weapon(.2f, 2, 1000, 700);
+            MyWeapon = new Weapon(.2f, 2, 1000, 1000);
             MyWeapon.BulletSize = 5;
             MyWeapon.Source = this;
             Gravity = false;
@@ -65,12 +65,22 @@ namespace AstralOutbreak
                 //    RoomManager.Active.BossActive = true;
                 //}
             }
+            else if(!Damaged)
+            {
+                CurrentActionTime = 0;
+            }
             Awake = CheckLineOfSight(RoomManager.Active.MapData);
             if (Damaged && CurrentActionTime > 10)
             {
                 Damaged = false;
                 Health = MaxHealth;
             }
+        }
+
+
+        public override bool CheckLineOfSight(Map map)
+        {
+            return (map.CheckLineOfSight(Center.X, Center.Y, RoomManager.Active.PlayerOne.Center.X, RoomManager.Active.PlayerOne.Center.Y));
         }
 
     }
