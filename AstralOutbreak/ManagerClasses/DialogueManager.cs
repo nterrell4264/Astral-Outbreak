@@ -82,6 +82,7 @@ namespace AstralOutbreak
         {
             get
             {
+
                 return Dialogue.currentDialogue[Dialogue.index].MyTint;
             }
         }
@@ -123,6 +124,7 @@ namespace AstralOutbreak
         }
         public static void Update(Triggers t)
         {
+            Game1.DialogueTimer = 0;
             DisplayOnMenu = false;
             Dialogue.index = 0;
             List<DialogueInfo> newDialogue = new List<DialogueInfo>();
@@ -154,7 +156,7 @@ namespace AstralOutbreak
                     newDialogue.Add(new DialogueInfo("I made it.", Speaker.Player, Color.White));
                     break;
                 case Triggers.Death:
-                    newDialogue.Add(new DialogueInfo("I have... failed.", Speaker.Player, new Color(1, 1, 1, 1)));
+                    newDialogue.Add(new DialogueInfo("I have... failed.", Speaker.Player, Color.Crimson));
                     break;
                 case Triggers.SlugBossStart:
                     newDialogue.Add(new DialogueInfo("Glug, Glug!", Speaker.Slug, Color.White));

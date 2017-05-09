@@ -826,7 +826,7 @@ namespace AstralOutbreak
                 col = Color.Orange;
                 Rectangle dest2 = new Rectangle(dest.X, dest.Y - 8, 28, 12);
                 Rectangle pos2 = pos;
-                switch ((int)(RoomManager.Active.TotalPlayTime * 60) % 5)
+                switch ((int)(RoomManager.Active.TotalPlayTime * 30) % 5)
                 {
                     default:
                     case 0:

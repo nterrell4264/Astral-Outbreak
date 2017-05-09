@@ -6,3 +6,4 @@ Controls (Note: Keyboard controls can be remapped using the options menu):
 	Space Bar: Dash / Air Dash (Requires Upgrade).
  	Mouse Cursor: Aim.
 	Mouse Click: Shoot.
+	Escape: Pause Game.
