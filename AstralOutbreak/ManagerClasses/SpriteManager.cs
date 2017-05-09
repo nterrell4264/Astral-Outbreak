@@ -557,23 +557,23 @@ namespace AstralOutbreak
                 default:
                     break;
                 case JackRabbitState.Falling:
-                    pos = new Rectangle(97, 5, 65, 34);
+                    pos = new Rectangle(96, 52, 65, 34);
                     break;
                 case JackRabbitState.Moving:
                     int o = (int)(enemy.CurrentActionTime * 8) % 4;
                     switch (o)
                     {
                         default:
-                            pos = new Rectangle(97, 5, 65, 34);
+                            pos = new Rectangle(96, 52, 65, 34);
                             break;
                         case 1:
-                            pos = new Rectangle(187, 6, 64, 34);
+                            pos = new Rectangle(186, 53, 64, 34);
                             break;
                         case 2:
-                            pos = new Rectangle(269, 6, 64, 34);
+                            pos = new Rectangle(268, 53, 64, 34);
                             break;
                         case 3:
-                            pos = new Rectangle(359, 7, 64, 34);
+                            pos = new Rectangle(358, 54, 64, 34);
                             break;
                     }
                     break;
@@ -582,16 +582,16 @@ namespace AstralOutbreak
                     switch (y)
                     {
                         default:
-                            pos = new Rectangle(97, 5, 65, 34);
+                            pos = new Rectangle(96, 52, 65, 34);
                             break;
                         case 1:
-                            pos = new Rectangle(187, 6, 64, 34);
+                            pos = new Rectangle(186, 53, 64, 34);
                             break;
                         case 2:
-                            pos = new Rectangle(269, 6, 64, 34);
+                            pos = new Rectangle(268, 53, 64, 34);
                             break;
                         case 3:
-                            pos = new Rectangle(359, 7, 64, 34);
+                            pos = new Rectangle(358, 54, 64, 34);
                             break;
                     }
                     break;
