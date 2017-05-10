@@ -1105,7 +1105,7 @@ namespace AstralOutbreak
         {
             if (!bullet.IsDead)
             {
-                Color col = Color.MediumSeaGreen;
+                Color col = Color.Gray;
                 Rectangle dest = new Rectangle((int)bullet.Position.X - (int)RoomManager.Active.CameraX,
                       (int)bullet.Position.Y - (int)RoomManager.Active.CameraY,
                       (int)bullet.Width, (int)bullet.Height);

@@ -26,7 +26,7 @@ namespace AstralOutbreak
                     base.Health = value;
                 if (IsDead)
                 {
-                    if (CoreBoss.CoreLives)
+                    if (RoomManager.Active.BossActive)
                     {
                         Damaged = true;
                         IsDead = false;
