@@ -119,6 +119,10 @@ namespace AstralOutbreak
                         {
                             Draw(sb, RoomManager.Active.PhysicsObjects[i] as CoreBoss, i);
                         }
+                        else if (RoomManager.Active.PhysicsObjects[i] is EscapePod)
+                        {
+                            Draw(sb, RoomManager.Active.PhysicsObjects[i] as EscapePod, i);
+                        }
                         else
                         {
                             sb.Draw(masterList["rect"],
@@ -135,6 +139,10 @@ namespace AstralOutbreak
             else if(Game1.CurrentState == GameState.MainMenu)
             {
                 sb.Draw(masterList["BestTitleScreenEver"], destinationRectangle: new Rectangle(0, 0, Game1.Graphics.PreferredBackBufferWidth, Game1.Graphics.PreferredBackBufferHeight));
+            }
+            else if (Game1.CurrentState == GameState.Victory)
+            {
+                sb.Draw(masterList["BestYouWinScreenEver"], destinationRectangle: new Rectangle(0, 0, Game1.Graphics.PreferredBackBufferWidth, Game1.Graphics.PreferredBackBufferHeight));
             }
             sb.End();
             sb.Begin();
@@ -173,6 +181,10 @@ namespace AstralOutbreak
                 sb.Draw(masterList["Avatars"], DialogueManager.AvatarDest, DialogueManager.AvatarPos, DialogueManager.AvatarCol);
                 sb.DrawString(fontList["textfont"], DialogueManager.CurrentDialogue, DialogueManager.TextDest, Color.Black);
             }
+            sb.End();
+            sb.Begin();
+            sb.Draw(masterList["MoreSprites"],destinationRectangle: new Rectangle(Game1.Inputs.MouseX, Game1.Inputs.MouseY, 14, 14), 
+                sourceRectangle: new Rectangle(240, 56, 14, 14), origin: new Vector2(7, 7));
         }
 
 
@@ -964,6 +976,18 @@ namespace AstralOutbreak
             (int)enemy.Center.Y - (int)RoomManager.Active.CameraY,
             118, 121);
             sb.Draw(texture: masterList["MoreSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(1, 1, 1, 1f), origin: org, effects: SpriteEffects.None, layerDepth: .4f);
+        }
+
+        //Escape Pod draw
+        public void Draw(SpriteBatch sb, EscapePod enemy, int i)
+        {
+            Rectangle dest;
+            Rectangle pos = new Rectangle();
+            pos = new Rectangle(4, 151, 86, 137);
+            dest = new Rectangle((int)enemy.Position.X - (int)RoomManager.Active.CameraX,
+            (int)enemy.Position.Y - (int)RoomManager.Active.CameraY,
+            86, 137);
+            sb.Draw(texture: masterList["MoreSprites"], destinationRectangle: dest, sourceRectangle: pos, color: new Color(.6f, .7f, .8f, 1f), effects: SpriteEffects.None, layerDepth: .4f);
         }
 
         //Non boss bats

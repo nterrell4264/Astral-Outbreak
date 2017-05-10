@@ -293,7 +293,7 @@ namespace AstralOutbreak
                         case 4:
                             return new CoreBoss(new Vector(x * Scale - 59 + 28, y * Scale + 56 - 121), 118, 121, 2000);
                         case 6:
-                            return new EscapePod(new Vector(x * Scale - 14, y * Scale - 14), 56, 56);
+                            return new EscapePod(new Vector(x * Scale - 14, y * Scale - 53), 86, 137);
 
                     }
                     break;

@@ -140,7 +140,6 @@ namespace AstralOutbreak
             Acceleration.Y = 0;
             if (invulnTime > 0)
                 invulnTime -= deltaTime;
-
             //Single state drive for the player
             switch (CurrentPlayerState)
             {

@@ -68,7 +68,6 @@ namespace AstralOutbreak
                 }
             else
                 Inputs = new InputManager();
-            IsMouseVisible = true;
             Graphics = graphics;
             //graphics.ToggleFullScreen();
             CurrentState = GameState.MainMenu;
@@ -94,7 +93,6 @@ namespace AstralOutbreak
             //Level sprites
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("MoreSprites"));
-            spriteManager.AddTexture(Content.Load<Texture2D>("BestTitleScreenEver"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Avatars"));
             spriteManager.AddTexture(Content.Load<Texture2D>("TextBox"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));
@@ -110,6 +108,8 @@ namespace AstralOutbreak
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/RetryButton"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/QuitButton"));
             //Other UI
+            spriteManager.AddTexture(Content.Load<Texture2D>("BestTitleScreenEver"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("BestYouWinScreenEver"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/SmallMenuBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/LargeMenuBG"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Menus/HudBG"));
@@ -168,10 +168,11 @@ namespace AstralOutbreak
                 else
                 {
                     DialogueTimer = 0;
-                    if (WonGame)
-                    {
-                        CurrentState = GameState.MainMenu;
-                    }
+                    
+                }
+                if (WonGame)
+                {
+                    CurrentState = GameState.MainMenu;
                 }
             }
             else if (DialogueManager.DisplayOnMenu)
@@ -239,6 +240,8 @@ namespace AstralOutbreak
         //Hooray!
         public static void Victory()
         {
+            if(!WonGame)
+                DialogueManager.Update(Triggers.Victory);
             WonGame = true;
         }
 
