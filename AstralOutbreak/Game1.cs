@@ -69,7 +69,7 @@ namespace AstralOutbreak
             else
                 Inputs = new InputManager();
             Graphics = graphics;
-            //graphics.ToggleFullScreen();
+            graphics.ToggleFullScreen();
             CurrentState = GameState.MainMenu;
             ResetGame();
             RoomManager.Active.Width = GraphicsDevice.Viewport.Width;

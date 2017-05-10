@@ -30,7 +30,7 @@ namespace AstralOutbreak
                     {
                         Damaged = true;
                         IsDead = false;
-                        CurrentActionTime = 0;
+                        CurrentActionTime = 3;
                         Shooting = false;
                     }
                 }
@@ -67,7 +67,7 @@ namespace AstralOutbreak
             }
             else if(!Damaged)
             {
-                CurrentActionTime = 0;
+                CurrentActionTime = 3;
             }
             Awake = CheckLineOfSight(RoomManager.Active.MapData);
             if (Damaged && CurrentActionTime > 10)
