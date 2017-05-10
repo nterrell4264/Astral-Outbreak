@@ -226,7 +226,7 @@ namespace AstralOutbreak
                             v = new Wall(new Vector(x * Scale, y * Scale), Scale, Scale);
                             break;
                         case WallType.Platform:
-                            v = new Wall(new Vector(x * Scale, y * Scale), Scale, 2);
+                            v = new Wall(new Vector(x * Scale, y * Scale), Scale, 8);
                             break;
                     }
                     if ( x < 1 || MapData[x - 1, y] == MapItem.Wall)
@@ -245,13 +245,27 @@ namespace AstralOutbreak
                     {
                         Pod p = new Pod(new Vector(x * Scale, y * Scale), 28, 28, 20);
                         if (y >= Height - 1 || MapData[x, y + 1] == MapItem.Wall)
+                        {
                             p.Direction = Facing.Up;
+                            p.Position.Y += 14;
+                            p.Height = 14;
+                        }
                         else if (y < 1 || MapData[x, y - 1] == MapItem.Wall)
+                        {
                             p.Direction = Facing.Down;
+                            p.Height = 14;
+                        }
                         else if (x < 1 || MapData[x - 1, y] == MapItem.Wall)
+                        {
                             p.Direction = Facing.Right;
+                            p.Width = 14;
+                        }
                         else if (x >= Width - 1 || MapData[x + 1, y] == MapItem.Wall)
+                        {
                             p.Direction = Facing.Left;
+                            p.Width = 14;
+                            p.Position.X += 14;
+                        }
                         return p;
                     }
                     return new Slug(new Vector(x * Scale, y * Scale), 56, 28, 20);

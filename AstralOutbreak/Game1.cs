@@ -94,6 +94,7 @@ namespace AstralOutbreak
             //Level sprites
             spriteManager.AddTexture(Content.Load<Texture2D>("rect"));
             spriteManager.AddTexture(Content.Load<Texture2D>("MoreSprites"));
+            spriteManager.AddTexture(Content.Load<Texture2D>("BestTitleScreenEver"));
             spriteManager.AddTexture(Content.Load<Texture2D>("Avatars"));
             spriteManager.AddTexture(Content.Load<Texture2D>("TextBox"));
             spriteManager.AddTexture(Content.Load<Texture2D>("PlayerSprites"));

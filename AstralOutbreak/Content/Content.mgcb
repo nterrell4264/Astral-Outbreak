@@ -325,7 +325,7 @@
 /processorParam:TextureFormat=Color
 /build:MoreSprites
 
-#begin Best Title Screen Ever.png
+#begin BestTitleScreenEver.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -335,5 +335,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Best Title Screen Ever.png
+/build:BestTitleScreenEver.png
 
